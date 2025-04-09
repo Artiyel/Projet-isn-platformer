@@ -40,3 +40,5 @@ class fenetre:
         self.affichage()
 
         self.running = True
+    
+#qouicoubeh
