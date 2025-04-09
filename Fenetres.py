@@ -2,16 +2,15 @@ import pygame
 
 pygame.init()
 
-class fenetre:
+class Fenetre:
     ''''''
-    def __init__(self):
+    def __init__(self, background = pygame.image.load("assets/3_isaac.png")):
         #le décor 
-        self.background = pygame.image.load("assets/3_isaac.png")
+        self.background = background
 
         #paramètre la fenêtre
         self.size_x=self.background.get_width()
         self.size_y=self.background.get_height()
-        pygame.display.set_caption("Squarey")
 
     def affichage(self):
         '''
@@ -23,7 +22,7 @@ class fenetre:
         #initialisation de la fenêtre
         self.window = pygame.display.set_mode((self.size_x,self.size_y))
         self.window.blit(self.background,(0,0))
-        pygame.display.set_caption('RPG UwU')
+        pygame.display.set_caption('Le jeu')
 
     def affiche_entity(entities):
         for entity in entities:
@@ -40,5 +39,3 @@ class fenetre:
         self.affichage()
 
         self.running = True
-    
-#qouicoubeh

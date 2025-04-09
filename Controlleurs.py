@@ -1,6 +1,6 @@
 import numpy as np
 import pygame
-from Fenetres import fenetre
+from Fenetres import * 
 
 
 pygame.init() #startcontroler démarre le jeu donc on initie pygame
@@ -8,7 +8,7 @@ pygame.init() #startcontroler démarre le jeu donc on initie pygame
 class StartControler :
 
     def __init__(self) :
-        self.fenetre = fenetre() #création de la fenêtre du menu principal
+        self.fenetre = Fenetre() #création de la fenêtre du menu principal
 
     def start(self) :
         self.fenetre.run() #on lance la fenêtre
