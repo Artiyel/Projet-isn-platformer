@@ -6,6 +6,9 @@ from Fenetres import *
 pygame.init() #startcontroler démarre le jeu donc on initie pygame
 
 class StartControler :
+    """
+    Met en oeuvre les classes et lance la fenêtre
+    """
 
     def __init__(self) :
         self.fenetre = Fenetre() #création de la fenêtre du menu principal
