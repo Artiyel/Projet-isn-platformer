@@ -2,6 +2,7 @@ import pygame
 
 pygame.init()
 
+
 class Fenetre:
     ''''''
     def __init__(self, background = pygame.image.load("assets/3_isaac.png")):
