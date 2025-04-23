@@ -5,7 +5,7 @@ pygame.init()
 
 class Fenetre:
     ''''''
-    def __init__(self, background = pygame.image.load("assets/3_isaac.png")):
+    def __init__(self, background):
         #le décor 
         self.background = background
 
@@ -13,7 +13,7 @@ class Fenetre:
         self.size_x=self.background.get_width()
         self.size_y=self.background.get_height()
 
-    def affichage(self):
+    def draw(self):
         '''
         entrée : self
         sortie : None
@@ -25,9 +25,6 @@ class Fenetre:
         self.window.blit(self.background,(0,0))
         pygame.display.set_caption('Le jeu')
 
-    def affiche_entity(entities):
-        for entity in entities:
-            ''''''
 
     def run(self):
         '''
@@ -37,6 +34,6 @@ class Fenetre:
         Permet de lancer et faire tourner la fenêtre.
         '''
         #on affiche la fenêtre
-        self.affichage()
+        self.draw()
 
         self.running = True
