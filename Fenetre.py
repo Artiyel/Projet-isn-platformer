@@ -1,4 +1,6 @@
 import pygame
+import ctypes
+
 
 pygame.init()
 
@@ -13,6 +15,16 @@ class Fenetre:
         self.size_x=self.background.get_width()
         self.size_y=self.background.get_height()
 
+        self.font = pygame.font.Font(size=40)
+        pygame.mixer.init()
+        self.click = pygame.mixer.Sound("assets/sound/click.mp3")
+        self.click_alt = pygame.mixer.Sound("assets/sound/click_effect.mp3")
+
+        user32 = ctypes.windll.user32
+        self.screensize = user32.GetSystemMetrics(0) , user32.GetSystemMetrics(1)*0.93
+
+        self.background = pygame.transform.scale(self.background,self.screensize)
+
     def draw(self):
         '''
         entrée : self
@@ -22,7 +34,27 @@ class Fenetre:
         '''
         #Faut mettre des trucs communs à tout les types de fenêtres
 
+    def textbox(self,text):
+        ''''''
+        with open(text,'r', encoding='utf-8') as f:
+            for line in f:
+                text_up = ""
+                for char in line:
+                    if char != "$":
+                        text_up +=char
+                        self.click.play()
+                    if char == " ":
+                        self.click_alt.play()
+                    rect = pygame.Rect(0,self.screensize[1]*2/3,self.screensize[0],self.screensize[1]/3)
+                    pygame.draw.rect(self.window,(0,0,0),rect)
+                    textbox = self.font.render(text_up, True, (255, 255, 255))
+                    self.window.blit(textbox,(10,self.screensize[1]*2/3+50))
+                    pygame.display.flip()
+                    pygame.time.delay(30)
+                pygame.time.delay(500)
+        self.window.blit(self.background,(0,0)) 
 
+    
     def run(self):
         '''
         Entrée : self
@@ -31,7 +63,7 @@ class Fenetre:
         Permet de lancer et faire tourner la fenêtre.
         '''
         #initialisation de la fenêtre
-        self.window = pygame.display.set_mode((self.size_x,self.size_y))
+        self.window = pygame.display.set_mode((self.screensize))
         self.window.blit(self.background,(0,0))
         pygame.display.set_caption('Le jeu')
         #on affiche la fenêtre
