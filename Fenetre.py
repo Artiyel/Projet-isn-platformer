@@ -20,10 +20,7 @@ class Fenetre:
         
         permet de créer l'affichage de la fenêtre
         '''
-        #initialisation de la fenêtre
-        self.window = pygame.display.set_mode((self.size_x,self.size_y))
-        self.window.blit(self.background,(0,0))
-        pygame.display.set_caption('Le jeu')
+        #Faut mettre des trucs communs à tout les types de fenêtres
 
 
     def run(self):
@@ -33,6 +30,10 @@ class Fenetre:
 
         Permet de lancer et faire tourner la fenêtre.
         '''
+        #initialisation de la fenêtre
+        self.window = pygame.display.set_mode((self.size_x,self.size_y))
+        self.window.blit(self.background,(0,0))
+        pygame.display.set_caption('Le jeu')
         #on affiche la fenêtre
         self.draw()
 

@@ -6,7 +6,7 @@ class FenetreJeu(Fenetre):
     Gere l'affichage de 
     '''
     def __init__(self,background = pygame.image.load("assets/3_isaac.png")):
-        super.__init__(background)
+        super(FenetreJeu,self).__init__(background)
 
     def draw_entity(self,entities):
         '''
@@ -39,6 +39,9 @@ class FenetreJeu(Fenetre):
             self.window.blit(img,element["pos"])
         
     def draw(self, entities = [], decor = []):
+        #on dessine les éléments de base
         super().draw()
+        #on affiche les entités
         self.draw_entity(entities)
+        #on affiche les éléments de décor
         self.draw_decor(decor)
