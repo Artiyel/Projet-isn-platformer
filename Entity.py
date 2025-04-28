@@ -1,4 +1,4 @@
-import pygame
+fimport pygame
 
 pygame.init()
 
@@ -13,6 +13,8 @@ class Player(Entity):
 
     def bouger(self,ajout_x, ajout_y):
         '''recupère une info donnée par le controlleur sur de combien il doit bouger et update les variables self.x et self.y'''
+        self.x += ajout_x
+        self.y += ajout_y
      
 
 class Ennemy(Entity):
