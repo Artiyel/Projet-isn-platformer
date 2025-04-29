@@ -14,4 +14,8 @@ class ElementDecor:
         print(f"L'objet est de taille {self.x_taille} x {self.y_taille} et positionné en ({self.x_pos} ; {self.y_pos})\n")
 
 
-    def
+    def get_min_max(self):
+        """
+        Méthode permettant d'obtenir les coordonnées des limites de l'objet
+        """
+        return x_pos, y_pos, x_pos + x_taille, y_pos + y_taille
