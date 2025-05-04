@@ -23,9 +23,10 @@ class StartControler :
                 #on arrête le jeu si on quitte par la croix par défaut (ou le bouton rouge pour les mac)
                 if event.type == pygame.QUIT:
                     self.fenetre.running = False
-                #on regarde si le joueur demande à bouger, puis on check là où il est pour savoir ce qu'il se passe (il tombe, y'a un mur, y'a un ennemi)
-                #et après/simultanément, on gère l'affichage
-                "if ..."
+
+                    
+
+                    
                 
     
 control = StartControler()
