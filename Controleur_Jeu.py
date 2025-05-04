@@ -18,7 +18,7 @@ class ControleurJeu:
 
 
 
-    def test_contact(self):
+    def test_contact(self): #contact ennemi ???
         print("stuff to do")
 
 
