@@ -20,3 +20,15 @@ class ControleurJeu:
 
     def test_contact
 
+    def souhait_action(self):
+    #récupère l'information du déplacement/ de l'action (si jamais on en ajoute) que veut effectuer le joueur
+    for event in pygame.event.get():
+        saut = 10 #nombre de pixel que fait bouger un saut
+        mvt = 5 #nombre de pixel que fait bouger un déplacement
+        if event.type == pygame.KEYDOWN: #recup l'information du clavier du joueur 
+            if event.key == pygame.K_UP:
+                self.perso.potentiel_pos_y = self.perso.y - saut
+            if event.key == pygame.K_RIGHT:
+                self.perso.potentiel_pos_x = self.perso.x + mvt
+            if event.key == pygame.K_LEFT:
+                self.perso.potentiel_pos_x = self.perso.x - mvt
