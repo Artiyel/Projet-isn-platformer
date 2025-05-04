@@ -11,6 +11,8 @@ class Entity:
         self.masse = 50
         self.vitesse = (0, 0)
         self.gravity_pixels = self.gravity * 1080 / 0.07
+        self.potentiel_pos_y = 0
+        self.potentiel_pos_x = 0
 
     def appliquer_physique(self):
         """
@@ -39,7 +41,7 @@ class Player(Entity):
         super.__init__()
 
     def bouger(self,ajout_x, ajout_y):
-        '''recupère une info donnée par le controlleur sur de combien il doit bouger et update les variables self.x et self.y'''
+        '''recupère une info donnée par le controlleur après avoir fait tous les teste sur de combien il doit bouger et update les variables self.x et self.y'''
         self.x += ajout_x
         self.y += ajout_y
      
