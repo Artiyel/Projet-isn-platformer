@@ -1,6 +1,6 @@
 import numpy as np
 import pygame
-from Fenetres import * 
+from Fenetre import * 
 
 
 pygame.init() #startcontroler démarre le jeu donc on initie pygame

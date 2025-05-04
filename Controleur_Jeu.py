@@ -18,7 +18,8 @@ class ControleurJeu:
 
 
 
-    def test_contact
+    def test_contact(self):
+        print("stuff to do")
 
 
     def souhait_action(self):
