@@ -1,6 +1,8 @@
 import numpy as np
 import pygame
-from Fenetre import * 
+from FenetreMenu import FenetreMenu
+from Elements_Decor import Elements_Decor
+
 
 
 pygame.init() #startcontroler démarre le jeu donc on initie pygame
