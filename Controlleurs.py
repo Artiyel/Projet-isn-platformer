@@ -7,11 +7,13 @@ pygame.init() #startcontroler démarre le jeu donc on initie pygame
 
 class StartControler :
     """
-    Met en oeuvre les classes et lance la fenêtre
+    Met en oeuvre les classes et lance la fenêtre 
+    défini la plateforme initiale (la plus basse) cf. Controlleur_Jeu.py
     """
 
     def __init__(self) :
         self.fenetre = Fenetre() #création de la fenêtre du menu principal
+        self.plateforme = [Elements_Decor(0, self.fenetre.size_y-20, self.fenetre.size_x, self.fenetre.size_y)] #liste des plateformes initiée avec la plateforme de départ
 
     def start(self) :
         self.fenetre.run() #on lance la fenêtre
