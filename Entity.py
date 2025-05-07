@@ -10,14 +10,15 @@ class Entity:
         self.x = 0  # position horizontale de l'entité
         self.y = 0  # position verticale de l'entité
         self.masse = 50
-
-        self.vel = np.array([0, 0])
+        self.vel = np.array([0, 0]) # vitesse de l'entité (vecteur 2D)
+        self.vie = 100  # points de vie de l'entité
+        self.invincibility = False
 
 
     def gravite(self):
         '''applique la gravité à l'entité'''
         # on modifie la vitesse verticale de l'entité
-        self.vel[1] += 9.81 * self.masse  # ajout de l'accélération due à la gravité à la vitesse verticale (car ici, on a un /_\t fixe)
+        self.vel = self.vel + np.array(0, 9.81 * self.masse)  # ajout de l'accélération due à la gravité à la vitesse verticale (car ici, on a un /_\t fixe)
 
 
 
