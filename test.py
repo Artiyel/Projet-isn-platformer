@@ -35,13 +35,9 @@ while win.running:
         if event.type == pygame.KEYDOWN:
             key = pygame.key.get_pressed()
             if key[pygame.K_m]:
-                vol_red = 0.3
-                pygame.mixer_music.set_volume(vol_red)
                 win.textbox("assets/text/y0u.txt")
-                while vol_red<1:
-                    vol_red+=0.1
-                    pygame.mixer_music.set_volume(vol_red)
-                    pygame.time.delay(50)
+            if key[pygame.K_t]:
+                win.textbox("assets/text/1t.txt")
             
     #NE PAS OUBLIER LE DISPLAY.FLIP() SINON CA VA FAIRE TOUT NOIR
     pygame.display.flip()
