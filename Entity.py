@@ -34,7 +34,14 @@ class Entity:
         # On utilise les vitesses et l'intervalle de temps pour mettre les positions du personnage à jour
         self.x += self.vitesse[0] * elapsed_time
         self.y += self.vitesse[1] * elapsed_time
+    
 
+    def bouger(self,ajout_x, ajout_y):
+        '''recupère une info donnée par le controlleur après avoir fait tous les teste sur de combien il doit bouger et update les variables self.x et self.y'''
+        # dépacements
+        # on modifie les valeurs des vitesses verticales et horizontales
+        self.x += ajout_x
+        self.y += ajout_y
 
 
 
@@ -42,10 +49,6 @@ class Player(Entity):
     def __init__(self):
         super.__init__()
 
-    def bouger(self,ajout_x, ajout_y):
-        '''recupère une info donnée par le controlleur après avoir fait tous les teste sur de combien il doit bouger et update les variables self.x et self.y'''
-        self.x += ajout_x
-        self.y += ajout_y
      
 
 class Ennemy(Entity):
