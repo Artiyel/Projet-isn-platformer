@@ -1,5 +1,6 @@
 import pygame
 import time as time
+import numpy as np
 
 
 pygame.init()
@@ -9,10 +10,11 @@ class Entity:
         self.x = 0
         self.y = 0
         self.masse = 50
-        self.vitesse = (0, 0)
+        # self.vitesse = (0, 0)
         self.gravity_pixels = self.gravity * 1080 / 0.07
         self.potentiel_pos_y = 0
         self.potentiel_pos_x = 0
+        self.vitesse = np.array([0, 0])
 
     def appliquer_physique(self):
         """
@@ -30,8 +32,8 @@ class Entity:
                         self.gravity_pixels * time_in_s)
 
         # On utilise les vitesses et l'intervalle de temps pour mettre les positions du personnage à jour
-        man.position[0] += man.speed[0] * elapsed_time
-        man.position[1] += man.speed[1] * elapsed_time
+        self.x += self.vitesse[0] * elapsed_time
+        self.y += self.vitesse[1] * elapsed_time
 
 
 
