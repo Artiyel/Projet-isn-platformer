@@ -36,6 +36,8 @@ class Fenetre:
 
     def textbox(self,text):
         ''''''
+        vol_red = 0.3
+        pygame.mixer_music.set_volume(vol_red)
         with open(text,'r', encoding='utf-8') as f:
             for line in f:
                 text_up = ""
@@ -53,6 +55,10 @@ class Fenetre:
                     pygame.time.delay(30)
                 pygame.time.delay(500)
         self.window.blit(self.background,(0,0)) 
+        while vol_red<1:
+                    vol_red+=0.1
+                    pygame.mixer_music.set_volume(vol_red)
+                    pygame.time.delay(50)
 
     
     def run(self):
