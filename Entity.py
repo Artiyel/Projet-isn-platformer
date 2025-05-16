@@ -7,41 +7,18 @@ pygame.init()
 
 class Entity:
     def __init__(self):
-        self.x = 0
-        self.y = 0
+        self.x = 0  # position horizontale de l'entité
+        self.y = 0  # position verticale de l'entité
         self.masse = 50
-        # self.vitesse = (0, 0)
-        self.gravity_pixels = self.gravity * 1080 / 0.07
-        self.potentiel_pos_y = 0
-        self.potentiel_pos_x = 0
-        self.vitesse = np.array([0, 0])
+        self.vel = np.array([0, 0]) # vitesse de l'entité (vecteur 2D)
+        self.vie = 100  # points de vie de l'entité
+        self.invincibility = False
 
-    def appliquer_physique(self):
-        """
-        Méthode qui calcule la vitesse d'une entité à un instant donné
-        Prend en compte la gravité et les frottements de l'air, mais pas les déplacements et sauts
-        """
-        current_time = time.time()
-        elapsed_time = current_time - self.last_update_time
-        self.last_update_time = current_time  # on réinitialise le moment de la dernière itération
-        time_in_s = elapsed_time / 1000  # conversion du temps en secondes
 
-        # On calcule les vitesses de man selon x et y
-        self.vitesse[0] -= self.frottement_pixels * self.vitesse[0] / self.masse * time_in_s
-        self.vitesse[1] -= self.frottement_pixels * self.vitesse[1] / self.masse * time_in_s - (
-                        self.gravity_pixels * time_in_s)
-
-        # On utilise les vitesses et l'intervalle de temps pour mettre les positions du personnage à jour
-        self.x += self.vitesse[0] * elapsed_time
-        self.y += self.vitesse[1] * elapsed_time
-    
-
-    def bouger(self,ajout_x, ajout_y):
-        '''recupère une info donnée par le controlleur après avoir fait tous les teste sur de combien il doit bouger et update les variables self.x et self.y'''
-        # dépacements
-        # on modifie les valeurs des vitesses verticales et horizontales
-        self.x += ajout_x
-        self.y += ajout_y
+    def gravite(self):
+        '''applique la gravité à l'entité'''
+        # on modifie la vitesse verticale de l'entité
+        self.vel = self.vel + np.array(0, 9.81 * self.masse)  # ajout de l'accélération due à la gravité à la vitesse verticale (car ici, on a un /_\t fixe)
 
 
 
