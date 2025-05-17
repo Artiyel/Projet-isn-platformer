@@ -12,8 +12,6 @@ class Fenetre:
         self.background = background
 
         #paramètre la fenêtre
-        self.size_x=self.background.get_width()
-        self.size_y=self.background.get_height()
 
         self.font = pygame.font.Font(size=40)
         pygame.mixer.init()
