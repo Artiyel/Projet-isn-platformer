@@ -41,16 +41,22 @@ class ControleurJeu:
             mvt = 5 #nombre de pixel que fait bouger un déplacement
             if event.type == pygame.KEYDOWN: #recup l'information du clavier du joueur 
                 if event.key == pygame.K_UP:
-                    self.perso.saut()
+                    saut = True
+                
+                else:
+                    saut = False
 
                 if event.key == pygame.K_RIGHT:
                     self.perso.potentiel_pos_x = self.perso.x + mvt
-                    right = True
+                    left = True
 
 
                 if event.key == pygame.K_LEFT:
                     self.perso.potentiel_pos_x = self.perso.x - mvt
-                    left = True
+                    right = True
+            else:
+                right = False
+                left = False
             
             if event.type == pygame.KEYUP: #si jamais l'utilisateur a maintenu enfoncé et s'arrête
                 if event.key == pygame.K_RIGHT:
@@ -59,30 +65,24 @@ class ControleurJeu:
                 if pygame.key == pygame.K_LEFT:
                     left = False         #à voir comment on communique cette information après 
 
+        return saut, right, left
+
 
     def calcul_mvt(self):
         ''' 
         méthode qui effectue tous les tests avec les méthodes faites en haut et renvoie la position finale du joueur
         peut être que y'a pas besoin de renvoie et qu'on peut juste update la position dans l'instance perso directement mais pas sûr que ça marche!'''
         #... y'a masse trucs à rajouter là 
-        chose_a_rajouter = True
-        if chose_a_rajouter:
-            print("il manque des trucs")
-        else:
-            pos_x = self.perso.potentiel_pos_x
-            pos_y = self.perso.potentiel_pos_y
-            return pos_x, pos_y #peut être que y'en a pas besoin en vrai
+        saut, right, left = self.souhait_action()
 
+        if test_contact_plateforme(self.perso):
+            if saut:
+                self.perso.saut()
+        else: 
+            self.perso.gravite()
 
-    
-    def gravite(self) :
-            """
-            Gère la gravité du personnage
-            """
-            #on regarde si le personnage est sur le sol ou pas, et on applique la gravité en conséquence
-            while test_contact_plateforme(self.perso) == False: 
-                # on applique la gravité au personnage
-                # on modifie la vitesse verticale de l'entité
-                self.perso.vel[1] += + np.array(0, 9.81 * self.masse)   # ajout de l'accélération due à la gravité à la vitesse verticale (car ici, on a un /_\t fixe)
-                # ici, on considère que le perso peut descendre en dehors de la fenêtre de jeu affichée (il peut régresser)
-                # on considère que le point de départ (tout en bas) est sur une plateforme qu'il faudra penser à crééer en début de jeu
+       
+        pos_x = self.perso.potentiel_pos_x
+        pos_y = self.perso.potentiel_pos_y
+        return pos_x, pos_y #peut être que y'en a pas besoin en vrai
+
