@@ -21,8 +21,7 @@ class ControleurJeu:
             # On récupère les coordonnées de la plateforme
             x_min, y_min, x_max, y_max = element.get_min_max()
             # On teste si le personnage est en contact avec la plateforme
-            if self.perso.y_pos + self.perso.y_taille == y_min \
-                and self.perso.x_pos < x_max and self.perso.x_pos + self.perso.x_taille > x_max:
+            if self.perso.y_pos + self.perso.y_taille == y_min and self.perso.x_pos < x_max and self.perso.x_pos + self.perso.x_taille > x_min:
                 contact = True
             else:
                 contact = False
