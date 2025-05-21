@@ -21,6 +21,13 @@ class Entity:
         self.vel = self.vel + np.array(0, 9.81 * self.masse)  # ajout de l'accélération due à la gravité à la vitesse verticale (car ici, on a un /_\t fixe)
 
 
+    def sauter(self):
+        """
+        méthode permettant d'initier un saut d'une entité
+        """
+        self.vel[1] -= 200
+
+
 
 class Player(Entity):
     def __init__(self):
