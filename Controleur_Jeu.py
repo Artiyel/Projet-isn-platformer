@@ -1,4 +1,6 @@
 from Decor import Decor
+import numpy as np
+from Entity import Entity
 import pygame
 
 
@@ -16,12 +18,15 @@ class ControleurJeu:
         :return: True si le personnage est en contact avec une plateforme, False sinon
         """
         for element in self.decor.plateformes :
+            # On récupère les coordonnées de la plateforme
             x_min, y_min, x_max, y_max = element.get_min_max()
+            # On teste si le personnage est en contact avec la plateforme
             if self.perso.y_pos + self.perso.y_taille == y_min \
-                and self.perso.x_pos < x_max \
-                    and self.perso.x_pos + self.perso.x_taille > x_max:
-                    res = 
-
+                and self.perso.x_pos < x_max and self.perso.x_pos + self.perso.x_taille > x_max:
+                contact = True
+            else:
+                contact = False
+        return contact
 
 
     def test_contact(self): #contact ennemi ???
@@ -62,7 +67,7 @@ class ControleurJeu:
             print("il manque des trucs")
         else:
             pos_x = self.perso.potentiel_pos_x
-            pox_y = self.peros.potentiel_pos_y
+            pos_y = self.perso.potentiel_pos_y
             return pos_x, pos_y #peut être que y'en a pas besoin en vrai
 
 
