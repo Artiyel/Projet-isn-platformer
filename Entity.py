@@ -20,17 +20,17 @@ class Entity:
 
 
 
-      def gravite(self) :
-            """
-            Gère la gravité du personnage
-            """
-            #on regarde si le personnage est sur le sol ou pas, et on applique la gravité en conséquence
-            while test_contact_plateforme(self.perso) == False: 
-                # on applique la gravité au personnage
-                # on modifie la vitesse verticale de l'entité
-                self.perso.vel[1] += + np.array(0, 9.81 * self.masse)   # ajout de l'accélération due à la gravité à la vitesse verticale (car ici, on a un /_\t fixe)
-                # ici, on considère que le perso peut descendre en dehors de la fenêtre de jeu affichée (il peut régresser)
-                # on considère que le point de départ (tout en bas) est sur une plateforme qu'il faudra penser à crééer en début de jeu
+    def gravite(self) :
+        """
+        Gère la gravité du personnage
+        """
+        #on regarde si le personnage est sur le sol ou pas, et on applique la gravité en conséquence
+        while test_contact_plateforme(self.perso) == False: 
+            # on applique la gravité au personnage
+            # on modifie la vitesse verticale de l'entité
+            self.perso.vel[1] += + np.array(0, 9.81 * self.masse)   # ajout de l'accélération due à la gravité à la vitesse verticale (car ici, on a un /_\t fixe)
+            # ici, on considère que le perso peut descendre en dehors de la fenêtre de jeu affichée (il peut régresser)
+            # on considère que le point de départ (tout en bas) est sur une plateforme qu'il faudra penser à crééer en début de jeu
 
 
 
