@@ -1,4 +1,5 @@
 from Decor import Decor
+import pygame
 
 
 class ControleurJeu:
@@ -9,12 +10,17 @@ class ControleurJeu:
         self.liste_ennemis= liste_ennemis
 
     def test_contact_plateforme(self, entite):
-        for element in self.decor.plateformes:
+        """
+        teste si le personnage est en contact avec une plateforme, ou si sa position rentre en conflit avec une plateforme
+        :param entite: l'entité à tester (ici le personnage)
+        :return: True si le personnage est en contact avec une plateforme, False sinon
+        """
+        for element in self.decor.plateformes :
             x_min, y_min, x_max, y_max = element.get_min_max()
             if self.perso.y_pos + self.perso.y_taille == y_min \
                 and self.perso.x_pos < x_max \
                     and self.perso.x_pos + self.perso.x_taille > x_max:
-                    res =
+                    res = 
 
 
 
@@ -54,8 +60,9 @@ class ControleurJeu:
             Gère la gravité du personnage
             """
             #on regarde si le personnage est sur le sol ou pas, et on applique la gravité en conséquence
-            while test_contact_plateforme(self.fenetre.player) == False: 
+            while test_contact_plateforme(self.perso) == False: 
                 # on applique la gravité au personnage
-                self.fenetre.player.rect.y += 2
+                # on modifie la vitesse verticale de l'entité
+                self.perso.vel[1] += + np.array(0, 9.81 * self.masse)   # ajout de l'accélération due à la gravité à la vitesse verticale (car ici, on a un /_\t fixe)
                 # ici, on considère que le perso peut descendre en dehors de la fenêtre de jeu affichée (il peut régresser)
                 # on considère que le point de départ (tout en bas) est sur une plateforme qu'il faudra penser à crééer en début de jeu
