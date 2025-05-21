@@ -4,7 +4,7 @@ class Plateforme(ElementDecor):
     """
 
     """
-    def __init__(self, x_pos, y_pos, x_taille, y_taille):
+    def __init__(self, x_pos, y_pos, x_taille = 100, y_taille = 10):
         super().__init__(x_pos, y_pos, x_taille, y_taille)
 
     def __str__(self):
