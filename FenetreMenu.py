@@ -15,6 +15,4 @@ class FenetreMenu(Fenetre):
         #on dessine les éléments de base
         super().draw()
         #on affiche les boutons
-        self.draw_buttons()
-    
-    
+        self.draw_buttons()   
