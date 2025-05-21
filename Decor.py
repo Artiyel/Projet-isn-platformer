@@ -25,6 +25,9 @@ class Decor:
 
 
     def ajouter_objet(self,objet):
+        """
+        méthode qui ajoute un objet (en paramètre) au décor du jeu
+        """
         self.objets.append(objet)
 
 
