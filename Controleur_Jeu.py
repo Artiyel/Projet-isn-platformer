@@ -34,28 +34,28 @@ class ControleurJeu:
 
 
     def souhait_action(self):
-    #récupère l'information du déplacement/ de l'action (si jamais on en ajoute) que veut effectuer le joueur
-    for event in pygame.event.get():
-        mvt = 5 #nombre de pixel que fait bouger un déplacement
-        if event.type == pygame.KEYDOWN: #recup l'information du clavier du joueur 
-            if event.key == pygame.K_UP:
-                self.perso.saut()
+        #récupère l'information du déplacement/ de l'action (si jamais on en ajoute) que veut effectuer le joueur
+        for event in pygame.event.get():
+            mvt = 5 #nombre de pixel que fait bouger un déplacement
+            if event.type == pygame.KEYDOWN: #recup l'information du clavier du joueur 
+                if event.key == pygame.K_UP:
+                    self.perso.saut()
 
-            if event.key == pygame.K_RIGHT:
-                self.perso.potentiel_pos_x = self.perso.x + mvt
-                right = True
+                if event.key == pygame.K_RIGHT:
+                    self.perso.potentiel_pos_x = self.perso.x + mvt
+                    right = True
 
 
-            if event.key == pygame.K_LEFT:
-                self.perso.potentiel_pos_x = self.perso.x - mvt
-                left = True
-        
-        if event.type == pygame.KEYUP: #si jamais l'utilisateur a maintenu enfoncé et s'arrête
-            if event.key == pygame.K_RIGHT:
-                right = False
+                if event.key == pygame.K_LEFT:
+                    self.perso.potentiel_pos_x = self.perso.x - mvt
+                    left = True
+            
+            if event.type == pygame.KEYUP: #si jamais l'utilisateur a maintenu enfoncé et s'arrête
+                if event.key == pygame.K_RIGHT:
+                    right = False
 
-            if pygame.key == pygame.K_LEFT:
-                left = False         #à voir comment on communique cette information après 
+                if pygame.key == pygame.K_LEFT:
+                    left = False         #à voir comment on communique cette information après 
 
 
     def calcul_mvt(self):
