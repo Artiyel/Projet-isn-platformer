@@ -60,7 +60,3 @@ class Decor:
         while hauteur > 100:
             nb_plateformes = randint(1, 3)
             self.creer_plateforme_hasard(nb_plateformes, hauteur)
-
-
-
-

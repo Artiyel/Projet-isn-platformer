@@ -85,4 +85,3 @@ class ControleurJeu:
         pos_x = self.perso.potentiel_pos_x
         pos_y = self.perso.potentiel_pos_y
         return pos_x, pos_y #peut être que y'en a pas besoin en vrai
-

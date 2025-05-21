@@ -11,5 +11,3 @@ class Plateforme(ElementDecor):
     def __str__(self):
         print(f"L'objet est une plateforme \n")
         super().__str__()
-
-
