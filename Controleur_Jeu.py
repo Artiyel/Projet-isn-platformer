@@ -1,4 +1,6 @@
 from Decor import Decor
+import numpy as np
+from Entity import Entity
 import pygame
 
 
@@ -69,7 +71,7 @@ class ControleurJeu:
             print("il manque des trucs")
         else:
             pos_x = self.perso.potentiel_pos_x
-            pox_y = self.peros.potentiel_pos_y
+            pos_y = self.perso.potentiel_pos_y
             return pos_x, pos_y #peut être que y'en a pas besoin en vrai
 
 
