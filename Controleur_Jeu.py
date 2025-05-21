@@ -11,10 +11,10 @@ class ControleurJeu:
     def test_contact_plateforme(self, entite):
         for element in self.decor.plateformes:
             x_min, y_min, x_max, y_max = element.get_min_max()
-            if self.perso.y_pos + self.perso.y_taille == y_min
-                and self.perso.x_pos < x_max
-                and self.perso.x_pos + self.perso.x_taille > x_max:
-                res =
+            if self.perso.y_pos + self.perso.y_taille == y_min \
+                and self.perso.x_pos < x_max \
+                    and self.perso.x_pos + self.perso.x_taille > x_max:
+                    res =
 
 
 
@@ -24,16 +24,16 @@ class ControleurJeu:
 
     def souhait_action(self):
     #récupère l'information du déplacement/ de l'action (si jamais on en ajoute) que veut effectuer le joueur
-    for event in pygame.event.get():
-        saut = 10 #nombre de pixel que fait bouger un saut
-        mvt = 5 #nombre de pixel que fait bouger un déplacement
-        if event.type == pygame.KEYDOWN: #recup l'information du clavier du joueur 
-            if event.key == pygame.K_UP:
-                self.perso.potentiel_pos_y = self.perso.y - saut
-            if event.key == pygame.K_RIGHT:
-                self.perso.potentiel_pos_x = self.perso.x + mvt
-            if event.key == pygame.K_LEFT:
-                self.perso.potentiel_pos_x = self.perso.x - mvt
+        for event in pygame.event.get():
+            saut = 10 #nombre de pixel que fait bouger un saut
+            mvt = 5 #nombre de pixel que fait bouger un déplacement
+            if event.type == pygame.KEYDOWN: #recup l'information du clavier du joueur 
+                if event.key == pygame.K_UP:
+                    self.perso.potentiel_pos_y = self.perso.y - saut
+                if event.key == pygame.K_RIGHT:
+                    self.perso.potentiel_pos_x = self.perso.x + mvt
+                if event.key == pygame.K_LEFT:
+                    self.perso.potentiel_pos_x = self.perso.x - mvt
 
     def calcul_mvt(self):
         ''' méthode qui effectue tous les tests avec les méthodes faites en haut et renvoie la position finale du joueur
