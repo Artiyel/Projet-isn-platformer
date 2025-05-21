@@ -15,6 +15,13 @@ class Entity:
         self.invincibility = False
 
 
+    def gravite(self):
+        '''applique la gravité à l'entité'''
+        # on modifie la vitesse verticale de l'entité
+        self.vel = self.vel + np.array(0, 9.81 * self.masse)  # ajout de l'accélération due à la gravité à la vitesse verticale (car ici, on a un /_\t fixe)
+
+
+
 class Player(Entity):
     def __init__(self):
         super.__init__()
