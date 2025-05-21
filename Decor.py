@@ -5,7 +5,7 @@ from Plateformes import Plateforme
 
 class Decor:
 
-    def __init__(self,plateformes, objets, taille_carte_x, taille_carte_y):
+    def __init__(self, taille_carte_x, taille_carte_y):
         self.plateformes = []
         self.objets = []
         self.taille_carte_x = taille_carte_x
@@ -25,13 +25,17 @@ class Decor:
 
 
     def ajouter_objet(self,objet):
+        """
+        méthode qui ajoute un objet (en paramètre) au décor du jeu
+        """
         self.objets.append(objet)
 
 
 
     def creer_plateforme_hasard(self, n, hauteur):
         """
-        méthode qui créé n plateformes à une position aléatoire sur une même hauteur
+        méthode qui créé n plateformes à une position aléatoire alignées sur une même hauteur
+        utilisée dans la méthode creer_decor_hasard
         """
         for i in range(1, n+1):
             # On découpe la largeur de l'écran en autant d'intervalles que de plateformes
@@ -51,11 +55,11 @@ class Decor:
         sol = Plateforme(x_pos= 0,y_pos= self.taille_carte_y-5, x_taille= self.taille_carte_x, y_taille= 5)
         self.ajouter_plateforme(sol)
 
-        # A intervalle d'espace régulier,
+        # A intervalle d'espace régulier, on ajoute entre 1 et 3 plateformes alignées
         hauteur = self.taille_carte_y - 100
         while hauteur > 100:
             nb_plateformes = randint(1, 3)
-            creer_plateformes_hasard(nb_plateformes, hauteur)
+            self.creer_plateforme_hasard(nb_plateformes, hauteur)
 
 
 
