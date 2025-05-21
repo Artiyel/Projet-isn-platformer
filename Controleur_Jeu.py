@@ -16,12 +16,15 @@ class ControleurJeu:
         :return: True si le personnage est en contact avec une plateforme, False sinon
         """
         for element in self.decor.plateformes :
+            # On récupère les coordonnées de la plateforme
             x_min, y_min, x_max, y_max = element.get_min_max()
+            # On teste si le personnage est en contact avec la plateforme
             if self.perso.y_pos + self.perso.y_taille == y_min \
-                and self.perso.x_pos < x_max \
-                    and self.perso.x_pos + self.perso.x_taille > x_max:
-                    res = 
-
+                and self.perso.x_pos < x_max and self.perso.x_pos + self.perso.x_taille > x_max:
+                contact = True
+            else:
+                contact = False
+        return contact
 
 
     def test_contact(self): #contact ennemi ???
@@ -30,41 +33,32 @@ class ControleurJeu:
 
     def souhait_action(self):
     #récupère l'information du déplacement/ de l'action (si jamais on en ajoute) que veut effectuer le joueur
-    for event in pygame.event.get():
-        mvt = 5 #nombre de pixel que fait bouger un déplacement
-        if event.type == pygame.KEYDOWN: #recup l'information du clavier du joueur 
-            if event.key == pygame.K_UP:
-                self.perso.saut()
-
-            if event.key == pygame.K_RIGHT:
-                self.perso.potentiel_pos_x = self.perso.x + mvt
-                right = True
-
-
-            if event.key == pygame.K_LEFT:
-                self.perso.potentiel_pos_x = self.perso.x - mvt
-                left = True
-        
-        if event.type == pygame.KEYUP: #si jamais l'utilisateur a maintenu enfoncé et s'arrête
-            if event.key == pygame.K_RIGHT:
-                right = False
-
-            if pygame.key == pygame.K_LEFT:
-                left = False         #à voir comment on communique cette information après 
-
-
-
-            
         for event in pygame.event.get():
-            saut = 10 #nombre de pixel que fait bouger un saut
             mvt = 5 #nombre de pixel que fait bouger un déplacement
             if event.type == pygame.KEYDOWN: #recup l'information du clavier du joueur 
                 if event.key == pygame.K_UP:
-                    self.perso.potentiel_pos_y = self.perso.y - saut
+                    self.perso.saut()
                 if event.key == pygame.K_RIGHT:
                     self.perso.potentiel_pos_x = self.perso.x + mvt
+                    right = True
                 if event.key == pygame.K_LEFT:
                     self.perso.potentiel_pos_x = self.perso.x - mvt
+                    left = True       
+            if event.type == pygame.KEYUP: #si jamais l'utilisateur a maintenu enfoncé et s'arrête
+                if event.key == pygame.K_RIGHT:
+                    right = False
+                if pygame.key == pygame.K_LEFT:
+                    left = False         #à voir comment on communique cette information après 
+            for event in pygame.event.get():
+                saut = 10 #nombre de pixel que fait bouger un saut
+                mvt = 5 #nombre de pixel que fait bouger un déplacement
+                if event.type == pygame.KEYDOWN: #recup l'information du clavier du joueur 
+                    if event.key == pygame.K_UP:
+                        self.perso.potentiel_pos_y = self.perso.y - saut
+                    if event.key == pygame.K_RIGHT:
+                        self.perso.potentiel_pos_x = self.perso.x + mvt
+                    if event.key == pygame.K_LEFT:
+                        self.perso.potentiel_pos_x = self.perso.x - mvt
 
     def calcul_mvt(self):
         ''' méthode qui effectue tous les tests avec les méthodes faites en haut et renvoie la position finale du joueur
