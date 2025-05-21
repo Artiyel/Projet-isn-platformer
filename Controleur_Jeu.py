@@ -53,19 +53,6 @@ class ControleurJeu:
                 left = False         #à voir comment on communique cette information après 
 
 
-
-            
-        for event in pygame.event.get():
-            saut = 10 #nombre de pixel que fait bouger un saut
-            mvt = 5 #nombre de pixel que fait bouger un déplacement
-            if event.type == pygame.KEYDOWN: #recup l'information du clavier du joueur 
-                if event.key == pygame.K_UP:
-                    self.perso.potentiel_pos_y = self.perso.y - saut
-                if event.key == pygame.K_RIGHT:
-                    self.perso.potentiel_pos_x = self.perso.x + mvt
-                if event.key == pygame.K_LEFT:
-                    self.perso.potentiel_pos_x = self.perso.x - mvt
-
     def calcul_mvt(self):
         ''' méthode qui effectue tous les tests avec les méthodes faites en haut et renvoie la position finale du joueur
         peut être que y'a pas besoin de renvoie et qu'on peut juste update la position dans l'instance perso directement mais pas sûr que ça marche!'''
