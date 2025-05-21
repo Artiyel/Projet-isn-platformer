@@ -33,6 +33,9 @@ class ControleurJeu:
 
 
     def souhait_action(self):
+        '''
+        récupère l'action souhaitée par l'utilisateur via le clavier
+        '''
         #récupère l'information du déplacement/ de l'action (si jamais on en ajoute) que veut effectuer le joueur
         for event in pygame.event.get():
             mvt = 5 #nombre de pixel que fait bouger un déplacement
@@ -58,7 +61,8 @@ class ControleurJeu:
 
 
     def calcul_mvt(self):
-        ''' méthode qui effectue tous les tests avec les méthodes faites en haut et renvoie la position finale du joueur
+        ''' 
+        méthode qui effectue tous les tests avec les méthodes faites en haut et renvoie la position finale du joueur
         peut être que y'a pas besoin de renvoie et qu'on peut juste update la position dans l'instance perso directement mais pas sûr que ça marche!'''
         #... y'a masse trucs à rajouter là 
         chose_a_rajouter = True

@@ -6,6 +6,10 @@ import numpy as np
 pygame.init()
 
 class Entity:
+    ''' 
+    classe de base pour les entités du jeu
+    (joueur, ennemis, objets) 
+    '''
     def __init__(self):
         self.x = 0  # position horizontale de l'entité
         self.y = 0  # position verticale de l'entité
@@ -23,11 +27,19 @@ class Entity:
 
 
 class Player(Entity):
+    '''
+    classe du joueur
+    hérite de la classe Entity
+    '''
     def __init__(self):
         super.__init__()
 
      
 
 class Ennemy(Entity):
+    '''
+    classe des ennemis
+    hérite de la classe Entity
+    '''
     def __init__(self):
         super.__init__()

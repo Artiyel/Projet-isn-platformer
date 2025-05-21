@@ -15,6 +15,10 @@ class ControlleurFenetre:
         self.dir = (0,0)
 
     def should_move(self):
+        """
+        gestion des déplacements de l'écran
+        :return: si on est offlimit -> True si l'écran doit bouger, False sinon
+        """
         
         #on cherche dans quelle direction il faudrait déplacer l'écran
         if self.player.x < self.fenetre.screensize[0]/3:
@@ -34,6 +38,7 @@ class ControlleurFenetre:
 
         return offlimit
         
+
     def move_all(self):
         """
         on bouge tout si on est offlimit
