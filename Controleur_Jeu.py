@@ -9,7 +9,6 @@ class ControleurJeu:
     def __init__(self, decor, perso, liste_ennemis):
         self.decor = decor
         self.perso = perso
-        self.liste_ennemis= liste_ennemis
 
     def test_contact_plateforme(self, entite):
         """
