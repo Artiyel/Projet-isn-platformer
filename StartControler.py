@@ -1,7 +1,7 @@
 import numpy as np
 import pygame
 from FenetreMenu import FenetreMenu
-from Elements_Decor import Elements_Decor
+from Elements_Decor import ElementDecor
 
 
 
@@ -15,7 +15,7 @@ class StartControler :
 
     def __init__(self) :
         self.fenetre = FenetreMenu() #création de la fenêtre du menu principal
-        self.plateforme = [Elements_Decor(0, self.fenetre.size_y-20, self.fenetre.size_x, self.fenetre.size_y)] #liste des plateformes initiée avec la plateforme de départ
+        self.plateforme = [ElementDecor(0, self.fenetre.size_y-20, self.fenetre.size_x, self.fenetre.size_y)] #liste des plateformes initiée avec la plateforme de départ
 
     def start(self) :
         self.fenetre.run() #on lance la fenêtre
@@ -29,5 +29,3 @@ class StartControler :
                     self.fenetre.running = False
           
     
-control = StartControler()
-control.start()
