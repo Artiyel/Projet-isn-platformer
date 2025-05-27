@@ -43,6 +43,7 @@ class Decor:
             placement_x = randint(intervalle[0], intervalle[1])
             brique = Plateforme(x_pos= placement_x, y_pos= hauteur, x_taille= 25, y_taille = 5)
             self.ajouter_plateforme(brique)
+            print(f"plateforme placée en {placement_x}, {hauteur}")
 
 
 
