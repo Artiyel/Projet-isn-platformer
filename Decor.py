@@ -39,7 +39,7 @@ class Decor:
         """
         for i in range(1, n+1):
             # On découpe la largeur de l'écran en autant d'intervalles que de plateformes
-            intervalle = (self.taille_carte_x * (i-1) /n , (self.taille_carte_x * i /n)-25)
+            intervalle = (int(self.taille_carte_x * (i-1) /n) , int((self.taille_carte_x * i /n)-25))
             placement_x = randint(intervalle[0], intervalle[1])
             brique = Plateforme(x_pos= placement_x, y_pos= hauteur, x_taille= 25, y_taille = 5)
             self.ajouter_plateforme(brique)
@@ -60,3 +60,4 @@ class Decor:
         while hauteur > 100:
             nb_plateformes = randint(1, 3)
             self.creer_plateforme_hasard(nb_plateformes, hauteur)
+            hauteur -= 180

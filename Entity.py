@@ -8,11 +8,20 @@ class Entity:
     def __init__(self):
         self.x = 0  # position horizontale de l'entité
         self.y = 0  # position verticale de l'entité
+        self.x_taille = 10
+        self.y_taille = 20
         self.masse = 10
         self.vel = np.array([0, 0]) # vitesse de l'entité (vecteur 2D)
         self.vie = 100  # points de vie de l'entité
         self.invincibility = False
         self.vitesse_marche = 20 #vitesse de déplacement horizontale
+
+
+    def get_min_max(self):
+        """
+        Méthode permettant d'obtenir les coordonnées des limites de l'entité
+        """
+        return self.x_pos, self.y_pos, self.x_pos + self.x_taille, self.y_pos +self.y_taille
 
 
     def placer(self, x, y):

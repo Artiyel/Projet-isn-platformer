@@ -84,3 +84,53 @@ class ControleurJeu:
         pos_x = self.perso.potentiel_pos_x
         pos_y = self.perso.potentiel_pos_y
         return pos_x, pos_y #peut être que y'en a pas besoin en vrai
+
+
+    def test_collision_droite(self, perso):
+        """
+        méthode permettant de vérifier si une entité Perso est en contact avec une plateforme sur le côté droit de l'écran.
+        Renvoie un Booléen correspondant.
+        """
+        res = False
+        for plateforme in self.perso.plateformes :
+            if perso.x + perso.x_taille >= plateforme.x_pos:
+                res = True
+        return res
+
+    def test_collision_gauche(self, perso):
+        """
+        méthode permettant de vérifier si une entité Perso est en contact avec une plateforme sur le côté gauche de l'écran.
+        Renvoie un Booléen correspondant.
+        """
+        res = False
+        for plateforme in self.perso.plateformes :
+            if perso.x <= plateforme.x_pos + plateforme.x_taille:
+                res = True
+        return res
+
+    def test_collision_haut(self, perso):
+        """
+        méthode permettant de vérifier si une entité Perso est en contact avec le dessous d'une plateforme.
+        Renvoie un Booléen correspondant.
+        """
+        res = False
+        for plateforme in self.perso.plateformes :
+            if perso.y <= plateforme.y_pos + plateforme.y_taille:
+                res = True
+        return res
+
+    def test_collision_bas(self, perso):
+        """
+        méthode permettant de vérifier si une entité Perso est en contact avec le dessus d'une plateforme.
+        Renvoie un Booléen correspondant.
+        """
+        res = False
+        for plateforme in self.perso.plateformes :
+            if perso.y + perso.y_taille >= plateforme.y_pos:
+                res = True
+        return res
+
+    def traiter_collisions(self, perso):
+        """
+        méthode
+        """
