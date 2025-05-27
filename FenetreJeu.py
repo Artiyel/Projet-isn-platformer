@@ -34,9 +34,10 @@ class FenetreJeu(Fenetre):
         Affiche les éléments du décor
         '''
         for element in decor:
-            img = pygame.image.load(f"assets/elements/{element["id"]}")
-            img = pygame.transform.scale(img,element["taille"])
-            self.window.blit(img,element["pos"])
+            #img = pygame.image.load(f"assets/elements/{element["id"]}")
+            #img = pygame.transform.scale(img,element["taille"])
+            rect = pygame.Rect(element.x_pos,element.y_pos,element.x_taille,element.y_taille)
+            img = pygame.draw.rect(self.window,(0,0,0),rect)
         
     def draw(self, entities = [], decor = []):
         #on dessine les éléments de base

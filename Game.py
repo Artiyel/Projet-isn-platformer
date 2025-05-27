@@ -4,11 +4,11 @@ from StartControler import StartControler
 
 class Game :
 
-    def __init__(self,dict_entites):
+    def __init__(self,dict_entites,buttons):
         """"""
-        self.startcontroler = StartControler(self)
-        self.controleurjeu = ControleurJeu(self,dict_entites["decor"],dict_entites["player"],dict_entites["entites"])
-        self.controleurfenetre = ControlleurFenetre(self,dict_entites["decor"],dict_entites["entites"],dict_entites["player"])
+        self.startcontroler = StartControler(self, buttons)
+        self.controleurjeu = ControleurJeu(dict_entites["decor"],dict_entites["player"],dict_entites["entites"])
+        self.controleurfenetre = ControlleurFenetre(dict_entites["decor"],dict_entites["entites"],dict_entites["player"],self)
 
     def game_start(self):
         self.startcontroler.start()

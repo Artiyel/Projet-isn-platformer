@@ -23,6 +23,8 @@ class Fenetre:
 
         self.background = pygame.transform.scale(self.background,self.screensize)
 
+        self.window = pygame.display.set_mode((self.screensize))
+
     def draw(self):
         '''
         entrée : self
@@ -67,7 +69,6 @@ class Fenetre:
         Permet de lancer et faire tourner la fenêtre.
         '''
         #initialisation de la fenêtre
-        self.window = pygame.display.set_mode((self.screensize))
         self.window.blit(self.background,(0,0))
         pygame.display.set_caption('Le jeu')
         #on affiche la fenêtre

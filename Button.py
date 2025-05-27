@@ -1,7 +1,7 @@
 import pygame
 
 class Button():
-    def __init__(self, img, x, y, width,height, text='', textsize = 10, font = None, sound = 'assets/sound/click_effect.mp3'):
+    def __init__(self, img, x, y, width,height, text='', textsize = 10, font = pygame.font.Font("assets/fonts/AncientModernTales-a7Po.ttf"), sound = 'assets/sound/click_effect.mp3'):
         '''
         Entrée : paramêtres du bouton
         Sortie : None

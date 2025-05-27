@@ -7,7 +7,8 @@ class ControlleurFenetre:
     """
     Classe qui gère la fenêtre de jeu.
     """
-    def __init__(self, background, decor, entities, player):
+    def __init__(self, decor, entities, player,jeu ,background = pygame.image.load("assets/3_isaac.png")):
+        self.jeu = jeu
         self.fenetre = FenetreJeu(background)
         self.decor = decor
         self.entities = entities
@@ -58,11 +59,30 @@ class ControlleurFenetre:
         """
         Lance la boucle principale de la fenêtre.
         """
-        self.running = True
-        while self.running:
+        self.fenetre.run()
+        self.fenetre.draw(decor = self.decor)
+        pygame.mixer_music.load("assets/music/Celeste_In_The_Mirror.mp3")
+        #la boucle principale
+        while self.fenetre.running:
+            if pygame.mixer_music.get_busy() == False:
+                pygame.mixer_music.play()
+            pygame.mixer_music.set_volume(1)
+            #important de mettre du délai. Là on a une image tout les 20ms, donc 50fps.
             pygame.time.delay(20)
-            self.move_all()
-            self.fenetre.draw(self.entities, self.decor)
-            for event in self.fenetre.get_events():
-                if event.type == self.fenetre.QUIT:
-                    self.running = False
+            #On utilise cette méthode pour afficher la fenêtre dans la boucle (interdiction d'utiliser .run() ici)
+            self.fenetre.draw()
+            #Et voilà le job du controlleur. On récupère toutes les actions...
+            for event in pygame.event.get():
+                #... et on  exécute les trucs qu'on veut.
+                if event.type == pygame.QUIT:
+                    self.fenetre.running = False
+                    pygame.mixer_music.stop()
+                if event.type == pygame.KEYDOWN:
+                    key = pygame.key.get_pressed()
+                    if key[pygame.K_m]:
+                        self.fenetre.textbox("assets/text/y0u.txt")
+                    if key[pygame.K_t]:
+                        self.fenetre.textbox("assets/text/1t.txt")
+            
+            #NE PAS OUBLIER LE DISPLAY.FLIP() SINON CA VA FAIRE TOUT NOIR
+            pygame.display.flip()
