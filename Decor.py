@@ -65,3 +65,41 @@ class Decor:
             nb_plateformes = randint(2, 5)
             self.creer_plateforme_hasard(nb_plateformes, hauteur, case)
             hauteur -= 6 * case
+
+
+    def quadrillage(self):
+        """
+        méthode qui renvoie une matrice du décor quadrillé, et dont chaque coefficient est 0 si la case est libre et 1 si la case est occupée par une plateforme
+        La taille des cases est déterminée par l'attribut taille_quadrillage
+        Précision : le point (0,0) de la matrice correspond au coin supérieur gauche (comme sur le Caneva)
+        """
+        mat = []
+        case = self.taille_quadrillage
+
+        # On commence par créer une matrice nulle de la taille de la carte
+        for i in range(0, int(self.taille_carte_y/case)): #boucle "pour chaque ligne du quadrillage"
+            ligne = []
+            for j in range(0, int(self.taille_carte_x/case)): #boucle "pour chaque colonne du quadrillage"
+                ligne.append(0)
+            mat.append(ligne)
+
+        # On parcours la liste des plateformes et on remplace par des 1 en conséquence
+        for plateforme in self.plateformes:
+            x_min, y_min, x_max, y_max = plateforme.get_min_max()
+            k = int(x_min/case)
+            # On remplace les coefs sur la coordonnée de la plateforme et les suivantes, jusqu'à avoir atteint un mur ou dépassé la plateforme
+            while k < (x_max/case) and k < self.taille_carte_x/case:
+                mat[int(y_min/case)][k] = 1
+                k += 1
+
+        return mat
+
+
+# Code pour tester et visualiser l'apprence de la matrice de carte quadrillée
+"""
+decor = Decor(taille_carte_x=2500, taille_carte_y=4000)
+decor.creer_decor_hasard()
+mat = decor.quadrillage()
+for element in mat:
+    print(element)
+"""
