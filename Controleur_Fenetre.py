@@ -70,11 +70,11 @@ class ControlleurFenetre:
                 pygame.mixer_music.play()
             pygame.mixer_music.set_volume(1)
             etat_saut, etat_right, etat_left = self.controleur.souhait_action(etat_saut, etat_right, etat_left)
-            self.entities["player"][0].x,self.entities["player"][0].y = self.controleur.calcul_mvt(etat_saut, etat_right, etat_left)
+            self.controleur.calcul_mvt(etat_saut, etat_right, etat_left)
             #important de mettre du délai. Là on a une image tout les 20ms, donc 50fps.
             pygame.time.delay(20)
             #On utilise cette méthode pour afficher la fenêtre dans la boucle (interdiction d'utiliser .run() ici)
-            self.fenetre.draw(decor=self.decor, entities=self.entities["player"])
+            self.fenetre.draw(decor=self.decor, entities=[self.player])
             #Et voilà le job du controlleur. On récupère toutes les actions...
             for event in pygame.event.get():
                 #... et on  exécute les trucs qu'on veut.
