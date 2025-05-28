@@ -102,28 +102,33 @@ class ControleurJeu:
 
         
 
-def calcul_mvt(self):
-        ''' 
-        méthode qui effectue tous les tests avec les méthodes faites en haut et renvoie la position finale du joueur
-        peut être que y'a pas besoin de renvoie et qu'on peut juste update la position dans l'instance perso directement mais pas sûr que ça marche!'''
-        #... y'a masse trucs à rajouter là 
-        saut, right, left = self.souhait_action()
+    def calcul_mvt(self):
+            ''' 
+            méthode qui effectue tous les tests avec les méthodes faites en haut et renvoie la position finale du joueur
+            peut être que y'a pas besoin de renvoie et qu'on peut juste update la position dans l'instance perso directement mais pas sûr que ça marche!'''
+            #... y'a masse trucs à rajouter là 
+            saut, right, left = self.souhait_action()
 
-        if self.test_contact_plateforme(self.perso):
-            if saut:
-                self.perso.saut()
-        else: 
-            self.perso.gravite()
-        if self.test_collision_droite(self.perso):
-            pos_x = pos_x
+            if self.test_contact_plateforme(self.perso):
+                if saut:
+                    self.perso.saut()
+            else: 
+                self.perso.gravite()
+            if self.test_collision_droite(self.perso):
+                pos_x = pos_x
 
-        else:
-            pos_x = self.perso.potentiel_pos_x
+            else:
+                pos_x = self.perso.potentiel_pos_x
 
-        if self.test_collision_gauche():
-            pos_y = pos_y
+            if self.test_collision_gauche():
+                pos_y = pos_y
 
-        else:
-            pos_y = self.perso.potentiel_pos_y
-            
-        return pos_x, pos_y #peut être que y'en a pas besoin en vrai
+            else:
+                pos_y = self.perso.potentiel_pos_y
+                
+            return pos_x, pos_y #peut être que y'en a pas besoin en vrai
+
+
+if __name__ == "main":
+    print('bah rien ducoup')
+        
