@@ -10,26 +10,6 @@ class ControleurJeu:
         self.decor = decor
         self.perso = perso
 
-    def test_contact_plateforme(self, entite):
-        """
-        teste si le personnage est en contact avec une plateforme, ou si sa position rentre en conflit avec une plateforme
-        :param entite: l'entité à tester (ici le personnage)
-        :return: True si le personnage est en contact avec une plateforme, False sinon
-        """
-        for element in self.decor.plateformes :
-            # On récupère les coordonnées de la plateforme
-            x_min, y_min, x_max, y_max = element.get_min_max()
-            # On teste si le personnage est en contact avec la plateforme
-            if self.perso.y_pos + self.perso.y_taille == y_min and self.perso.x_pos < x_max and self.perso.x_pos + self.perso.x_taille > x_min:
-                contact = True
-            else:
-                contact = False
-        return contact
-
-
-    def test_contact(self): #contact ennemi ???
-        print("stuff to do")
-
 
     def souhait_action(self):
         '''
@@ -67,36 +47,53 @@ class ControleurJeu:
         return saut, right, left
 
 
-    def test_collision_droite(self, perso):
+    def test_contact_plateforme(self):
+        """
+        teste si le personnage est en contact avec une plateforme, ou si sa position rentre en conflit avec une plateforme
+        :param entite: l'entité à tester (ici le personnage)
+        :return: True si le personnage est en contact avec une plateforme, False sinon
+        """
+        for element in self.decor.plateformes :
+            # On récupère les coordonnées de la plateforme
+            x_min, y_min, x_max, y_max = element.get_min_max()
+            # On teste si le personnage est en contact avec la plateforme
+            if self.perso.y + self.perso.y_taille == y_min and self.perso.x < x_max and self.perso.x + self.perso.x_taille > x_min:
+                contact = True
+            else:
+                contact = False
+        return contact
+
+
+    def test_collision_droite(self):
         """
         méthode permettant de vérifier si une entité Perso est en contact avec une plateforme sur le côté droit de l'écran.
         Renvoie un Booléen correspondant.
         """
         res = False
         for plateforme in self.perso.plateformes :
-            if perso.x + perso.x_taille >= plateforme.x_pos:
+            if self.perso.x + self.perso.x_taille >= plateforme.x_pos:
                 res = True
         return res
 
-    def test_collision_gauche(self, perso):
+    def test_collision_gauche(self):
         """
         méthode permettant de vérifier si une entité Perso est en contact avec une plateforme sur le côté gauche de l'écran.
         Renvoie un Booléen correspondant.
         """
         res = False
         for plateforme in self.perso.plateformes :
-            if perso.x <= plateforme.x_pos + plateforme.x_taille:
+            if self.perso.x <= plateforme.x_pos + plateforme.x_taille:
                 res = True
         return res
 
-    def test_collision_haut(self, perso):
+    def test_collision_haut(self):
         """
         méthode permettant de vérifier si une entité Perso est en contact avec le dessous d'une plateforme.
         Renvoie un Booléen correspondant.
         """
         res = False
         for plateforme in self.perso.plateformes :
-            if perso.y <= plateforme.y_pos + plateforme.y_taille:
+            if self.perso.y <= plateforme.y_pos + plateforme.y_taille:
                 res = True
         return res
 
@@ -109,12 +106,13 @@ class ControleurJeu:
             #... y'a masse trucs à rajouter là 
             saut, right, left = self.souhait_action()
 
-            if self.test_contact_plateforme(self.perso):
+            if self.test_contact_plateforme():
                 if saut:
                     self.perso.saut()
             else: 
                 self.perso.gravite()
-            if self.test_collision_droite(self.perso):
+
+            if self.test_collision_droite():
                 pos_x = pos_x
 
             else:
@@ -126,6 +124,8 @@ class ControleurJeu:
             else:
                 pos_y = self.perso.potentiel_pos_y
                 
+            self.perso.x = pos_x
+            self.perso.y = pos_y #same pour ces lignes jsp trop 
             return pos_x, pos_y #peut être que y'en a pas besoin en vrai
 
 
