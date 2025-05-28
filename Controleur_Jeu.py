@@ -11,13 +11,18 @@ class ControleurJeu:
         self.perso = perso
 
 
-    def souhait_action(self):
+    def souhait_action(self, saut_av, right_av, left_av):
         '''
         récupère l'action souhaitée par l'utilisateur via le clavier
         '''
         #récupère l'information du déplacement/ de l'action (si jamais on en ajoute) que veut effectuer le joueur
+        saut = saut_av
+        right = right_av
+        left = left_av 
+
         for event in pygame.event.get():
             mvt = 5 #nombre de pixel que fait bouger un déplacement
+            
             if event.type == pygame.KEYDOWN: #recup l'information du clavier du joueur 
                 if event.key == pygame.K_UP:
                     saut = True
@@ -99,12 +104,12 @@ class ControleurJeu:
 
         
 
-    def calcul_mvt(self):
+    def calcul_mvt(self, saut, right, left):
             ''' 
             méthode qui effectue tous les tests avec les méthodes faites en haut et renvoie la position finale du joueur
             peut être que y'a pas besoin de renvoie et qu'on peut juste update la position dans l'instance perso directement mais pas sûr que ça marche!'''
             #... y'a masse trucs à rajouter là 
-            saut, right, left = self.souhait_action()
+            
 
             if self.test_contact_plateforme():
                 if saut:
@@ -112,18 +117,19 @@ class ControleurJeu:
             else: 
                 self.perso.gravite()
 
-            if self.test_collision_droite():
-                pos_x = pos_x
+            if right:
+                if self.test_collision_droite():
+                    pos_x = pos_x
 
-            else:
-                pos_x = self.perso.potentiel_pos_x
+                else:
+                    pos_x = self.perso.potentiel_pos_x
+            if left:
+                if self.test_collision_gauche():
+                    pos_y = pos_y
 
-            if self.test_collision_gauche():
-                pos_y = pos_y
-
-            else:
-                pos_y = self.perso.potentiel_pos_y
-                
+                else:
+                    pos_y = self.perso.potentiel_pos_y
+                    
             self.perso.x = pos_x
             self.perso.y = pos_y #same pour ces lignes jsp trop 
             return pos_x, pos_y #peut être que y'en a pas besoin en vrai
