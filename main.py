@@ -19,7 +19,7 @@ from Button import Button
 #ça c'est le main
 
 ### PARAMETRES DU JEU ###
-taille_carte = (1000,5000)
+taille_carte = (3000,50000)
 ### CREATION DES ENTITES ###
 dict_entites = dict()
 
@@ -30,13 +30,17 @@ dict_entites["player"] = perso
 #decor
 decor = Decor(taille_carte[0],taille_carte[1])
 decor.creer_decor_hasard()
-dict_entites["decor"] = []
-for element in decor.plateformes:
-    dict_entites["decor"].append(element)
-print(dict_entites)
+dict_entites["decor"] = decor
+#dict_entites["decor"] = []
+#for element in decor.plateformes:
+#    dict_entites["decor"].append(element)
+#print(dict_entites)
+
 
 #entites
 dict_entites["entites"] = []
+
+player = Player()
 
 ###BOUTONS###
 buttons = []
