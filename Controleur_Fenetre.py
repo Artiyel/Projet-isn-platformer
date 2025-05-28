@@ -10,7 +10,8 @@ class ControlleurFenetre:
     def __init__(self, decor, entities, player,jeu ,background = pygame.image.load("assets/3_isaac.png")):
         self.jeu = jeu
         self.fenetre = FenetreJeu(background)
-        self.decor = decor
+        self.controleur = jeu.controleurjeu
+        self.decor = decor.plateformes
         self.entities = entities
         self.player = player
         self.dir = (0,0)
@@ -62,15 +63,18 @@ class ControlleurFenetre:
         self.fenetre.run()
         self.fenetre.draw(decor = self.decor)
         pygame.mixer_music.load("assets/music/Celeste_In_The_Mirror.mp3")
+        etat_saut, etat_right, etat_left = False,False,False
         #la boucle principale
         while self.fenetre.running:
             if pygame.mixer_music.get_busy() == False:
                 pygame.mixer_music.play()
             pygame.mixer_music.set_volume(1)
+            etat_saut, etat_right, etat_left = self.controleur.souhait_action(etat_saut, etat_right, etat_left)
+            self.entities["player"][0].x,self.entities["player"][0].y = self.controleur.calcul_mvt(etat_saut, etat_right, etat_left)
             #important de mettre du délai. Là on a une image tout les 20ms, donc 50fps.
             pygame.time.delay(20)
             #On utilise cette méthode pour afficher la fenêtre dans la boucle (interdiction d'utiliser .run() ici)
-            self.fenetre.draw()
+            self.fenetre.draw(decor=self.decor, entities=self.entities["player"])
             #Et voilà le job du controlleur. On récupère toutes les actions...
             for event in pygame.event.get():
                 #... et on  exécute les trucs qu'on veut.
