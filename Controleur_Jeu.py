@@ -108,7 +108,6 @@ class ControleurJeu:
             ''' 
             méthode qui effectue tous les tests avec les méthodes faites en haut et renvoie la position finale du joueur
             peut être que y'a pas besoin de renvoie et qu'on peut juste update la position dans l'instance perso directement mais pas sûr que ça marche!'''
-            #... y'a masse trucs à rajouter là 
             
 
             if self.test_contact_plateforme():
@@ -119,20 +118,18 @@ class ControleurJeu:
 
             if right:
                 if self.test_collision_droite():
-                    pos_x = pos_x
-
+                    self.perso.x += 0 #à voir si il faut pas le repositionner sur le bord de la plateforme jsp
                 else:
-                    pos_x = self.perso.potentiel_pos_x
+                    self.perso.x = self.perso.potentiel_pos_x
+
             if left:
                 if self.test_collision_gauche():
-                    pos_y = pos_y
+                    self.perso.x += 0 #à voir si il faut pas le repositionner sur le bord de la plateforme jsp
 
                 else:
-                    pos_y = self.perso.potentiel_pos_y
-                    
-            self.perso.x = pos_x
-            self.perso.y = pos_y #same pour ces lignes jsp trop 
-            return pos_x, pos_y #peut être que y'en a pas besoin en vrai
+                    self.perso.x = self.perso.potentiel_pos_x
+                     #same pour ces lignes jsp trop 
+                        #peut être que y'en a pas besoin en vrai
 
 
 if __name__ == "main":
