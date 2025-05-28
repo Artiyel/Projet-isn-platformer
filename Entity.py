@@ -11,7 +11,7 @@ class Entity:
         self.x_taille = 10
         self.y_taille = 20
         self.masse = 10
-        self.vel = np.array([0, 0]) # vitesse de l'entité (vecteur 2D)
+        self.vel = [0, 0] # vitesse de l'entité (vecteur 2D)
         self.vie = 100  # points de vie de l'entité
         self.invincibility = False
         self.vitesse_marche = 20 #vitesse de déplacement horizontale
@@ -37,7 +37,7 @@ class Entity:
         applique la gravité à l'entité
         """
         # on modifie la vitesse verticale de l'entité
-        self.vel = self.vel + np.array(0, 9.81 * self.masse)  # ajout de l'accélération due à la gravité à la vitesse verticale (car ici, on a un /_\t fixe)
+        self.vel = self.vel[1] + 9.81 * self.masse  # ajout de l'accélération due à la gravité à la vitesse verticale (car ici, on a un /_\t fixe)
 
 
     def mouvement_droite(self):
