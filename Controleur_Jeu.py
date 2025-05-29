@@ -60,8 +60,10 @@ class ControleurJeu:
         """
         for element in self.decor.plateformes :
             self.perso.potentiel_pos_y = self.perso.y
+
             # On récupère les coordonnées de la plateforme
             x_min, y_min, x_max, y_max = element.get_min_max()
+
             # On teste si le personnage est en contact avec la plateforme
             if self.perso.y >= (y_min - self.perso.y_taille) and self.perso.y <= y_max and self.perso.x < x_max and self.perso.x + self.perso.x_taille > x_min:
                 contact = True
@@ -79,8 +81,9 @@ class ControleurJeu:
         Renvoie un Booléen correspondant.
         """
         res = False
-        for plateforme in self.perso.plateformes :
-            if self.perso.x + self.perso.x_taille >= plateforme.x_pos:
+        for element in self.perso.plateformes :
+            x_min, y_min, x_max, y_max = element.get_min_max()
+            if self.perso.x + self.perso.x_taille >= x_min:
                 res = True
         return res
 
