@@ -46,7 +46,7 @@ class ControleurJeu:
                 if event.key == pygame.K_RIGHT:
                     right = False
 
-                if pygame.key == pygame.K_LEFT:
+                if event.key == pygame.K_LEFT:
                     left = False         #à voir comment on communique cette information après 
 
         return saut, right, left
@@ -59,11 +59,15 @@ class ControleurJeu:
         :return: True si le personnage est en contact avec une plateforme, False sinon
         """
         for element in self.decor.plateformes :
+            self.perso.potentiel_pos_y = self.perso.y
             # On récupère les coordonnées de la plateforme
             x_min, y_min, x_max, y_max = element.get_min_max()
             # On teste si le personnage est en contact avec la plateforme
-            if self.perso.y + self.perso.y_taille == y_min and self.perso.x < x_max and self.perso.x + self.perso.x_taille > x_min:
+            if self.perso.y >= (y_min - self.perso.y_taille) and self.perso.y <= y_max and self.perso.x < x_max and self.perso.x + self.perso.x_taille > x_min:
                 contact = True
+                if self.perso.y != y_min - self.perso.y_taille:
+                    self.perso.potentiel_pos_y = self.perso.y + y_min - (self.perso.y + self.perso.y_taille)
+
             else:
                 contact = False
         return contact
@@ -111,6 +115,7 @@ class ControleurJeu:
             
 
             if self.test_contact_plateforme():
+                self.perso.y = self.perso.potentiel_pos_y
                 if saut:
                     self.perso.saut()
             else: 
