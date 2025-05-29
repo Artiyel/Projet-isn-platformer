@@ -14,14 +14,14 @@ class ControlleurFenetre:
         self.decor = decor.plateformes
         self.entities = entities
         self.player = player
-        self.dir = (0,0)
+        self.dir = [0,0]
 
     def should_move(self):
         """
         gestion des déplacements de l'écran
         :return: si on est offlimit -> True si l'écran doit bouger, False sinon
         """
-        
+        offlimit = False
         #on cherche dans quelle direction il faudrait déplacer l'écran
         if self.player.x < self.fenetre.screensize[0]/3:
             self.dir[0] = 1
@@ -45,15 +45,16 @@ class ControlleurFenetre:
         """
         on bouge tout si on est offlimit
         """
-        if self.should_move():
-            self.player.x += self.dir[0]
-            self.player.y += self.dir[1]
+        while self.should_move():
+            self.player.x += 10*self.dir[0]
+            self.player.y += 10*self.dir[1]
             for brick in self.decor:
-                brick.x_pos += self.dir[0]
-                brick.y_pos += self.dir[1]
+                brick.x_pos += 10*self.dir[0]
+                brick.y_pos += 10*self.dir[1]
             for ennemy in self.entities:
-                ennemy.x += self.dir[0]
-                ennemy.y += self.dir[1]
+                ennemy.x += 10*self.dir[0]
+                ennemy.y += 10*self.dir[1]
+            print("moved")
 
 
     def run(self):
@@ -66,6 +67,7 @@ class ControlleurFenetre:
         etat_saut, etat_right, etat_left = False,False,False
         #la boucle principale
         while self.fenetre.running:
+            self.move_all()
             if pygame.mixer_music.get_busy() == False:
                 pygame.mixer_music.play()
             pygame.mixer_music.set_volume(1)
@@ -76,17 +78,6 @@ class ControlleurFenetre:
             #On utilise cette méthode pour afficher la fenêtre dans la boucle (interdiction d'utiliser .run() ici)
             self.fenetre.draw(decor=self.decor, entities=[self.player])
             #Et voilà le job du controlleur. On récupère toutes les actions...
-            for event in pygame.event.get():
-                #... et on  exécute les trucs qu'on veut.
-                if event.type == pygame.QUIT:
-                    self.fenetre.running = False
-                    pygame.mixer_music.stop()
-                if event.type == pygame.KEYDOWN:
-                    key = pygame.key.get_pressed()
-                    if key[pygame.K_m]:
-                        self.fenetre.textbox("assets/text/y0u.txt")
-                    if key[pygame.K_t]:
-                        self.fenetre.textbox("assets/text/1t.txt")
             
             #NE PAS OUBLIER LE DISPLAY.FLIP() SINON CA VA FAIRE TOUT NOIR
             pygame.display.flip()

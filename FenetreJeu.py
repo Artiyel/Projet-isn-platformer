@@ -24,7 +24,7 @@ class FenetreJeu(Fenetre):
             #img = pygame.transform.scale(img,entity["taille"])
             #self.window.blit(img,entity["pos"])
             rect = pygame.Rect(entity.x,entity.y,entity.x_taille,entity.y_taille)
-            img = pygame.draw.rect(self.window,(0,0,0),rect)
+            img = pygame.draw.rect(self.window,(255,255,255),rect)
             
     def draw_decor(self,decor):
         '''
@@ -40,7 +40,7 @@ class FenetreJeu(Fenetre):
             #img = pygame.transform.scale(img,element["taille"])
             rect = pygame.Rect(element.x_pos,element.y_pos,element.x_taille,element.y_taille)
             img = pygame.draw.rect(self.window,(0,0,0),rect)
-            print(f"dessiné en {element.x_pos,element.y_pos}, taille {element.x_taille,element.y_taille}")
+            
         
     def draw(self, entities = [], decor = []):
         #on dessine les éléments de base

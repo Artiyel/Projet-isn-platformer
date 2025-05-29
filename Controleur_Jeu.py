@@ -3,10 +3,12 @@ import numpy as np
 from Entity import Entity
 import pygame
 
+pygame.init()
 
 class ControleurJeu:
 
-    def __init__(self, decor, perso, liste_ennemis):
+    def __init__(self, decor, perso, liste_ennemis,jeu):
+        self.jeu = jeu
         self.decor = decor
         self.perso = perso
 
@@ -19,35 +21,39 @@ class ControleurJeu:
         saut = saut_av
         right = right_av
         left = left_av 
-
         for event in pygame.event.get():
+            print(".")
             mvt = 5 #nombre de pixel que fait bouger un déplacement
-            
-            if event.type == pygame.KEYDOWN: #recup l'information du clavier du joueur 
-                if event.key == pygame.K_UP:
+            if event.type == pygame.QUIT:
+                self.jeu.controleurfenetre.running = False
+
+            if event.type == pygame.KEYDOWN:
+                print("OMG")
+                print(event.type)
+                key = pygame.key.get_pressed()
+                if key[pygame.K_UP]:
+                    #recup l'information du clavier du joueur 
                     saut = True
                 
                 else:
                     saut = False
 
-                if event.key == pygame.K_RIGHT:
+                if key[pygame.K_RIGHT]:
                     self.perso.potentiel_pos_x = self.perso.x + mvt
                     left = True
+                    print("A GAUCHE")
 
-
-                if event.key == pygame.K_LEFT:
+                if key[pygame.K_LEFT]:
                     self.perso.potentiel_pos_x = self.perso.x - mvt
                     right = True
+                    print("a dro*te")
             else:
                 right = False
                 left = False
             
             if event.type == pygame.KEYUP: #si jamais l'utilisateur a maintenu enfoncé et s'arrête
-                if event.key == pygame.K_RIGHT:
-                    right = False
-
-                if event.key == pygame.K_LEFT:
-                    left = False         #à voir comment on communique cette information après 
+                right = False
+                left = False         #à voir comment on communique cette information après 
 
         return saut, right, left
 
@@ -81,7 +87,7 @@ class ControleurJeu:
         Renvoie un Booléen correspondant.
         """
         res = False
-        for element in self.perso.plateformes :
+        for element in self.decor.plateformes:
             x_min, y_min, x_max, y_max = element.get_min_max()
             if self.perso.y < y_max and self.perso.y + self.perso.y_taille > y_min and self.perso.x < x_max and self.perso.x + self.perso.x_taille > x_min:
                 res = True
@@ -96,7 +102,7 @@ class ControleurJeu:
         Renvoie un Booléen correspondant.
         """
         res = False
-        for element in self.perso.plateformes :
+        for element in self.decor.plateformes :
             x_min, y_min, x_max, y_max = element.get_min_max()
             if self.perso.y < y_max and self.perso.y + self.perso.y_taille > y_min and (self.perso.x + self.perso.x_taille) > x_min and self.perso.x <= x_max:
                 res = True
@@ -111,7 +117,7 @@ class ControleurJeu:
             ''' 
             méthode qui effectue tous les tests avec les méthodes faites en haut et renvoie la position finale du joueur
             peut être que y'a pas besoin de renvoie et qu'on peut juste update la position dans l'instance perso directement mais pas sûr que ça marche!'''
-            
+            self.souhait_action(saut,right,left)
 
             if self.test_contact_plateforme():
                 self.perso.y = self.perso.potentiel_pos_y
@@ -134,7 +140,6 @@ class ControleurJeu:
                     self.perso.x = self.perso.potentiel_pos_x
                      #same pour ces lignes jsp trop 
                         #peut être que y'en a pas besoin en vrai
-
 
 if __name__ == "main":
     print('bah rien ducoup')

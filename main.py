@@ -24,9 +24,10 @@ taille_carte = (3000,50000)
 dict_entites = dict()
 
 #personnage
-perso = deepcopy(Player())
-dict_entites["player"] = perso
-
+player = Player()
+player.x = 100
+player.y = 4950
+dict_entites["player"] = player
 #decor
 decor = Decor(taille_carte[0],taille_carte[1])
 decor.creer_decor_hasard()
@@ -39,8 +40,6 @@ dict_entites["decor"] = decor
 
 #entites
 dict_entites["entites"] = []
-
-player = Player()
 
 ###BOUTONS###
 buttons = []

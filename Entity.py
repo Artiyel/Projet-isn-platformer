@@ -37,7 +37,7 @@ class Entity:
         applique la gravité à l'entité
         """
         # on modifie la vitesse verticale de l'entité
-        self.vel = self.vel[1] + 9.81 * self.masse  # ajout de l'accélération due à la gravité à la vitesse verticale (car ici, on a un /_\t fixe)
+        self.vel[1] = self.vel[1] + 9.81 * self.masse  # ajout de l'accélération due à la gravité à la vitesse verticale (car ici, on a un /_\t fixe)
 
 
     def mouvement_droite(self):
