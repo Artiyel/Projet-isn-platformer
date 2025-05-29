@@ -68,7 +68,7 @@ class ControleurJeu:
             if self.perso.y >= (y_min - self.perso.y_taille) and self.perso.y <= y_max and self.perso.x < x_max and self.perso.x + self.perso.x_taille > x_min:
                 contact = True
                 if self.perso.y != y_min - self.perso.y_taille:
-                    self.perso.potentiel_pos_y = self.perso.y + y_min - (self.perso.y + self.perso.y_taille)
+                    self.perso.potentiel_pos_y = y_min - self.perso.y_taille
 
             else:
                 contact = False
@@ -83,9 +83,12 @@ class ControleurJeu:
         res = False
         for element in self.perso.plateformes :
             x_min, y_min, x_max, y_max = element.get_min_max()
-            if self.perso.x + self.perso.x_taille >= x_min:
+            if self.perso.y < y_max and self.perso.y + self.perso.y_taille > y_min and self.perso.x < x_max and self.perso.x + self.perso.x_taille > x_min:
                 res = True
+                if self.perso.x != x_min:
+                    self.perso.pos_potentiel_x = x_min
         return res
+
 
     def test_collision_gauche(self):
         """
@@ -93,20 +96,13 @@ class ControleurJeu:
         Renvoie un Booléen correspondant.
         """
         res = False
-        for plateforme in self.perso.plateformes :
-            if self.perso.x <= plateforme.x_pos + plateforme.x_taille:
+        for element in self.perso.plateformes :
+            x_min, y_min, x_max, y_max = element.get_min_max()
+            if self.perso.y < y_max and self.perso.y + self.perso.y_taille > y_min and (self.perso.x + self.perso.x_taille) > x_min and self.perso.x <= x_max:
                 res = True
-        return res
+                if self.perso.x != x_max:
+                    self.perso.potentiel_pos_x = x_max
 
-    def test_collision_haut(self):
-        """
-        méthode permettant de vérifier si une entité Perso est en contact avec le dessous d'une plateforme.
-        Renvoie un Booléen correspondant.
-        """
-        res = False
-        for plateforme in self.perso.plateformes :
-            if self.perso.y <= plateforme.y_pos + plateforme.y_taille:
-                res = True
         return res
 
         
@@ -126,13 +122,13 @@ class ControleurJeu:
 
             if right:
                 if self.test_collision_droite():
-                    self.perso.x += 0 #à voir si il faut pas le repositionner sur le bord de la plateforme jsp
+                    self.perso.x = self.perso.potentiel_pos_x #à voir si il faut pas le repositionner sur le bord de la plateforme jsp
                 else:
                     self.perso.x = self.perso.potentiel_pos_x
 
             if left:
                 if self.test_collision_gauche():
-                    self.perso.x += 0 #à voir si il faut pas le repositionner sur le bord de la plateforme jsp
+                    self.perso.x = self.perso.potentiel_pos_x #à voir si il faut pas le repositionner sur le bord de la plateforme jsp
 
                 else:
                     self.perso.x = self.perso.potentiel_pos_x
