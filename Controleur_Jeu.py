@@ -62,24 +62,31 @@ class ControleurJeu:
 
     def test_contact_plateforme(self):
         """
-        teste si le personnage est en contact avec une plateforme, ou si sa position rentre en conflit avec une plateforme
-        :param entite: l'entité à tester (ici le personnage)
+        Teste si le personnage est en contact avec une plateforme, ou si sa position rentre en conflit avec une plateforme.
         :return: True si le personnage est en contact avec une plateforme, False sinon
         """
-        for element in self.decor.plateformes :
+        contact = False
+        meilleur_y = None
+        for element in self.decor.plateformes:
+            x_min, y_min, x_max, y_max = element.get_min_max()
+            # Test de contact vertical et horizontal
+            if (
+                self.perso.y >= (y_min - self.perso.y_taille)
+                and self.perso.y <= y_max
+                and self.perso.x < x_max
+                and self.perso.x + self.perso.x_taille > x_min
+            ):
+                contact = True
+                # On cherche la plateforme la plus haute sous le joueur
+                if meilleur_y is None or y_min - self.perso.y_taille < meilleur_y:
+                    meilleur_y = y_min - self.perso.y_taille
+
+        # On ne modifie potentiel_pos_y que si contact
+        if contact and meilleur_y is not None and self.perso.y != meilleur_y:
+            self.perso.potentiel_pos_y = meilleur_y
+        else:
             self.perso.potentiel_pos_y = self.perso.y
 
-            # On récupère les coordonnées de la plateforme
-            x_min, y_min, x_max, y_max = element.get_min_max()
-
-            # On teste si le personnage est en contact avec la plateforme
-            if self.perso.y >= (y_min - self.perso.y_taille) and self.perso.y <= y_max and self.perso.x < x_max and self.perso.x + self.perso.x_taille > x_min:
-                contact = True
-                if self.perso.y != y_min - self.perso.y_taille:
-                    self.perso.potentiel_pos_y = y_min - self.perso.y_taille
-
-            else:
-                contact = False
         return contact
 
 
