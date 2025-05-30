@@ -46,7 +46,6 @@ class ControlleurFenetre:
             offlimit = True
 
         return offlimit
-        
 
     def move_all(self):
         """
@@ -59,26 +58,32 @@ class ControlleurFenetre:
                 brick.x_pos += 10*self.dir[0]
                 brick.y_pos += 10*self.dir[1]
             for ennemy in self.entities:
-                ennemy.x += 10*self.dir[0]
-                ennemy.y += 10*self.dir[1]
-            print("moved")
-
+                ennemy.x += 10 * self.dir[0]
+                ennemy.y += 10 * self.dir[1]
+            print("moved")  # Debug : affiche chaque déplacement de l'écran
 
     def run(self):
         """
         Lance la boucle principale de la fenêtre.
         """
-        self.fenetre.run()
+        # self.fenetre.run()
         self.fenetre.draw(decor = self.decor)
         pygame.mixer_music.load("assets/music/Celeste_In_The_Mirror.mp3")
-        etat_saut, etat_right, etat_left = False,False,False
-        #la boucle principale
-        while self.fenetre.running:
-            self.move_all()
-            if pygame.mixer_music.get_busy() == False:
+        etat_saut, etat_right, etat_left = False, False, False
+        running = True
+        while running:
+            events = pygame.event.get()  #on récupère les événements
+            for event in events:
+                if event.type == pygame.QUIT:
+                    running = False
+                    self.fenetre.running = False  # Pour arrêter aussi la fenêtre si besoin
+            self.move_all()  # Déplace tout si besoin (scrolling)
+            if not pygame.mixer_music.get_busy():
+                # Si la musique n'est pas en cours de lecture, on la lance
                 pygame.mixer_music.play()
             pygame.mixer_music.set_volume(1)
-            etat_saut, etat_right, etat_left = self.controleur.souhait_action_joueur(etat_saut, etat_right, etat_left)
+            # On passe events à souhait_action_joueur
+            etat_saut, etat_right, etat_left = self.controleur.souhait_action_joueur(etat_saut, etat_right, etat_left, events)
             self.controleur.calcul_mvt(etat_saut, etat_right, etat_left)
             #important de mettre du délai. Là on a une image tout les 20ms, donc 50fps.
             pygame.time.delay(20)
@@ -88,3 +93,4 @@ class ControlleurFenetre:
             
             #NE PAS OUBLIER LE DISPLAY.FLIP() SINON CA VA FAIRE TOUT NOIR
             pygame.display.flip()
+        pygame.quit()

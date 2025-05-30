@@ -10,7 +10,7 @@ user32 = ctypes.windll.user32
 screensize = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
 
 
-from Entity import *
+from Entity import Player, Fantome
 from Decor import Decor
 from Game import Game
 from copy import deepcopy
@@ -28,6 +28,12 @@ player = Player()
 player.x = 100
 player.y = 4950
 dict_entites["player"] = player
+
+fantome = Fantome()
+fantome.x = 200
+fantome.y = 4950
+dict_entites["entites"] = [fantome]
+
 #decor
 decor = Decor(taille_carte[0],taille_carte[1])
 decor.creer_decor_hasard()
@@ -38,8 +44,13 @@ dict_entites["decor"] = decor
 #print(dict_entites)
 
 
-#entites
-dict_entites["entites"] = []
+#entites non jouables
+from Entity import Fantome
+
+fantome = Fantome()
+fantome.x = 200
+fantome.y = 4950
+dict_entites["entites_non_jouables"] = [fantome]
 
 ###BOUTONS###
 buttons = []
@@ -51,4 +62,4 @@ buttons.append(bouton_start)
 
 ### CREATION DU JEU ###
 game = Game(dict_entites,buttons)
-game.startcontroler.start()
+game.controleurfenetre.run()

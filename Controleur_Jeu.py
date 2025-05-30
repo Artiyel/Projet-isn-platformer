@@ -8,55 +8,45 @@ pygame.init()
 
 class ControleurJeu:
 
-    def __init__(self, decor, perso,fantome, jeu):
+    def __init__(self, decor, perso, entites, jeu):
         self.jeu = jeu
         self.decor = decor
         self.perso = perso
-        self.fantome = fantome
+        # Prend le premier fantome de la liste s'il existe, sinon None
+        self.fantome = entites[0] if entites else None
 
 
-    def souhait_action_joueur(self, saut_av, right_av, left_av):
+    def souhait_action_joueur(self, saut_av, right_av, left_av, events):
         '''
-        récupère l'action souhaitée par l'utilisateur via le clavier
+        Gère les actions du joueur en fonction des événements clavier et de l'état des touches.
+        - Les touches droite/gauche sont gérées en continu (appui prolongé).
+        - La touche saut (haut) est gérée à l'appui.
         '''
-        #récupère l'information du déplacement/ de l'action (si jamais on en ajoute) que veut effectuer le joueur
-        saut = saut_av
-        right = right_av
-        left = left_av 
-        for event in pygame.event.get():
-            print(".")
-            mvt = 5 #nombre de pixel que fait bouger un déplacement
-            if event.type == pygame.QUIT:
-                self.jeu.controleurfenetre.running = False
+        saut = saut_av  # On garde l'état précédent du saut
+        right = False   # On réinitialise right/left à chaque frame (car on va tester l'état du clavier)
+        left = False
 
+        # gestion des événements pour le saut (action ponctuelle)
+        for event in events:
             if event.type == pygame.KEYDOWN:
-                print("OMG")
-                print(event.type)
-                key = pygame.key.get_pressed()
-                if key[pygame.K_UP]:
-                    #recup l'information du clavier du joueur 
-                    saut = True
-                
-                else:
-                    saut = False
+                if event.key == pygame.K_UP:
+                    saut = True  # On active le saut à l'appui
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_UP:
+                    saut = False  # On désactive le saut au relâchement
 
-                if key[pygame.K_RIGHT]:
-                    self.perso.potentiel_pos_x = self.perso.x + mvt
-                    left = True
-                    print("A GAUCHE")
+        # gestion des touches maintenues pour droite/gauche (déplacement continu)
+        keys = pygame.key.get_pressed()  # Récupère l'état de toutes les touches du clavier
+        mvt = 5  # Vitesse de déplacement
 
-                if key[pygame.K_LEFT]:
-                    self.perso.potentiel_pos_x = self.perso.x - mvt
-                    right = True
-                    print("a dro*te")
-            else:
-                right = False
-                left = False
-            
-            if event.type == pygame.KEYUP: #si jamais l'utilisateur a maintenu enfoncé et s'arrête
-                right = False
-                left = False         #à voir comment on communique cette information après 
+        if keys[pygame.K_RIGHT]:
+            self.perso.potentiel_pos_x = self.perso.x + mvt
+            right = True  # Si la touche droite est maintenue, on active le déplacement à droite
+        if keys[pygame.K_LEFT]:
+            self.perso.potentiel_pos_x = self.perso.x - mvt
+            left = True   # Si la touche gauche est maintenue, on active le déplacement à gauche
 
+        # On retourne les états pour la frame suivante
         return saut, right, left
 
 
@@ -67,7 +57,7 @@ class ControleurJeu:
         """
         contact = False
         meilleur_y = None
-        for element in self.decor.plateformes:
+        for element in self.decor:  # On parcourt les plateformes du décor
             x_min, y_min, x_max, y_max = element.get_min_max()
             # Test de contact vertical et horizontal
             if (
@@ -96,7 +86,7 @@ class ControleurJeu:
         Renvoie un Booléen correspondant.
         """
         res = False
-        for element in self.decor.plateformes:
+        for element in self.decor:
             x_min, y_min, x_max, y_max = element.get_min_max()
             if self.perso.y < y_max and self.perso.y + self.perso.y_taille > y_min and self.perso.x < x_max and self.perso.x + self.perso.x_taille > x_min:
                 res = True
@@ -111,7 +101,7 @@ class ControleurJeu:
         Renvoie un Booléen correspondant.
         """
         res = False
-        for element in self.decor.plateformes :
+        for element in self.decor :
             x_min, y_min, x_max, y_max = element.get_min_max()
             if self.perso.y < y_max and self.perso.y + self.perso.y_taille > y_min and (self.perso.x + self.perso.x_taille) > x_min and self.perso.x <= x_max:
                 res = True
@@ -127,7 +117,7 @@ class ControleurJeu:
             méthode qui effectue tous les tests avec les méthodes faites en haut et renvoie la position finale du joueur
             peut être que y'a pas besoin de renvoie et qu'on peut juste update la position dans l'instance perso directement mais pas sûr que ça marche!
             '''
-            self.souhait_action_joueur(saut,right,left)
+            # self.souhait_action_joueur(saut,right,left,)
 
             if self.test_contact_plateforme():
                 self.perso.y = self.perso.potentiel_pos_y
