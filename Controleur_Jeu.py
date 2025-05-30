@@ -2,18 +2,20 @@ from Decor import Decor
 import numpy as np
 from Entity import Entity
 import pygame
+import heapq
 
 pygame.init()
 
 class ControleurJeu:
 
-    def __init__(self, decor, perso, liste_ennemis,jeu):
+    def __init__(self, decor, perso, liste_ennemis,fantome, jeu):
         self.jeu = jeu
         self.decor = decor
         self.perso = perso
+        self.fantome = fantome
 
 
-    def souhait_action(self, saut_av, right_av, left_av):
+    def souhait_action_joueur(self, saut_av, right_av, left_av):
         '''
         récupère l'action souhaitée par l'utilisateur via le clavier
         '''
@@ -116,7 +118,8 @@ class ControleurJeu:
     def calcul_mvt(self, saut, right, left):
             ''' 
             méthode qui effectue tous les tests avec les méthodes faites en haut et renvoie la position finale du joueur
-            peut être que y'a pas besoin de renvoie et qu'on peut juste update la position dans l'instance perso directement mais pas sûr que ça marche!'''
+            peut être que y'a pas besoin de renvoie et qu'on peut juste update la position dans l'instance perso directement mais pas sûr que ça marche!
+            '''
             self.souhait_action(saut,right,left)
 
             if self.test_contact_plateforme():
@@ -141,6 +144,102 @@ class ControleurJeu:
                      #same pour ces lignes jsp trop 
                         #peut être que y'en a pas besoin en vrai
 
+    def detecte_collision(self, entite, x, y, obstacles):
+        """
+        Vérifie si l'entité placée en (x, y) entre en collision avec un des obstacles.
+        :param entite: l'entité à tester
+        :param x: position x de l'entité
+        :param y: position y de l'entité
+        :param obstacles: liste des obstacles sous forme de dictionnaires avec les clés "x", "y", "w", "h"
+        :return: True si une collision est détectée, False sinon
+        """
+        for obs in obstacles:
+            ox, oy, ow, oh = obs["x"], obs["y"], obs["w"], obs["h"]
+            if (x + entite.x_taille > ox and x < ox + ow and
+                y + entite.y_taille > oy and y < oy + oh):
+                return True
+        return False
+
+    def calcul_action_fantome(self, fantome, player_x, player_y, obstacles):
+        """
+        Calcule la prochaine action à effectuer pour le fantôme pour suivre le joueur en évitant les obstacles.
+        algorithme Dijstra pour trouver le chemin le plus court vers le joueur.
+        :param fantome: l'entité fantôme
+        :param player_x: la position x du joueur
+        :param player_y: la position y du joueur
+        :param obstacles: liste des obstacles sous forme de dictionnaires avec les clés "x", "y", "w", "h"
+        :return: None, met à jour l'attribut next_action du fantôme
+        """
+        actions = ["droite", "gauche", "saut"]
+        heap = []
+        visited = set()
+        heapq.heappush(heap, (0, fantome.x, fantome.y, fantome.vel[1], []))
+
+        while heap:
+            cost, x, y, vel_y, chemin = heapq.heappop(heap)
+            if abs(x - player_x) < 5 and abs(y - player_y) < 5:
+                fantome.next_action = chemin[0] if chemin else None
+                return
+
+            state = (round(x, 1), round(y, 1), round(vel_y, 1))
+            if state in visited:
+                continue
+            visited.add(state)
+
+            for action in actions:
+                nx, ny, nvel_y = x, y, vel_y
+                if action == "droite":
+                    nx += fantome.vitesse * 0.1
+                elif action == "gauche":
+                    nx -= fantome.vitesse * 0.1
+                elif action == "saut":
+                    nvel_y = -200
+
+                nvel_y += 9.81 * fantome.masse * 0.1
+                ny += nvel_y * 0.1
+
+                if ny < 0:
+                    ny = 0
+                    nvel_y = 0
+
+                if self.detecte_collision(fantome, nx, ny, obstacles):
+                    continue
+
+                heapq.heappush(heap, (cost + 1, nx, ny, nvel_y, chemin + [action]))
+
+        fantome.next_action = None
+
+    def appliquer_action_fantome(self, fantome, delta_time):
+        """
+        Applique l'action calculée au fantôme.
+        """
+        if fantome.next_action == "droite":
+            fantome.x += fantome.vitesse * delta_time
+            fantome.direction = np.array([1, 0])
+        elif fantome.next_action == "gauche":
+            fantome.x -= fantome.vitesse * delta_time
+            fantome.direction = np.array([-1, 0])
+        elif fantome.next_action == "saut":
+            fantome.vel[1] = -200
+            fantome.direction = np.array([0, -1])
+        # Gravité
+        fantome.vel[1] += 9.81 * fantome.masse * delta_time
+        fantome.y += fantome.vel[1] * delta_time
+
+    def __str__(self):
+        info = "=== ControleurJeu ===\n"
+        info += f"Décor : {self.decor}\n"
+        info += f"Joueur : x={self.perso.x}, y={self.perso.y}\n"
+        if self.fantome is not None:
+            en_contact = self.fantome.est_en_contact(self.perso.x, self.perso.y)
+            info += (
+                f"Fantome : x={self.fantome.x}, y={self.fantome.y}, "
+                f"next_action={self.fantome.next_action}, "
+                f"en_contact={'Oui' if en_contact else 'Non'}\n"
+            )
+        else:
+            info += "Fantome : Aucun\n"
+        return info
+
 if __name__ == "main":
     print('bah rien ducoup')
-        
