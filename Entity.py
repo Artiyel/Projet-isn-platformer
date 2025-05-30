@@ -1,5 +1,6 @@
 import pygame
 import numpy as np
+import heapq
 
 
 pygame.init()
@@ -13,7 +14,7 @@ class Entity:
         self.masse = 10
         self.vel = [0, 0] # vitesse de l'entité (vecteur 2D)
         self.vie = 100  # points de vie de l'entité
-        self.invincibility = False
+        self.invincibilite = False
         self.vitesse_marche = 20 #vitesse de déplacement horizontale
 
 
@@ -58,13 +59,64 @@ class Entity:
         """
         self.vel[1] -= 200
 
+    def __str__(self):
+        return (
+            f"Entity(x={self.x}, y={self.y}, taille=({self.x_taille},{self.y_taille}), "
+            f"vie={self.vie}, vitesse=({self.vel[0]},{self.vel[1]}))"
+        )
 
 class Player(Entity):
     def __init__(self):
         super().__init__()
 
-     
+    def __str__(self):
+        return f"Player({super().__str__()})"
 
 class Ennemy(Entity):
     def __init__(self):
         super().__init__()
+
+    def __str__(self):
+        return f"Ennemy({super().__str__()})"
+
+# class Projectile(Entity):
+#     def __init__(self):
+#         super().__init__()
+#         self.vitesse = 100  # vitesse du projectile
+#         self.direction = np.array([1, 0])  # direction du projectile (vecteur unitaire)
+#         self.x_taille = 5
+#         self.y_taille = 5
+
+#     def deplacer(self, delta_time):
+#         """
+#         Déplace le projectile dans la direction spécifiée par l'attribut direction.
+#         """
+#         self.x += self.direction[0] * self.vitesse * delta_time
+#         self.y += self.direction[1] * self.vitesse * delta_time
+
+class Fantome(Player):
+    def __init__(self):
+        super().__init__()
+        self.vitesse = 100
+        self.direction = np.array([1, 0])
+        self.x_taille = 5
+        self.y_taille = 5
+        self.next_action = None
+
+    def est_en_contact(self, player_x, player_y, marge=5):
+        return abs(self.x - player_x) < marge and abs(self.y - player_y) < marge
+
+    def collision(self, x, y, obstacles):
+        for obs in obstacles:
+            ox, oy, ow, oh = obs["x"], obs["y"], obs["w"], obs["h"]
+            if (x + self.x_taille > ox and x < ox + ow and
+                y + self.y_taille > oy and y < oy + oh):
+                return True
+        return False
+
+    def __str__(self):
+        return (
+            f"Fantome(x={self.x}, y={self.y}, taille=({self.x_taille},{self.y_taille}), "
+            f"vitesse={self.vitesse}, direction={self.direction.tolist()}, "
+            f"next_action={self.next_action})"
+        )
