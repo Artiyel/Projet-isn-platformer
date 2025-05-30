@@ -21,17 +21,24 @@ class ControlleurFenetre:
         gestion des déplacements de l'écran
         :return: si on est offlimit -> True si l'écran doit bouger, False sinon
         """
-        offlimit = False
         #on cherche dans quelle direction il faudrait déplacer l'écran
         if self.player.x < self.fenetre.screensize[0]/3:
             self.dir[0] = 1
+            offlimit = True
         elif self.player.x > self.fenetre.screensize[0]*2/3:
             self.dir[0]=-1
+            offlimit = True
+        else :
+            self.dir[0]=0
+            offlimit = False
         if self.player.y < self.fenetre.screensize[1]/3:
             self.dir[1] = 1
+            offlimit = True
         elif self.player.y > self.fenetre.screensize[1]*2/3:
             self.dir[1]=-1
+            offlimit = True
         else :
+            self.dir[1]=0
             offlimit = False
         
         #on regarde si on est offlimits
