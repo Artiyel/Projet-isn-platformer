@@ -8,7 +8,7 @@ pygame.init()
 
 class ControleurJeu:
 
-    def __init__(self, decor, perso, liste_ennemis,fantome, jeu):
+    def __init__(self, decor, perso,fantome, jeu):
         self.jeu = jeu
         self.decor = decor
         self.perso = perso
@@ -120,7 +120,7 @@ class ControleurJeu:
             méthode qui effectue tous les tests avec les méthodes faites en haut et renvoie la position finale du joueur
             peut être que y'a pas besoin de renvoie et qu'on peut juste update la position dans l'instance perso directement mais pas sûr que ça marche!
             '''
-            self.souhait_action(saut,right,left)
+            self.souhait_action_joueur(saut,right,left)
 
             if self.test_contact_plateforme():
                 self.perso.y = self.perso.potentiel_pos_y

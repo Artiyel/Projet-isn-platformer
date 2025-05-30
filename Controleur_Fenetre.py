@@ -78,7 +78,7 @@ class ControlleurFenetre:
             if pygame.mixer_music.get_busy() == False:
                 pygame.mixer_music.play()
             pygame.mixer_music.set_volume(1)
-            etat_saut, etat_right, etat_left = self.controleur.souhait_action(etat_saut, etat_right, etat_left)
+            etat_saut, etat_right, etat_left = self.controleur.souhait_action_joueur(etat_saut, etat_right, etat_left)
             self.controleur.calcul_mvt(etat_saut, etat_right, etat_left)
             #important de mettre du délai. Là on a une image tout les 20ms, donc 50fps.
             pygame.time.delay(20)
