@@ -56,9 +56,13 @@ dict_entites["entites_non_jouables"] = [fantome]
 buttons = []
 
 #bouton start
-size = (100,30)
-bouton_start = Button(screensize[0] //2,screensize[1]//2,size[0],size[1],"start")
+size = (200,50)
+bouton_start = Button(screensize[0] //2,screensize[1]//2,size[0],size[1],"Start Game")
 buttons.append(bouton_start)
+bouton_lore = Button(screensize[0] //2,screensize[1]//2+100,size[0],size[1],"Histoire")
+buttons.append(bouton_lore)
+bouton_mode_fantome = Button(screensize[0] //2,screensize[1]//2+200,size[0],size[1],"Mode Fantôme")
+buttons.append(bouton_mode_fantome)
 
 ### CREATION DU JEU ###
 game = Game(dict_entites,buttons)
