@@ -38,7 +38,7 @@ class Entity:
         applique la gravité à l'entité
         """
         # on modifie la vitesse verticale de l'entité
-        self.vel[1] = self.vel[1] + 9.81 * self.masse  # ajout de l'accélération due à la gravité à la vitesse verticale (car ici, on a un /_\t fixe)
+        self.vel[1] = self.vel[1] + 4  # ajout de l'accélération due à la gravité à la vitesse verticale (car ici, on a un /_\t fixe)
 
 
     def mouvement_droite(self):
@@ -57,7 +57,7 @@ class Entity:
         """
         méthode faisant sauter l'entité par une impulsion verticale.
         """
-        self.vel[1] -= 200
+        self.vel[1] -= 85
 
     def __str__(self):
         return (

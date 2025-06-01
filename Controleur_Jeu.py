@@ -120,11 +120,13 @@ class ControleurJeu:
             # self.souhait_action_joueur(saut,right,left,)
 
             if self.test_contact_plateforme():
+                self.perso.vel[1] = 0
                 self.perso.y = self.perso.potentiel_pos_y
                 if saut:
                     self.perso.saut()
             else: 
                 self.perso.gravite()
+            self.perso.y += self.perso.vel[1]
 
             if right:
                 if self.test_collision_droite():
