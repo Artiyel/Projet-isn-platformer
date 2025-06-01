@@ -62,4 +62,4 @@ buttons.append(bouton_start)
 
 ### CREATION DU JEU ###
 game = Game(dict_entites,buttons)
-game.controleurfenetre.run()
+game.startcontroler.start()
