@@ -57,7 +57,7 @@ buttons = []
 
 #bouton start
 size = (100,30)
-bouton_start = Button((100, 124, 154),(screensize[0]-size[0])/2,(screensize[1]-size[1])/2,size[0],size[1],"start")
+bouton_start = Button(screensize[0] //2,screensize[1]//2,size[0],size[1],"start")
 buttons.append(bouton_start)
 
 ### CREATION DU JEU ###

@@ -13,14 +13,12 @@ class FenetreMenu(Fenetre):
             button.draw(self.window)
     
     def draw(self):
-        # #on dessine les éléments de base
-        # super().draw()
-        # #on affiche les boutons
-        # self.draw_buttons()   
 
-        font = pygame.font.SysFont("Chiller", 200, bold=True)
-        titre = font.render("ICI", True, (255, 167, 17))
-        text_rect = titre.get_rect(center=(self.window.get_width() // 2, 250))
+        # affichage titre du jeu 
+        font = pygame.font.SysFont("Chiller", 200, bold=True)   # police et taille
+        titre = font.render("ICI", True, (255, 167, 17))    # texte et couleur
+        text_rect = titre.get_rect(center=(self.window.get_width() // 2, 250))  # position texte (centrage + pos.vrticale)
+        # on centre le titre        
         self.window.blit(titre, text_rect)
 
         # Affiche les boutons
