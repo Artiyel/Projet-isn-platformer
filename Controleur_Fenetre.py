@@ -52,14 +52,14 @@ class ControlleurFenetre:
         on bouge tout si on est offlimit
         """
         while self.should_move():
-            self.player.x += 10*self.dir[0]
-            self.player.y += 10*self.dir[1]
+            self.player.x += 5*self.dir[0]
+            self.player.y += 5*self.dir[1]
             for brick in self.decor:
-                brick.x_pos += 10*self.dir[0]
-                brick.y_pos += 10*self.dir[1]
+                brick.x_pos += 5*self.dir[0]
+                brick.y_pos += 5*self.dir[1]
             for ennemy in self.entities:
-                ennemy.x += 10 * self.dir[0]
-                ennemy.y += 10 * self.dir[1]
+                ennemy.x += 5 * self.dir[0]
+                ennemy.y += 5 * self.dir[1]
             print("moved")  # Debug : affiche chaque déplacement de l'écran
 
     def run(self):
