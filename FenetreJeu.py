@@ -5,7 +5,7 @@ class FenetreJeu(Fenetre):
     '''
     Gere l'affichage de 
     '''
-    def __init__(self,background = pygame.image.load("assets/3_isaac.png")):
+    def __init__(self,background = pygame.image.load("assets/fond_1.png")):
         super(FenetreJeu,self).__init__(background)
 
     def draw_entity(self,entities):

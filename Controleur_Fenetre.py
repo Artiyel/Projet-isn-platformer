@@ -7,7 +7,7 @@ class ControlleurFenetre:
     """
     Classe qui gère la fenêtre de jeu.
     """
-    def __init__(self, decor, entities, player,jeu ,background = pygame.image.load("assets/3_isaac.png")):
+    def __init__(self, decor, entities, player,jeu ,background = pygame.image.load("assets/fond_1.png")):
         self.jeu = jeu
         self.fenetre = FenetreJeu(background)
         self.controleur = jeu.controleurjeu
