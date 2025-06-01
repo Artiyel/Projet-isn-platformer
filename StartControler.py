@@ -46,8 +46,16 @@ class StartControler :
                     for button in self.fenetre.buttons:
                         print("2")
                         if button.is_hit(pygame.mouse.get_pos()):
-                            self.fenetre.running = False    #quitte la fenêtre du menu
-                            print("3")
-                            self.jeu.controleurfenetre.run()  # lance la fenêtre de jeu
-          
+                            if button.text == "Start Game":
+                                self.fenetre.running = False    #quitte la fenêtre du menu
+                                print("3")
+                                self.jeu.controleurfenetre.run()  # lance la fenêtre de jeu
+                            elif button.text == "Quit":
+                                self.fenetre.running = False
+                                print("Quitter le jeu")
+                            elif button.text == "Histoire":
+                                print("Histoire du jeu")
+                            elif button.text == "Mode Fantôme":
+                                print("Mode Fantôme activé")
+
     

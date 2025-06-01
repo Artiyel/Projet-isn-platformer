@@ -63,6 +63,9 @@ bouton_lore = Button(screensize[0] //2,screensize[1]//2+100,size[0],size[1],"His
 buttons.append(bouton_lore)
 bouton_mode_fantome = Button(screensize[0] //2,screensize[1]//2+200,size[0],size[1],"Mode Fantôme")
 buttons.append(bouton_mode_fantome)
+#bouton quit
+bouton_quit = Button(screensize[0] //2,screensize[1]//2+300,size[0],size[1],"Quit")
+buttons.append(bouton_quit)
 
 ### CREATION DU JEU ###
 game = Game(dict_entites,buttons)
