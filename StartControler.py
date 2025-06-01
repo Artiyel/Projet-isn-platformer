@@ -45,8 +45,9 @@ class StartControler :
                     print("1")
                     for button in self.fenetre.buttons:
                         print("2")
-                        if button.is_hit():
+                        if button.is_hit(pygame.mouse.get_pos()):
+                            self.fenetre.running = False    #quitte la fenêtre du menu
                             print("3")
-                            self.execute(button.text)
+                            self.jeu.controleurfenetre.run()  # lance la fenêtre de jeu
           
     

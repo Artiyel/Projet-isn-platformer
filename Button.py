@@ -43,7 +43,7 @@ class Button():
         pygame.draw.rect(win, (255,255,255), rect, 2, border_radius=10)   # pour dessiner une bordure autour du bouton
 
 
-    def is_hit(self):
+    def is_hit(self, pos):
         '''
         entrée : self
         sortie : reponse : Booléen
