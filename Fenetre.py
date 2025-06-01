@@ -39,27 +39,53 @@ class Fenetre:
         ''''''
         vol_red = 0.3
         pygame.mixer_music.set_volume(vol_red)
-        with open(text,'r', encoding='utf-8') as f:
+        running = True
+        with open(text, 'r', encoding='utf-8') as f:
             for line in f:
                 text_up = ""
                 for char in line:
+                    for event in pygame.event.get():
+                        if event.type == pygame.QUIT:
+                            running = False
+                        if event.type == pygame.KEYDOWN and (event.key == pygame.K_ESCAPE or event.key == pygame.K_RETURN):
+                            running = False
+                    if not running:
+                        break
                     if char != "$":
-                        text_up +=char
+                        text_up += char
                         self.click.play()
                     if char == " ":
                         self.click_alt.play()
-                    rect = pygame.Rect(0,self.screensize[1]*2/3,self.screensize[0],self.screensize[1]/3)
-                    pygame.draw.rect(self.window,(0,0,0),rect)
+                    rect = pygame.Rect(0, self.screensize[1]*2/3, self.screensize[0], self.screensize[1]/3)
+                    pygame.draw.rect(self.window, (0,0,0), rect)
                     textbox = self.font.render(text_up, True, (255, 255, 255))
-                    self.window.blit(textbox,(10,self.screensize[1]*2/3+50))
+                    self.window.blit(textbox, (10, self.screensize[1]*2/3+50))
                     pygame.display.flip()
                     pygame.time.delay(30)
+                if not running:
+                    break
                 pygame.time.delay(500)
-        self.window.blit(self.background,(0,0)) 
-        while vol_red<1:
-                    vol_red+=0.1
-                    pygame.mixer_music.set_volume(vol_red)
-                    pygame.time.delay(50)
+        self.window.blit(self.background, (0,0))
+        while vol_red < 1:
+            vol_red += 0.1
+            pygame.mixer_music.set_volume(vol_red)
+            pygame.time.delay(50)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+                if event.type == pygame.KEYDOWN and (event.key == pygame.K_ESCAPE or event.key == pygame.K_RETURN):
+                    running = False
+            if not running:
+                break
+        # Si l'utilisateur n'a pas quitté, attend un événement pour fermer
+        if running:
+            wait = True
+            while wait:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        wait = False
+                    if event.type == pygame.KEYDOWN and (event.key == pygame.K_ESCAPE or event.key == pygame.K_RETURN):
+                        wait = False
 
     
     def run(self):

@@ -55,7 +55,11 @@ class StartControler :
                                 print("Quitter le jeu")
                             elif button.text == "Histoire":
                                 print("Histoire du jeu")
+                                self.fenetre.running = False
+                                # Crée une nouvelle fenêtre pour le lore
+                                fenetre_lore = FenetreMenu()  # ou Fenetre(background=...) si tu veux un fond différent
+                                fenetre_lore.textbox("lore.txt")  # Affiche le texte dans la nouvelle fenêtre
+                                self.fenetre.running = True
+                                self.start()
                             elif button.text == "Mode Fantôme":
                                 print("Mode Fantôme activé")
-
-    
