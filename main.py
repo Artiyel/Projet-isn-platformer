@@ -26,12 +26,12 @@ dict_entites = dict()
 #personnage
 player = Player()
 player.x = 100
-player.y = 4950
+player.y = taille_carte[1]
 dict_entites["player"] = player
 
 fantome = Fantome()
 fantome.x = 200
-fantome.y = 4950
+fantome.y = taille_carte[1]
 dict_entites["entites"] = [fantome]
 
 #decor
