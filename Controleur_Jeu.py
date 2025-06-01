@@ -37,7 +37,7 @@ class ControleurJeu:
 
         # gestion des touches maintenues pour droite/gauche (déplacement continu)
         keys = pygame.key.get_pressed()  # Récupère l'état de toutes les touches du clavier
-        mvt = 5  # Vitesse de déplacement
+        mvt = self.perso.vitesse_marche  # Vitesse de déplacement
 
         if keys[pygame.K_RIGHT]:
             self.perso.potentiel_pos_x = self.perso.x + mvt
