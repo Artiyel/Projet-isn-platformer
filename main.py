@@ -6,9 +6,13 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 os.chdir(script_dir)
 
 import ctypes
-user32 = ctypes.windll.user32
-screensize = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
 
+if os.name == 'nt':
+    print("ouf!")
+    user32 = ctypes.windll.user32
+    screensize = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
+else:
+    screensize = (1000,1000)
 
 from Entity import Player, Fantome
 from Decor import Decor
