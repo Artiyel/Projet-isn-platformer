@@ -56,7 +56,7 @@ class Decor:
         """
         # On place une large plateforme sur tout le bas de la carte
         case = self.taille_quadrillage
-        sol = Plateforme(x_pos= 0,y_pos= self.taille_carte_y-case, x_taille= self.taille_carte_x, y_taille= case)
+        sol = Plateforme(x_pos= -500*self.taille_carte_x,y_pos= self.taille_carte_y-case, x_taille= self.taille_carte_x*10000, y_taille= case)
         self.ajouter_plateforme(sol)
 
         # A intervalle d'espace régulier, on ajoute entre 1 et 3 plateformes alignées

@@ -155,7 +155,7 @@ class ControleurJeu:
         :return: True si une collision est détectée, False sinon
         """
         for obs in obstacles:
-            ox, oy, ow, oh = obs["x"], obs["y"], obs["w"], obs["h"]
+            ox, oy, ow, oh = obs.x_pos, obs.y_pos, obs.x_taille, obs.y_taille
             if (x + entite.x_taille > ox and x < ox + ow and
                 y + entite.y_taille > oy and y < oy + oh):
                 return True

@@ -86,10 +86,12 @@ class ControlleurFenetre:
             # On passe events à souhait_action_joueur
             etat_saut, etat_right, etat_left = self.controleur.souhait_action_joueur(etat_saut, etat_right, etat_left, events)
             self.controleur.calcul_mvt(etat_saut, etat_right, etat_left)
+            self.controleur.calcul_action_fantome(self.controleur.fantome,self.player.x,self.player.y,self.decor)
+            self.controleur.appliquer_action_fantome(self.controleur.fantome,20)
             #important de mettre du délai. Là on a une image tout les 20ms, donc 50fps.
             pygame.time.delay(20)
             #On utilise cette méthode pour afficher la fenêtre dans la boucle (interdiction d'utiliser .run() ici)
-            self.fenetre.draw(decor=self.decor, entities=[self.player])
+            self.fenetre.draw(decor=self.decor, entities=[self.player,self.controleur.fantome])
             #Et voilà le job du controlleur. On récupère toutes les actions...
             
             #NE PAS OUBLIER LE DISPLAY.FLIP() SINON CA VA FAIRE TOUT NOIR
