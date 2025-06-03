@@ -60,12 +60,14 @@ class ControleurJeu:
         for element in self.decor:  # On parcourt les plateformes du décor
             x_min, y_min, x_max, y_max = element.get_min_max()
             # Test de contact vertical et horizontal
-            if (
-                self.perso.y >= (y_min - self.perso.y_taille)
-                and self.perso.y <= y_max
+            if (self.perso.y >= (y_min - self.perso.y_taille)
+                and self.perso.y <= y_max                           # Condition n°1 : le perso est "dans" une plateforme
                 and self.perso.x < x_max
+                and self.perso.x + self.perso.x_taille > x_min)\
+                or (self.perso.x < x_max                            # Condition n°2 : le perso risque de passer à travers une plateforme en tombant
                 and self.perso.x + self.perso.x_taille > x_min
-            ):
+                and self.perso.y + self.perso.y_taille < y_min
+                and self.perso.y + self.perso.y_taille + self.perso.vel[1] > y_min):
                 contact = True
                 # On cherche la plateforme la plus haute sous le joueur
                 if meilleur_y is None or y_min - self.perso.y_taille < meilleur_y:

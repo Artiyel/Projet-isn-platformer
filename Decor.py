@@ -52,7 +52,7 @@ class Decor:
 
     def creer_decor_hasard(self):
         """
-        méthode qui créé un décor généré aléatoirement en appelant d'autres fonctions dédiées jusqu'à remplir la carte.
+        méthode qui créé un décor généré aléatoirement en appelant une autre fonction dédiée jusqu'à remplir la carte.
         """
         # On place une large plateforme sur tout le bas de la carte
         case = self.taille_quadrillage
@@ -62,7 +62,7 @@ class Decor:
         # A intervalle d'espace régulier, on ajoute entre 1 et 3 plateformes alignées
         hauteur = self.taille_carte_y - 7 * case
         while hauteur > 100:
-            nb_plateformes = randint(2, 5)
+            nb_plateformes = randint(4, 7)
             self.creer_plateforme_hasard(nb_plateformes, hauteur, case)
             hauteur -= 6 * case
 
