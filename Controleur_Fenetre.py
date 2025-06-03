@@ -3,6 +3,7 @@ import pygame
 
 pygame.init()
 
+print("test")
 
 class ControlleurFenetre:
     """
