@@ -1,29 +1,45 @@
 import pygame
 import ctypes
 
-
 pygame.init()
 
 
 class Fenetre:
     ''''''
-    def __init__(self, background):
+    def __init__(self, background, window):
+        self.background = pygame.transform.scale(background, window.get_size())
+        self.window = window
         #le décor 
         self.background = background
 
         #paramètre la fenêtre
 
-        self.font = pygame.font.Font(size=40)
+        self.font = pygame.font.SysFont("New Times Roman", 40)
+        # self.font = pygame.font.Font("assets/fonts/AncientModernTales-a7Po.ttf", 40)
         pygame.mixer.init()
         self.click = pygame.mixer.Sound("assets/sound/click.mp3")
         self.click_alt = pygame.mixer.Sound("assets/sound/click_effect.mp3")
 
         user32 = ctypes.windll.user32
-        self.screensize = user32.GetSystemMetrics(0) , user32.GetSystemMetrics(1)*0.93
+        self.screensize = user32.GetSystemMetrics(0), int(user32.GetSystemMetrics(1)*0.93)
 
         self.background = pygame.transform.scale(self.background,self.screensize)
 
-        self.window = pygame.display.set_mode((self.screensize))
+
+    def wrap_text(self, text, font, max_width):
+        """Découpe le texte pour qu'il tienne dans max_width pixels."""
+        words = text.split(' ')
+        lines = []
+        current_line = ""
+        for word in words:
+            test_line = current_line + word + " "
+            if font.size(test_line)[0] <= max_width:
+                current_line = test_line
+            else:
+                lines.append(current_line)
+                current_line = word + " "
+        lines.append(current_line)
+        return lines
 
     def draw(self):
         '''
@@ -44,29 +60,40 @@ class Fenetre:
             for line in f:
                 text_up = ""
                 for char in line:
+                    # Gestion des événements
                     for event in pygame.event.get():
                         if event.type == pygame.QUIT:
                             running = False
                         if event.type == pygame.KEYDOWN and (event.key == pygame.K_ESCAPE or event.key == pygame.K_RETURN):
                             running = False
                     if not running:
-                        break
+                        return  # On quitte proprement la fonction
                     if char != "$":
                         text_up += char
                         self.click.play()
                     if char == " ":
                         self.click_alt.play()
-                    rect = pygame.Rect(0, self.screensize[1]*2/3, self.screensize[0], self.screensize[1]/3)
-                    pygame.draw.rect(self.window, (0,0,0), rect)
-                    textbox = self.font.render(text_up, True, (255, 255, 255))
-                    self.window.blit(textbox, (10, self.screensize[1]*2/3+50))
-                    pygame.display.flip()
-                    pygame.time.delay(30)
+                    # Affichage avec retour à la ligne automatique
+                    if text_up.strip() != "":
+                        self.draw()  # Affiche le fond (image)
+                        # Crée une surface semi-transparente pour la bande noire
+                        rect_surface = pygame.Surface((self.screensize[0], self.screensize[1]//3), pygame.SRCALPHA)
+                        rect_surface.fill((0, 0, 0, 180))  # 180 = transparence (0 transparent, 255 opaque)
+                        self.window.blit(rect_surface, (0, int(self.screensize[1]*2/3)))
+                        # Affichage du texte
+                        lines = self.wrap_text(text_up, self.font, int(self.screensize[0]) - 40)
+                        y = self.screensize[1]*2/3+50
+                        for subline in lines:
+                            textbox = self.font.render(subline, True, (255, 255, 255))
+                            self.window.blit(textbox, (10, y))
+                            y += self.font.get_height() + 5
+                        pygame.display.flip()
+                    pygame.time.delay(5)
                 if not running:
-                    break
+                    return
                 pygame.time.delay(500)
         self.window.blit(self.background, (0,0))
-        while vol_red < 1:
+        while vol_red < 1 and running:
             vol_red += 0.1
             pygame.mixer_music.set_volume(vol_red)
             pygame.time.delay(50)
@@ -75,17 +102,15 @@ class Fenetre:
                     running = False
                 if event.type == pygame.KEYDOWN and (event.key == pygame.K_ESCAPE or event.key == pygame.K_RETURN):
                     running = False
-            if not running:
-                break
         # Si l'utilisateur n'a pas quitté, attend un événement pour fermer
         if running:
-            wait = True
-            while wait:
+            waiting = True
+            while waiting:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
-                        wait = False
+                        waiting = False
                     if event.type == pygame.KEYDOWN and (event.key == pygame.K_ESCAPE or event.key == pygame.K_RETURN):
-                        wait = False
+                        waiting = False
 
     
     def run(self):

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import pygame
 # Get the directory where the script is located
 script_dir = os.path.dirname(os.path.abspath(__file__))
 # Change the working directory to the script directory
@@ -7,7 +8,12 @@ os.chdir(script_dir)
 
 import ctypes
 user32 = ctypes.windll.user32
-screensize = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
+screensize = user32.GetSystemMetrics(0), int(user32.GetSystemMetrics(1)*0.93)
+window = pygame.display.set_mode(screensize)
+fond_menu = pygame.image.load("assets/fond_menu_1.png")
+fond_menu = pygame.transform.scale(fond_menu, screensize)
+window.blit(fond_menu, (0, 0))
+pygame.display.flip()
 
 
 from Entity import Player, Fantome
@@ -15,6 +21,7 @@ from Decor import Decor
 from Game import Game
 from copy import deepcopy
 from Button import Button
+from FenetreMenu import FenetreMenu
 
 #ça c'est le main
 
@@ -67,6 +74,11 @@ buttons.append(bouton_mode_fantome)
 bouton_quit = Button(screensize[0] //2,screensize[1]//2+300,size[0],size[1],"Quit")
 buttons.append(bouton_quit)
 
+fond_menu = pygame.image.load("assets/fond_menu_1.png")
+fenetre_menu = FenetreMenu(background=fond_menu, window=window, buttons=buttons)
+fenetre_menu.draw()
+pygame.display.flip()
+
 ### CREATION DU JEU ###
-game = Game(dict_entites,buttons)
+game = Game(dict_entites,buttons, window)
 game.startcontroler.start()
