@@ -12,7 +12,6 @@ class Decor:
         self.taille_carte_y = taille_carte_y
         self.taille_quadrillage = taille_quadrillage
         self.arrivee = False
-        self.arrivee_indice = None
 
 
     def __str__(self):
@@ -70,7 +69,6 @@ class Decor:
         # On choisit une plateforme aléatoire sur la dernière hauteur comme point d'arrivée
         arrivee = len(self.plateformes) -1
         self.plateformes[arrivee].arrivee = True
-        self.arrivee_indice = arrivee
 
 
     def quadrillage(self):

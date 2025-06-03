@@ -13,7 +13,6 @@ class ControlleurFenetre:
         self.fenetre = FenetreJeu(background, window)
         self.controleur = jeu.controleurjeu
         self.decor = decor.plateformes
-        self.arrivee_indice = decor.arrivee_indice
         self.entities = entities
         self.player = player
         self.dir = [0,0]
