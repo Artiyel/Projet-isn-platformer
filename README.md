@@ -9,6 +9,7 @@ Ce jeu est un plateformer, le but est de monter en sautant de plateforme en plat
 Une fois le jeu lancé, plusieurs choix sont disponibles sur le menu. Le mode histoire permet de découvrir les dessous du jeu. Pour lancer une partie il faut cliquer sur "Start Game". En appuyant sur échap on peut revenir au menu.
 
 
+Le module pygame est nécessaire pour le bon fonctionnement du jeu. 
 
 *ça jsp si faut le mettre*
 
