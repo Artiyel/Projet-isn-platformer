@@ -12,13 +12,15 @@ if os.name == 'nt':
     print("ouf!")
     user32 = ctypes.windll.user32
     screensize = user32.GetSystemMetrics(0), int(user32.GetSystemMetrics(1)*0.93)
+else:
+    screensize = (1000,1000)
+    
 window = pygame.display.set_mode(screensize)
 fond_menu = pygame.image.load("assets/fond_menu_1.png")
 fond_menu = pygame.transform.scale(fond_menu, screensize)
 window.blit(fond_menu, (0, 0))
 pygame.display.flip()
-else:
-    screensize = (1000,1000)
+
 
 from Entity import Player, Fantome
 from Decor import Decor
