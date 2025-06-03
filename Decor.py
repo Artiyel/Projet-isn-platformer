@@ -11,6 +11,8 @@ class Decor:
         self.taille_carte_x = taille_carte_x
         self.taille_carte_y = taille_carte_y
         self.taille_quadrillage = taille_quadrillage
+        self.arrivee = False
+        self.arrivee_indice = None
 
 
     def __str__(self):
@@ -65,6 +67,10 @@ class Decor:
             nb_plateformes = randint(4, 7)
             self.creer_plateforme_hasard(nb_plateformes, hauteur, case)
             hauteur -= 6 * case
+        # On choisit une plateforme aléatoire sur la dernière hauteur comme point d'arrivée
+        arrivee = len(self.plateformes) -1
+        self.plateformes[arrivee].arrivee = True
+        self.arrivee_indice = arrivee
 
 
     def quadrillage(self):
