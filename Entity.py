@@ -57,7 +57,7 @@ class Entity:
         """
         méthode faisant sauter l'entité par une impulsion verticale.
         """
-        self.vel[1] -= 85
+        self.vel[1] -= 65
 
     def __str__(self):
         return (

@@ -52,7 +52,7 @@ class Decor:
 
     def creer_decor_hasard(self):
         """
-        méthode qui créé un décor généré aléatoirement en appelant d'autres fonctions dédiées jusqu'à remplir la carte.
+        méthode qui créé un décor généré aléatoirement en appelant une autre fonction dédiée jusqu'à remplir la carte.
         """
         # On place une large plateforme sur tout le bas de la carte
         case = self.taille_quadrillage

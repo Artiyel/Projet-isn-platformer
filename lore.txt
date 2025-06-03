@@ -20,4 +20,4 @@ Il s’agissait d’« ici ».
 $$
 Il s’agissait de chez moi.
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-touche échap pour quitter le mode histoire
+(touche échap pour quitter le mode histoire)
