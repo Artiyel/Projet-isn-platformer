@@ -1,4 +1,5 @@
 from FenetreJeu import FenetreJeu
+from Menu import Menu
 import pygame
 
 pygame.init()
@@ -15,6 +16,8 @@ class ControlleurFenetre:
         self.entities = entities
         self.player = player
         self.dir = [0,0]
+        fond = pygame.image.load("assets/3_isaac.png")
+        self.menu = Menu(fond, window)
 
     def should_move(self):
         """
@@ -78,6 +81,13 @@ class ControlleurFenetre:
                 if event.type == pygame.QUIT:
                     running = False
                     self.fenetre.running = False  # Pour arrêter aussi la fenêtre si besoin
+
+                if event.type == pygame.KEYDOWN: 
+                    if event.key == pygame.K_ESCAPE:
+                        print('test')
+                        self.menu.run() #pour lancer un autre menu (qui propose de retourner au menu principal ou continuer le jeu)
+
+
             self.move_all()  # Déplace tout si besoin (scrolling)
             if not pygame.mixer_music.get_busy():
                 # Si la musique n'est pas en cours de lecture, on la lance

@@ -13,7 +13,7 @@ if os.name == 'nt':
     user32 = ctypes.windll.user32
     screensize = user32.GetSystemMetrics(0), int(user32.GetSystemMetrics(1)*0.93)
 else:
-    screensize = (1000,1000)
+    screensize = (1500,800)
     
 window = pygame.display.set_mode(screensize)
 fond_menu = pygame.image.load("assets/fond_menu_1.png")
