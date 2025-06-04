@@ -3,7 +3,7 @@ import pygame
 
 class Menu(Fenetre):
     def __init__(self, background, window):
-        super.__init__(self,background, window)
+        super().__init__(background, window)
 
     def draw(self):
         super.draw()
@@ -21,5 +21,5 @@ class Menu(Fenetre):
 
             events = pygame.event.get()
 
-            for event in events:
-                if event.type 
+            # for event in events:
+            #     if event.type 

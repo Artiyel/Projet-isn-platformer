@@ -86,10 +86,9 @@ class ControlleurFenetre:
                     running = False
                     self.fenetre.running = False  # Pour arrêter aussi la fenêtre si besoin
 
-                if event.type == pygame.KEYDOWN: 
-                    if event.key == pygame.K_ESCAPE:
-                        print('test')
-                        self.menu.run() #pour lancer un autre menu (qui propose de retourner au menu principal ou continuer le jeu)
+                if event.type == pygame.KEYDOWN and (event.key == pygame.K_ESCAPE or event.key == pygame.K_RETURN): 
+                    print('test')
+                    self.menu.run() #pour lancer un autre menu (qui propose de retourner au menu principal ou continuer le jeu)
 
 
             self.move_all()  # Déplace tout si besoin (scrolling)
