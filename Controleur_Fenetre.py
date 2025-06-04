@@ -4,6 +4,8 @@ import pygame
 
 pygame.init()
 
+print("test")
+
 class ControlleurFenetre:
     """
     Classe qui gère la fenêtre de jeu.
@@ -75,7 +77,9 @@ class ControlleurFenetre:
         pygame.mixer_music.load("assets/music/Celeste_In_The_Mirror.mp3")
         etat_saut, etat_right, etat_left = False, False, False
         running = True
-        while running:
+        arrivee = False
+        chute = False
+        while running and (not arrivee) and (not chute):
             events = pygame.event.get()  #on récupère les événements
             for event in events:
                 if event.type == pygame.QUIT:
@@ -89,19 +93,39 @@ class ControlleurFenetre:
 
 
             self.move_all()  # Déplace tout si besoin (scrolling)
+
+            # On vérifie la condition de victoire "joueur sur la plateforme d'arrivee"
+            Plateforme_fin = self.decor[len(self.decor) -1]
+            if ((self.player.x >= Plateforme_fin.x_pos) and (self.player.x + self.player.x_taille <= Plateforme_fin.x_pos + Plateforme_fin.x_taille)
+                and (self.player.y + self.player.y_taille <= Plateforme_fin.y_pos + Plateforme_fin.y_taille)
+                and (self.player.y + self.player.y_taille >= Plateforme_fin.y_pos - 5)):
+                arrivee = True
+
+            # On vérifie la condition de fin de partie "Le joueur est tombé de la carte"
+            if self.player.y > self.decor[0].y_pos + 500:
+                chute = True
+
             if not pygame.mixer_music.get_busy():
                 # Si la musique n'est pas en cours de lecture, on la lance
                 pygame.mixer_music.play()
             pygame.mixer_music.set_volume(1)
+
             # On passe events à souhait_action_joueur
             etat_saut, etat_right, etat_left = self.controleur.souhait_action_joueur(etat_saut, etat_right, etat_left, events)
             self.controleur.calcul_mvt(etat_saut, etat_right, etat_left)
             #important de mettre du délai. Là on a une image tout les 20ms, donc 50fps.
             pygame.time.delay(20)
+
             #On utilise cette méthode pour afficher la fenêtre dans la boucle (interdiction d'utiliser .run() ici)
             self.fenetre.draw(decor=self.decor, entities=[self.player])
             #Et voilà le job du controlleur. On récupère toutes les actions...
             
             #NE PAS OUBLIER LE DISPLAY.FLIP() SINON CA VA FAIRE TOUT NOIR
             pygame.display.flip()
-        pygame.quit()
+        if arrivee:
+            print("Le joueur a gagné")
+        if chute:
+            print("Le joueur est tombé de la carte")
+
+        else:
+            pygame.quit()

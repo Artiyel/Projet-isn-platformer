@@ -32,7 +32,7 @@ from FenetreMenu import FenetreMenu
 #ça c'est le main
 
 ### PARAMETRES DU JEU ###
-taille_carte = (3000,50000)
+taille_carte = (3000,3000)
 ### CREATION DES ENTITES ###
 dict_entites = dict()
 

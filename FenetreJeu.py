@@ -39,8 +39,11 @@ class FenetreJeu(Fenetre):
             #img = pygame.image.load(f"assets/elements/{element["id"]}")
             #img = pygame.transform.scale(img,element["taille"])
             rect = pygame.Rect(element.x_pos,element.y_pos,element.x_taille,element.y_taille)
-            img = pygame.draw.rect(self.window,(0,0,0),rect)
-            
+            if element.arrivee:
+                img = pygame.draw.rect(self.window,(200,0,0),rect)
+            else:
+                img = pygame.draw.rect(self.window,(0,0,0),rect)
+
         
     def draw(self, entities = [], decor = []):
         #on dessine les éléments de base
