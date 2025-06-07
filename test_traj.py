@@ -23,28 +23,24 @@ for ligne in mat:
     ''''''
     pos[0]=0
     for case in ligne:
-        arbre[str(pos)]={}
+        if case == 1:
+            arbre[str(pos)]={}
         pos[0]+=1
     pos[1]+=1
 
 
 #maintenant qu'on a toutes les coordonées dans le graphe, on crée les arrêtes
 #on reviens sur chaque case
-pos = [0,0]
-for ligne in mat:
-    pos[0]=0
-    for case in ligne:
-        pos2 = [0,0]
-        #pour chaque case, on regarde si les autres cases sont atteignables et on leur assigne une distance
-        for ligne in mat:
-            pos2[0]=0
-            for case in ligne:
-                if atteignable(mat,pos,pos2):
-                    arbre[str(pos)][str(pos2)] = distance(pos,pos2)
-                pos2[0]+=1
-            pos2[1]+=1
-        pos[0]+=1
-    pos[1]+=1
+
+for case in arbre:
+    pos = [int(x) for x in case.strip("[]").split(",")]
+
+    #pour chaque case, on regarde si les autres cases sont atteignables et on leur assigne une distance
+    for case2 in arbre:
+        pos2 = [int(x) for x in case2.strip("[]").split(",")]
+        if atteignable(mat,pos,pos2):
+            arbre[case][case2] = distance(pos,pos2)
+
 
 print(arbre)
 
