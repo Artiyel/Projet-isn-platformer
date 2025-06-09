@@ -37,6 +37,21 @@ def distance(pos1,pos2):
     #on assigne le coût du déplacement, à modifier, là c'est juste la distance
     return(((pos1[0]-pos2[0])**2+(pos1[1]-pos2[1])**2)**(1/2))
 
+def conversion_reel_to_matrice(coordonnees, case=50):
+    """
+    méthode qui convertit des coordonnées (sous forme [x, y]) sur le Caneva en position dans la matrice du décor.
+    Renvoie la position sous la forme [x_mat, y_mat] ; corresponds alors à la case mat[y_mat][x_mat]
+    """
+    return [coordonnees[0]// case, coordonnees[1]// case]
+
+def converion_matrice_to_reel(coordonnees_mat, case=50):
+    """
+    méthode qui convertit des coordonnées (sous forme [x_mat, y_mat]) dans la matrice en coordonnees sur le caneva.
+    Renvoie les coordonnees du centre de la case mat[y_mat][x_mat] sous la forme [x, y]
+    """
+    return [coordonnees_mat[0]*case + case//2, coordonnees_mat[1]*case + case//2]
+
+
 graphe = {} #le graphe de tout les chemins
 pos = [0,0] #on initialise pos
 #on crée un graphe
