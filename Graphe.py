@@ -1,4 +1,5 @@
 import heapq
+from pygame import mixer
 
 class Graphe :
 
@@ -7,6 +8,20 @@ class Graphe :
         self.matrice = controleur.matrice
         self.taille_case = controleur.taille_case
         self.creer_graphe()
+
+    def conversion_reel_to_matrice(self,coordonnees, case=50):
+        """
+        méthode qui convertit des coordonnées (sous forme [x, y]) sur le Caneva en position dans la matrice du décor.
+        Renvoie la position sous la forme [x_mat, y_mat] ; corresponds alors à la case mat[y_mat][x_mat]
+        """
+        return [coordonnees[0]// case, coordonnees[1]// case]
+
+    def conversion_matrice_to_reel(self,coordonnees_mat, case=50):
+        """
+        méthode qui convertit des coordonnées (sous forme [x_mat, y_mat]) dans la matrice en coordonnees sur le caneva.
+        Renvoie les coordonnees du centre de la case mat[y_mat][x_mat] sous la forme [x, y]
+        """
+        return [coordonnees_mat[0]*case + case//2, coordonnees_mat[1]*case + case//2]
         
     def atteignable(self,pos_origine,pos_arrivee):
         '''
@@ -24,12 +39,6 @@ class Graphe :
         #on regarde si on peut atteindre le sommet
         T = abs(2*v_saut/g) #la durée du saut (x=x0 à t=0, x=x0 à t=T)
         res = False #ca c'est ce qu'on va renvoyer
-        print(pos_arrivee[0]-pos_origine[0])
-        print(v_dep*T)
-        print(".")
-        print(pos_arrivee[1]-pos_origine[1])
-        print(g*(pos_arrivee[0]-pos_origine[0])/v_dep)
-        print(".")
         if (abs(pos_arrivee[0]-pos_origine[0]) <= v_dep*T and pos_origine[1]-pos_arrivee[1] < abs(g*(pos_arrivee[0]-pos_origine[0])/v_dep)) or (abs(pos_arrivee[0]-pos_origine[0]) < v_dep*T/2 and pos_arrivee[1]-pos_origine[0] < v_saut):
             res = True #tkt ça marche
         return res
@@ -73,45 +82,45 @@ class Graphe :
                     self.graphe[case1][case2] = self.distance(pos1,pos2)
     
     def trouver_chemin(self, pos1):
-        if pos1 in self.graphe.keys():
-            #init
-            dist = {sommet : float("inf") for sommet in self.graphe}
-            dist["pos1"] = 0
+        #init
+        dist = {sommet : float("inf") for sommet in self.graphe}
+        dist[f"{pos1}"] = 0
 
-            attente = [(0,str(pos1))]
-            heapq.heapify(attente)
+        attente = [(0,str(pos1))]
+        heapq.heapify(attente)
 
-            visites = set()
+        visites = set()
 
-            while attente:
-                dist_act, sommet_act = heapq.heappop(attente)
-                if sommet_act in visites:
-                    continue
-                visites.add(sommet_act)
+        while attente:
+            dist_act, sommet_act = heapq.heappop(attente)
+            if sommet_act in visites:
+                continue
+            visites.add(sommet_act)
 
-                for voisin, cout in self.graphe[sommet_act].items():
-                    test_dist = dist_act + cout
-                    if test_dist < dist[voisin]:
-                        dist[voisin] = test_dist
-                        heapq.heappush(attente,(test_dist,voisin))
+            for voisin, cout in self.graphe[sommet_act].items():
+                test_dist = dist_act + cout
+                if test_dist < dist[voisin]:
+                    dist[voisin] = test_dist
+                    heapq.heappush(attente,(test_dist,voisin))
 
-            pred = {sommet : None for sommet in self.graphe}
-            for sommet,distance in dist.items():
-                for voisin, cout in self.graphe[sommet].items():
-                    if dist[voisin] == distance + cout:
-                        pred[voisin] = sommet
-            return dist,pred
+        pred = {sommet : None for sommet in self.graphe}
+        for sommet,distance in dist.items():
+            for voisin, cout in self.graphe[sommet].items():
+                if dist[voisin] == distance + cout:
+                    pred[voisin] = sommet
+        return dist,pred
         
-    def chemin_le_plus_court(self, origin : str, arivee : str):
-        _,pred = self.trouver_chemin(origin)
+    def chemin_le_plus_court(self, origin, arivee):
+        if str(origin) in self.graphe.keys():
+            _,pred = self.trouver_chemin(origin)
 
-        chemin = []
-        sommet_act = arivee
+            chemin = []
+            sommet_act = arivee
 
-        while sommet_act:
-            chemin.append(sommet_act)
-            sommet_act = pred[sommet_act]
+            while sommet_act:
+                chemin.append(str(sommet_act))
+                sommet_act = pred[str(sommet_act)]
 
             chemin.reverse()
-        return chemin
+            return chemin
 

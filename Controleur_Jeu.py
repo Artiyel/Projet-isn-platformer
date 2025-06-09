@@ -18,7 +18,6 @@ class ControleurJeu:
         self.matrice = decor.quadrillage()
         self.taille_case = decor.taille_quadrillage
         self.graphe = Graphe(self)
-        print(self.graphe)
 
 
     def souhait_action_joueur(self, saut_av, right_av, left_av, events):
@@ -53,9 +52,21 @@ class ControleurJeu:
 
         # On retourne les états pour la frame suivante
         return saut, right, left
+    
+    def souhait_action_fantome(self,droite,gauche):
+        mvt = self.fantome.vitesse_marche
+        droite_res, gauche_res = False, False
+        print("humm")
+        if droite:
+            self.fantome.potentiel_pos_x = self.fantome.x + mvt
+            droite_res = True
+        if gauche:
+            print("ok")
+            self.fantome.potentiel_pos_x = self.fantome.x - mvt
+            gauche_res = True
+        return droite_res,gauche_res
 
-
-    def test_contact_plateforme(self):
+    def test_contact_plateforme(self,perso):
         """
         Teste si le personnage est en contact avec une plateforme, ou si sa position rentre en conflit avec une plateforme.
         :return: True si le personnage est en contact avec une plateforme, False sinon
@@ -65,29 +76,29 @@ class ControleurJeu:
         for element in self.decor:  # On parcourt les plateformes du décor
             x_min, y_min, x_max, y_max = element.get_min_max()
             # Test de contact vertical et horizontal
-            if (self.perso.y >= (y_min - self.perso.y_taille)
-                and self.perso.y <= y_max                           # Condition n°1 : le perso est "dans" une plateforme
-                and self.perso.x < x_max
-                and self.perso.x + self.perso.x_taille > x_min)\
-                or (self.perso.x < x_max                            # Condition n°2 : le perso risque de passer à travers une plateforme en tombant
-                and self.perso.x + self.perso.x_taille > x_min
-                and self.perso.y + self.perso.y_taille < y_min
-                and self.perso.y + self.perso.y_taille + self.perso.vel[1] > y_min):
+            if (perso.y >= (y_min - perso.y_taille)
+                and perso.y <= y_max                           # Condition n°1 : le perso est "dans" une plateforme
+                and perso.x < x_max
+                and perso.x + perso.x_taille > x_min)\
+                or (perso.x < x_max                            # Condition n°2 : le perso risque de passer à travers une plateforme en tombant
+                and perso.x + perso.x_taille > x_min
+                and perso.y + perso.y_taille < y_min
+                and perso.y + perso.y_taille + perso.vel[1] > y_min):
                 contact = True
                 # On cherche la plateforme la plus haute sous le joueur
-                if meilleur_y is None or y_min - self.perso.y_taille < meilleur_y:
-                    meilleur_y = y_min - self.perso.y_taille
+                if meilleur_y is None or y_min - perso.y_taille < meilleur_y:
+                    meilleur_y = y_min - perso.y_taille
 
         # On ne modifie potentiel_pos_y que si contact
-        if contact and meilleur_y is not None and self.perso.y != meilleur_y:
-            self.perso.potentiel_pos_y = meilleur_y
+        if contact and meilleur_y is not None and perso.y != meilleur_y:
+            perso.potentiel_pos_y = meilleur_y
         else:
-            self.perso.potentiel_pos_y = self.perso.y
+            perso.potentiel_pos_y = perso.y
 
         return contact
 
 
-    def test_collision_droite(self):
+    def test_collision_droite(self,perso):
         """
         méthode permettant de vérifier si une entité Perso est en contact avec une plateforme sur le côté droit de l'écran.
         Renvoie un Booléen correspondant.
@@ -95,14 +106,14 @@ class ControleurJeu:
         res = False
         for element in self.decor:
             x_min, y_min, x_max, y_max = element.get_min_max()
-            if self.perso.y < y_max and self.perso.y + self.perso.y_taille > y_min and self.perso.x < x_max and self.perso.x + self.perso.x_taille > x_min:
+            if self.perso.y < y_max and perso.y + perso.y_taille > y_min and perso.x < x_max and perso.x + perso.x_taille > x_min:
                 res = True
-                if self.perso.x != x_min:
-                    self.perso.pos_potentiel_x = x_min
+                if perso.x != x_min:
+                    perso.pos_potentiel_x = x_min
         return res
 
 
-    def test_collision_gauche(self):
+    def test_collision_gauche(self,perso):
         """
         méthode permettant de vérifier si une entité Perso est en contact avec une plateforme sur le côté gauche de l'écran.
         Renvoie un Booléen correspondant.
@@ -110,43 +121,42 @@ class ControleurJeu:
         res = False
         for element in self.decor :
             x_min, y_min, x_max, y_max = element.get_min_max()
-            if self.perso.y < y_max and self.perso.y + self.perso.y_taille > y_min and (self.perso.x + self.perso.x_taille) > x_min and self.perso.x <= x_max:
+            if perso.y < y_max and perso.y + perso.y_taille > y_min and (perso.x + perso.x_taille) > x_min and perso.x <= x_max:
                 res = True
-                if self.perso.x != x_max:
-                    self.perso.potentiel_pos_x = x_max
+                if perso.x != x_max:
+                    perso.potentiel_pos_x = x_max
 
         return res
 
         
 
-    def calcul_mvt(self, saut, right, left):
+    def calcul_mvt(self, saut, right, left,perso):
             ''' 
             méthode qui effectue tous les tests avec les méthodes faites en haut et renvoie la position finale du joueur
             peut être que y'a pas besoin de renvoie et qu'on peut juste update la position dans l'instance perso directement mais pas sûr que ça marche!
             '''
             # self.souhait_action_joueur(saut,right,left,)
-
-            if self.test_contact_plateforme():
-                self.perso.vel[1] = 0
-                self.perso.y = self.perso.potentiel_pos_y
+            if self.test_contact_plateforme(perso):
+                perso.vel[1] = 0
+                perso.y = perso.potentiel_pos_y
                 if saut:
-                    self.perso.saut()
+                    perso.saut()
             else: 
-                self.perso.gravite()
-            self.perso.y += self.perso.vel[1]
+                perso.gravite()
+            perso.y += perso.vel[1]
 
             if right:
-                if self.test_collision_droite():
-                    self.perso.x = self.perso.potentiel_pos_x #à voir si il faut pas le repositionner sur le bord de la plateforme jsp
+                if self.test_collision_droite(perso):
+                    perso.x = perso.potentiel_pos_x #à voir si il faut pas le repositionner sur le bord de la plateforme jsp
                 else:
-                    self.perso.x = self.perso.potentiel_pos_x
+                    perso.x = perso.potentiel_pos_x
 
             if left:
-                if self.test_collision_gauche():
-                    self.perso.x = self.perso.potentiel_pos_x #à voir si il faut pas le repositionner sur le bord de la plateforme jsp
+                if self.test_collision_gauche(perso):
+                    perso.x = perso.potentiel_pos_x #à voir si il faut pas le repositionner sur le bord de la plateforme jsp
 
                 else:
-                    self.perso.x = self.perso.potentiel_pos_x
+                    perso.x = perso.potentiel_pos_x
                      #same pour ces lignes jsp trop 
                         #peut être que y'en a pas besoin en vrai
 
@@ -165,9 +175,9 @@ class ControleurJeu:
                 y + entite.y_taille > oy and y < oy + oh):
                 return True
         return False
-
+    """
     def calcul_action_fantome(self, fantome, player_x, player_y, obstacles):
-        """
+
         Calcule la prochaine action à effectuer pour le fantôme pour suivre le joueur en évitant les obstacles.
         algorithme Dijstra pour trouver le chemin le plus court vers le joueur.
         :param fantome: l'entité fantôme
@@ -175,7 +185,7 @@ class ControleurJeu:
         :param player_y: la position y du joueur
         :param obstacles: liste des obstacles sous forme de dictionnaires avec les clés "x", "y", "w", "h"
         :return: None, met à jour l'attribut next_action du fantôme
-        """
+
         actions = ["droite", "gauche", "saut"]
         heap = []
         visited = set()
@@ -216,9 +226,9 @@ class ControleurJeu:
         fantome.next_action = None
 
     def appliquer_action_fantome(self, fantome, delta_time):
-        """
+
         Applique l'action calculée au fantôme.
-        """
+
         if fantome.next_action == "droite":
             fantome.x += fantome.vitesse * delta_time
             fantome.direction = np.array([1, 0])
@@ -230,7 +240,7 @@ class ControleurJeu:
             fantome.direction = np.array([0, -1])
         # Gravité
         fantome.vel[1] += 9.81 * fantome.masse * delta_time
-        fantome.y += fantome.vel[1] * delta_time
+        fantome.y += fantome.vel[1] * delta_time"""
 
     def __str__(self):
         info = "=== ControleurJeu ===\n"

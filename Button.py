@@ -1,5 +1,7 @@
 import pygame
 
+pygame.mixer.init()
+
 class Button():
     def __init__(self, x, y, width,height, text='',text_color=(255,255,255),bg_color=(50,50,50), textsize = 30, font_name = "assets/fonts/AncientModernTales-a7Po.ttf", sound = 'assets/sound/click_effect.mp3'):
         '''
