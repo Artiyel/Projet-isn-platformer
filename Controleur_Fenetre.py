@@ -102,6 +102,7 @@ class ControlleurFenetre:
 
             # On vérifie la condition de fin de partie "Le joueur est tombé de la carte"
             if self.player.y > self.decor[0].y_pos + 500:
+                self.fenetre.textbox("assets/text/Stubborn3ss.txt")
                 chute = True
 
             if not pygame.mixer_music.get_busy():
