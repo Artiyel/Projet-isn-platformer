@@ -39,7 +39,7 @@ class Graphe :
         #on regarde si on peut atteindre le sommet
         T = abs(2*v_saut/g) #la durée du saut (x=x0 à t=0, x=x0 à t=T)
         res = False #ca c'est ce qu'on va renvoyer
-        if (abs(pos_arrivee[0]-pos_origine[0]) <= v_dep*T and pos_origine[1]-pos_arrivee[1] < abs(g*(pos_arrivee[0]-pos_origine[0])/v_dep)) or (abs(pos_arrivee[0]-pos_origine[0]) < v_dep*T/2 and pos_arrivee[1]-pos_origine[0] < v_saut):
+        if (abs(pos_arrivee[0]-pos_origine[0]) <= v_dep*T and pos_origine[1]-pos_arrivee[1] < abs(g*(pos_arrivee[0]-pos_origine[0])/v_dep)) or (abs(pos_arrivee[0]-pos_origine[0]) < v_dep*T/2 and pos_arrivee[1]-pos_origine[1] < v_saut):
             res = True #tkt ça marche
         return res
 

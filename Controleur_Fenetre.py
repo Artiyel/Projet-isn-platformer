@@ -4,8 +4,6 @@ import pygame
 
 pygame.init()
 
-print("test")
-
 class ControlleurFenetre:
     """
     Classe qui gère la fenêtre de jeu.
@@ -112,14 +110,12 @@ class ControlleurFenetre:
                         running = False
                         self.fenetre.running = False 
                         print('ouaippppp')
-            print('event off')
+            #print('event off')
 
             ###déplacement du fantome
 
             #on initialise les mouvements à réaliser
             etat_saut_f, etat_right_f, etat_left_f = False, False, False
-
-            print(self.chemin)
 
             #on obtient la position du personnage dans la matrice
             pos_perso = self.controleur.graphe.conversion_reel_to_matrice([self.player.x-self.depl_rel[0],self.player.y-self.depl_rel[1]])
@@ -127,8 +123,7 @@ class ControlleurFenetre:
             #on se place sur la plateforme en dessous (le personnage etant en dehors de la plateforme, sa position n'est pas dans le graphe)
             pos_perso[1]+=1
 
-            #de meme pour le fantome
-            print(self.fantome.x)
+            #de meme pour le fantome            
             pos_fantome = self.controleur.graphe.conversion_reel_to_matrice([self.fantome.x-self.depl_rel[0],self.fantome.y-self.depl_rel[1]])
             pos_fantome[1]+=1
                        
@@ -165,16 +160,13 @@ class ControlleurFenetre:
                     etat_saut_f = True
 
                 #si on a atteint l'objectif, on passe au suivant en supprimant celui que l'on viens d'atteindre
-                print(pos_fantome)
                 if (abs(pos_fantome[0] - obj_rel[0]) == 0 and abs(obj_rel[1] - pos_fantome[1]) < 50):
                     self.chemin.pop(0)
-                    print("etape")
             
             #si on a atteint le personnage, on clear le chemin
             if  (pos_fantome[0] - pos_perso[0] == 0 and pos_perso[1] - pos_fantome[1] == 0) or self.chemin == []:
                     self.chemin = None
                     parcours_chemin = False
-                    print("arrivé")
 
             self.move_all()  # Déplace tout si besoin (scrolling)
 
@@ -214,7 +206,7 @@ class ControlleurFenetre:
  
             self.controleur.calcul_mvt(etat_saut, etat_right, etat_left,self.player)
             self.controleur.calcul_mvt(etat_saut_f, etat_right_f, etat_left_f,self.fantome)
-            print(etat_saut_f, etat_right_f, etat_left_f)
+
             #important de mettre du délai. Là on a 60fps.
             clock.tick(60)  # 60 FPS, fluide
 
