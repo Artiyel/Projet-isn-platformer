@@ -63,7 +63,7 @@ class Decor:
         # A intervalle d'espace régulier, on ajoute entre 1 et 3 plateformes alignées
         hauteur = self.taille_carte_y - 7 * case
         while hauteur > 100:
-            nb_plateformes = randint(4, 7)
+            nb_plateformes = randint(3, 6)
             self.creer_plateforme_hasard(nb_plateformes, hauteur, case)
             hauteur -= 6 * case
         # On choisit une plateforme aléatoire sur la dernière hauteur comme point d'arrivée
