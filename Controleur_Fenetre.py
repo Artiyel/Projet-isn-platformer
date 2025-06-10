@@ -20,7 +20,7 @@ class ControlleurFenetre:
         self.fantome = self.entities[0]
         self.depl_rel = [0,0]
         self.dir = [0,0]
-        fond = pygame.image.load("assets/3_isaac.png")
+        fond = background
         self.menu = MenuInGame(fond, window)
         
 

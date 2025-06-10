@@ -10,5 +10,5 @@ class Game :
     def __init__(self, dict_entites, window):
         ''''''
         self.startcontroler = StartControler(self, window)
-        self.controleurjeu = ControleurJeu(dict_entites["decor"].plateformes, dict_entites["player"], dict_entites["entites"], self)
+        self.controleurjeu = ControleurJeu(dict_entites["decor"], dict_entites["player"], dict_entites["entites"], self)
         self.controleurfenetre = ControlleurFenetre(dict_entites["decor"], dict_entites["entites"], dict_entites["player"], self, window)
