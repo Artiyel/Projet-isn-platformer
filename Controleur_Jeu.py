@@ -60,12 +60,10 @@ class ControleurJeu:
     def souhait_action_fantome(self,droite,gauche):
         mvt = self.fantome.vitesse_marche
         droite_res, gauche_res = False, False
-        print("humm")
         if droite:
             self.fantome.potentiel_pos_x = self.fantome.x + mvt
             droite_res = True
         if gauche:
-            print("ok")
             self.fantome.potentiel_pos_x = self.fantome.x - mvt
             gauche_res = True
         return droite_res,gauche_res
