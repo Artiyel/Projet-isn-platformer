@@ -33,7 +33,10 @@ class Game :
         self.decor.creer_decor_hasard()
         self.dict_entites["decor"] = self.decor
 
-
+    def initialize_controlers(self, window):
+        '''
+        Initialise les contrôleurs du jeu.
+        '''
         self.startcontroler = StartControler(self, window)
         self.controleurjeu = ControleurJeu(self.dict_entites, self)
         self.controleurfenetre = ControlleurFenetre(self.dict_entites, self, window)

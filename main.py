@@ -46,6 +46,7 @@ pygame.display.flip()
 
 ### CREATION DU JEU ###
 game = Game(window, taille_carte)
+game.initialize_controlers(window)
 fenetre_menu.run()
 
 while True:
@@ -60,6 +61,8 @@ while True:
         if game.controleurfenetre.menu.etat == "retour menu":
             print('retour au menu')
             fenetre_menu.run()
+            game = Game(window, taille_carte)
+            game.initialize_controlers(window)
         elif game.controleurfenetre.menu.etat == 'quit':
             print('quitter le jeu')
             pygame.quit()
