@@ -69,7 +69,7 @@ class MenuPrincipal(Fenetre):
                                 print("Histoire du jeu")
                                 self.running = False
                                 # Crée une nouvelle fenêtre pour le lore
-                                fond_lore = pygame.image.load("assets/fond_menu_1.png")
+                                fond_lore = pygame.image.load("assets//pics/fond_menu_1.png")
                                 print("Fond lore chargé :", fond_lore.get_size())
                                 fenetre_lore = MenuPrincipal(background=fond_lore, window=self.window)
                                 fenetre_lore.draw()  # Affiche la fenêtre avec le fond

@@ -28,7 +28,7 @@ else:
     screensize = (1500,800)
     
 window = pygame.display.set_mode(screensize)
-fond_menu = pygame.image.load("assets/fond_menu_1.png")
+fond_menu = pygame.image.load("assets/pics/fond_menu_1.png")
 fond_menu = pygame.transform.scale(fond_menu, screensize)
 window.blit(fond_menu, (0, 0))
 pygame.display.flip()
@@ -39,13 +39,13 @@ pygame.display.flip()
 ### PARAMETRES DU JEU ###
 taille_carte = (3000,20000)
 
-fond_menu = pygame.image.load("assets/fond_menu_1.png")
+fond_menu = pygame.image.load("assets/pics/fond_menu_1.png")
 fenetre_menu = MenuPrincipal(background=fond_menu, window=window)
 fenetre_menu.draw()
 pygame.display.flip()
 
 ### CREATION DU JEU ###
-game = Game(window, taille_carte)
+game = Game("classique", taille_carte)
 game.initialize_controlers(window)
 fenetre_menu.run()
 
