@@ -190,6 +190,19 @@ class ControlleurFenetre:
                 (self.player.y + self.player.y_taille >= Plateforme_fin.y_pos - 5)
             ):
                 arrivee = True
+                # Lance le menu in-game après le texte
+                self.menu.etat = "stand by"  # Réinitialise l'état du menu
+                self.menu.running = True
+                self.menu.run()
+                # Après le menu, tu peux agir selon l'état choisi par l'utilisateur
+                if self.menu.etat == "return to menu":
+                    running = False
+                    self.fenetre.running = False
+                elif self.menu.etat == "quit":
+                    running = False
+                    self.fenetre.running = False
+                    pygame.quit()
+                    exit()
 
             # On vérifie la condition de fin de partie "Le joueur est tombé de la carte"
             if self.player.y > self.decor.plateformes[0].y_pos + 500:
@@ -200,7 +213,7 @@ class ControlleurFenetre:
                 self.menu.running = True
                 self.menu.run()
                 # Après le menu, tu peux agir selon l'état choisi par l'utilisateur
-                if self.menu.etat == "retour menu":
+                if self.menu.etat == "return to menu":
                     running = False
                     self.fenetre.running = False
                 elif self.menu.etat == "quit":
