@@ -42,7 +42,7 @@ class Decor:
         """
         for i in range(1, n+1):
             # On découpe la largeur de l'écran en autant d'intervalles que de plateformes
-            intervalle = (int((self.taille_carte_x * (i-1) /n) / case) , int(((self.taille_carte_x * i /n)- 4*case) / 25))
+            intervalle = (int((self.taille_carte_x * (i-1) /n) / case) , int(((self.taille_carte_x * i /n)- 4*case) / case))
             placement_x = randint(intervalle[0], intervalle[1])
             brique = Plateforme(x_pos= placement_x * case, y_pos= hauteur, x_taille= 4*case, y_taille = case)
             self.ajouter_plateforme(brique)
