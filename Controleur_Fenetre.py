@@ -97,6 +97,7 @@ class ControlleurFenetre:
         chute = False
         parcours_chemin = False
         self.chemin = []
+        count = 0
         clock = pygame.time.Clock()
 
         while running and (not arrivee) and (not chute):
@@ -166,15 +167,18 @@ class ControlleurFenetre:
                         etat_right_f = True
                     if pos_fantome[1] - obj_rel[1] > 0:
                         etat_saut_f = True
+                        count+=1
 
                     # si on a atteint l'objectif, on passe au suivant
                     if (abs(pos_fantome[0] - obj_rel[0]) == 0 and abs(obj_rel[1] - pos_fantome[1]) < 50):
                         self.chemin.pop(0)
+                        count = 0
 
                 # si on a atteint le personnage, on clear le chemin
-                if (pos_fantome[0] - pos_perso[0] == 0 and pos_perso[1] - pos_fantome[1] == 0) or self.chemin == []:
+                if (pos_fantome[0] - pos_perso[0] == 0 and pos_perso[1] - pos_fantome[1] == 0) or self.chemin == [] or count > 20:
                     self.chemin = None
                     parcours_chemin = False
+                    count = 0
 
             self.move_all()  # Déplace tout si besoin (scrolling)
 
