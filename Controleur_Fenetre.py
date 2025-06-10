@@ -98,6 +98,7 @@ class ControlleurFenetre:
         parcours_chemin = False
         self.chemin = []
         clock = pygame.time.Clock()
+
         while running and (not arrivee) and (not chute):
             events = pygame.event.get()  #on récupère les événements
             for event in events:
@@ -132,14 +133,15 @@ class ControlleurFenetre:
                 #on se place sur la plateforme en dessous (le personnage etant en dehors de la plateforme, sa position n'est pas dans le graphe)
                 pos_perso[1]+=1
 
-            #de meme pour le fantome            
-            pos_fantome = self.controleur.graphe.conversion_reel_to_matrice([self.fantome.x-self.depl_rel[0],self.fantome.y-self.depl_rel[1]])
-            pos_fantome[1]+=1
-                       
-            #si le fantome n'est pas sur un chemin
-            if parcours_chemin == False:
+                # de meme pour le fantome            
+                pos_fantome = self.controleur.graphe.conversion_reel_to_matrice(
+                    [self.fantome.x - self.depl_rel[0], self.fantome.y - self.depl_rel[1]]
+                )
+                pos_fantome[1] += 1
 
-                    #on regarde si la position est dans le graphe
+                # si le fantome n'est pas sur un chemin
+                if not parcours_chemin:
+                    # on regarde si la position est dans le graphe
                     if str(pos_perso) in self.controleur.graphe.graphe.keys():
 
                         #dans ce cas, on crée le chemin
@@ -149,10 +151,9 @@ class ControlleurFenetre:
                     if self.chemin != None:
                         parcours_chemin = True
 
-                #si le fantome a un chemin a suivre
-                elif  self.chemin != None and self.chemin != []:
-
-                    #on place l'objectif à la prochaine étape du chemin (on corrige la position car on la décale avec la fenetre)
+                # si le fantome a un chemin à suivre
+                elif self.chemin is not None and self.chemin != []:
+                    # on place l'objectif à la prochaine étape du chemin
                     obj_rel = [int(x) for x in self.chemin[0].strip("[]").split(",")]
                     objectif = self.controleur.graphe.conversion_matrice_to_reel(obj_rel)
                     objectif[0]-=self.depl_rel[0]
@@ -161,19 +162,17 @@ class ControlleurFenetre:
                     #on regarde les actions nécessaires
                     if pos_fantome[0] - obj_rel[0] > 0:
                         etat_left_f = True
-                    
                     if obj_rel[0] - pos_fantome[0] > 0:
                         etat_right_f = True
-
-                    if  pos_fantome[1] - obj_rel[1] > 0:
+                    if pos_fantome[1] - obj_rel[1] > 0:
                         etat_saut_f = True
 
-                #si on a atteint l'objectif, on passe au suivant en supprimant celui que l'on viens d'atteindre
-                if (abs(pos_fantome[0] - obj_rel[0]) == 0 and abs(obj_rel[1] - pos_fantome[1]) < 50):
-                    self.chemin.pop(0)
-            
-            #si on a atteint le personnage, on clear le chemin
-            if  (pos_fantome[0] - pos_perso[0] == 0 and pos_perso[1] - pos_fantome[1] == 0) or self.chemin == []:
+                    # si on a atteint l'objectif, on passe au suivant
+                    if (abs(pos_fantome[0] - obj_rel[0]) == 0 and abs(obj_rel[1] - pos_fantome[1]) < 50):
+                        self.chemin.pop(0)
+
+                # si on a atteint le personnage, on clear le chemin
+                if (pos_fantome[0] - pos_perso[0] == 0 and pos_perso[1] - pos_fantome[1] == 0) or self.chemin == []:
                     self.chemin = None
                     parcours_chemin = False
 
@@ -181,9 +180,12 @@ class ControlleurFenetre:
 
             # On vérifie la condition de victoire "joueur sur la plateforme d'arrivee"
             Plateforme_fin = self.decor.plateformes[-1]
-            if ((self.player.x >= Plateforme_fin.x_pos) and (self.player.x + self.player.x_taille <= Plateforme_fin.x_pos + Plateforme_fin.x_taille)
-                and (self.player.y + self.player.y_taille <= Plateforme_fin.y_pos + Plateforme_fin.y_taille)
-                and (self.player.y + self.player.y_taille >= Plateforme_fin.y_pos - 5)):
+            if (
+                (self.player.x >= Plateforme_fin.x_pos) and
+                (self.player.x + self.player.x_taille <= Plateforme_fin.x_pos + Plateforme_fin.x_taille) and
+                (self.player.y + self.player.y_taille <= Plateforme_fin.y_pos + Plateforme_fin.y_taille) and
+                (self.player.y + self.player.y_taille >= Plateforme_fin.y_pos - 5)
+            ):
                 arrivee = True
 
             # On vérifie la condition de fin de partie "Le joueur est tombé de la carte"
@@ -210,7 +212,9 @@ class ControlleurFenetre:
             pygame.mixer_music.set_volume(1)
 
             # On passe events à souhait_action_joueur
-            etat_saut, etat_right, etat_left = self.controleur.souhait_action_joueur(etat_saut, etat_right, etat_left, events)
+            etat_saut, etat_right, etat_left = self.controleur.souhait_action_joueur(
+                etat_saut, etat_right, etat_left, events
+            )
             if self.fantome:
                 # On passe events à souhait_action_fantome
                 etat_right_f, etat_left_f = self.controleur.souhait_action_fantome(etat_right_f,etat_left_f)
@@ -223,12 +227,13 @@ class ControlleurFenetre:
             #important de mettre du délai. Là on a 60fps.
             clock.tick(60)  # 60 FPS, fluide
 
-            #On utilise cette méthode pour afficher la fenêtre dans la boucle (interdiction d'utiliser .run() ici)
+            # Affichage
             self.fenetre.draw(decor=self.decor.plateformes, entities=[self.player, self.fantome])
             #Et voilà le job du controlleur. On récupère toutes les actions...
             
             #NE PAS OUBLIER LE DISPLAY.FLIP() SINON CA VA FAIRE TOUT NOIR
             pygame.display.flip()
+
         if arrivee:
             print("Le joueur a gagné")
         if chute:
