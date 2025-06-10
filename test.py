@@ -1,5 +1,5 @@
 import pygame
-from FenetreMenu import FenetreMenu
+from MenuPrincipal import FenetreMenu
 from FenetreJeu import FenetreJeu
 
 import ctypes

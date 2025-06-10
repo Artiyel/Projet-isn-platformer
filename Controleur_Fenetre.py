@@ -1,5 +1,5 @@
 from FenetreJeu import FenetreJeu
-from Menu import Menu
+from MenuInGame import MenuInGame
 import pygame
 
 pygame.init()
@@ -19,7 +19,8 @@ class ControlleurFenetre:
         self.player = player
         self.dir = [0,0]
         fond = pygame.image.load("assets/3_isaac.png")
-        self.menu = Menu(fond, window)
+        self.menu = MenuInGame(fond, window)
+        
 
     def should_move(self):
         """
@@ -85,12 +86,19 @@ class ControlleurFenetre:
                 if event.type == pygame.QUIT:
                     running = False
                     self.fenetre.running = False  # Pour arrêter aussi la fenêtre si besoin
+                    pygame.quit()
+                    exit()
 
                 if event.type == pygame.KEYDOWN and (event.key == pygame.K_ESCAPE or event.key == pygame.K_RETURN): 
                     print('test')
                     self.menu.run() #pour lancer un autre menu (qui propose de retourner au menu principal ou continuer le jeu)
+                    if self.menu.etat == "retour menu":
+                        running = False
+                        self.fenetre.running = False 
+                        print('ouaippppp')
+            print('event off')
 
-
+            
             self.move_all()  # Déplace tout si besoin (scrolling)
 
             # On vérifie la condition de victoire "joueur sur la plateforme d'arrivee"
@@ -112,6 +120,7 @@ class ControlleurFenetre:
             # On passe events à souhait_action_joueur
             etat_saut, etat_right, etat_left = self.controleur.souhait_action_joueur(etat_saut, etat_right, etat_left, events)
             self.controleur.calcul_mvt(etat_saut, etat_right, etat_left)
+            
             #important de mettre du délai. Là on a une image tout les 20ms, donc 50fps.
             pygame.time.delay(20)
 
@@ -125,6 +134,3 @@ class ControlleurFenetre:
             print("Le joueur a gagné")
         if chute:
             print("Le joueur est tombé de la carte")
-
-        else:
-            pygame.quit()

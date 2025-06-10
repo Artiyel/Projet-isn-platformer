@@ -1,12 +1,24 @@
 # -*- coding: utf-8 -*-
 import os
 import pygame
+
+import ctypes
+
+from Entity import Player, Fantome
+from Decor import Decor
+from Game import Game
+from copy import deepcopy
+from Button import Button
+from MenuPrincipal import MenuPrincipal
+from MenuInGame import MenuInGame
+
+
 # Get the directory where the script is located
 script_dir = os.path.dirname(os.path.abspath(__file__))
 # Change the working directory to the script directory
 os.chdir(script_dir)
 
-import ctypes
+
 
 if os.name == 'nt':
     print("ouf!")
@@ -22,19 +34,13 @@ window.blit(fond_menu, (0, 0))
 pygame.display.flip()
 
 
-from Entity import Player, Fantome
-from Decor import Decor
-from Game import Game
-from copy import deepcopy
-from Button import Button
-from FenetreMenu import FenetreMenu
-
 #ça c'est le main
 
 ### PARAMETRES DU JEU ###
 taille_carte = (3000,3000)
 ### CREATION DES ENTITES ###
 dict_entites = dict()
+
 
 #personnage
 player = Player()
@@ -57,34 +63,29 @@ dict_entites["decor"] = decor
 #print(dict_entites)
 
 
-#entites non jouables
-from Entity import Fantome
-
-fantome = Fantome()
-fantome.x = 200
-fantome.y = 4950
-dict_entites["entites_non_jouables"] = [fantome]
-
-###BOUTONS###
-buttons = []
-
-#bouton start
-size = (200,50)
-bouton_start = Button(screensize[0] //2,screensize[1]//2,size[0],size[1],"Start Game")
-buttons.append(bouton_start)
-bouton_lore = Button(screensize[0] //2,screensize[1]//2+100,size[0],size[1],"Histoire")
-buttons.append(bouton_lore)
-bouton_mode_fantome = Button(screensize[0] //2,screensize[1]//2+200,size[0],size[1],"Mode Fantôme")
-buttons.append(bouton_mode_fantome)
-#bouton quit
-bouton_quit = Button(screensize[0] //2,screensize[1]//2+300,size[0],size[1],"Quit")
-buttons.append(bouton_quit)
-
 fond_menu = pygame.image.load("assets/fond_menu_1.png")
-fenetre_menu = FenetreMenu(background=fond_menu, window=window, buttons=buttons)
+fenetre_menu = MenuPrincipal(background=fond_menu, window=window)
 fenetre_menu.draw()
 pygame.display.flip()
 
 ### CREATION DU JEU ###
-game = Game(dict_entites,buttons, window)
-game.startcontroler.start()
+game = Game(dict_entites, window)
+fenetre_menu.run()
+
+while True:
+    if fenetre_menu.etat == 'jeu':
+        game.controleurfenetre.run()
+        print('run')
+        if game.controleurfenetre.menu.etat == "retour menu":
+            print('retour au menu')
+            fenetre_menu.run()
+        elif game.controleurfenetre.menu.etat == 'quit':
+            print('quitter le jeu')
+            pygame.quit()
+            break
+
+    elif fenetre_menu.etat == 'lore':
+        print('lore time')
+
+    elif fenetre_menu.etat == 'fantome':
+        print('mode fantome ouais')

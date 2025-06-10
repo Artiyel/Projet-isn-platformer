@@ -120,6 +120,7 @@ class Fenetre:
 
         Permet de lancer et faire tourner la fenêtre.
         '''
+        print("run lancé")
         #initialisation de la fenêtre
         self.window.blit(self.background,(0,0))
         pygame.display.set_caption('Le jeu')
