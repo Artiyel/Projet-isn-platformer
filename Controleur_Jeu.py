@@ -11,10 +11,14 @@ class ControleurJeu:
 
     def __init__(self, dict_entites, jeu):
         self.jeu = jeu
+        self.mode = jeu.mode
         self.decor = dict_entites["decor"]
         self.perso = dict_entites["player"]
         # Prend le premier fantome de la liste s'il existe, sinon None
-        self.fantome = dict_entites["entites"][0]
+        if self.mode == "fantome" and dict_entites["entites"]:
+            self.fantome = dict_entites["entites"][0]
+        else:
+            self.fantome = None
         self.matrice = self.decor.quadrillage()
         self.taille_case = self.decor.taille_quadrillage
         self.graphe = Graphe(self)

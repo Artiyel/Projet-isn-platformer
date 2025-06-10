@@ -1,6 +1,7 @@
 import pygame
 from Fenetre import Fenetre
 from Button import Button
+import Game 
 
 
 class MenuPrincipal(Fenetre):
@@ -56,10 +57,16 @@ class MenuPrincipal(Fenetre):
                         print("2")
                         if button.is_hit(pygame.mouse.get_pos()):
                             if button.text == "Start Game":
+                                self.etat = "jeu"
+                                self.mode = "classique"
                                 self.running = False    #quitte la fenêtre du menu
                                 print("3")
                                 self.etat = "jeu"
-                                #self.jeu.controleurfenetre.run()  # lance la fenêtre de jeu
+                            elif button.text == "Mode Fantôme":
+                                self.etat = "jeu"
+                                self.mode = "fantome"
+                                self.running = False
+                                print("Mode Fantôme activé")
                             elif button.text == "Quit":
                                 self.etat = "quit"
                                 self.running = False

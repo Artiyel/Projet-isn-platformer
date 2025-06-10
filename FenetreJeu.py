@@ -20,11 +20,12 @@ class FenetreJeu(Fenetre):
         affiche toutes les entités présentes
         '''
         for entity in entities:
-            #img = pygame.image.load(f"assets/characters/{entity["id"]}")
-            #img = pygame.transform.scale(img,entity["taille"])
-            #self.window.blit(img,entity["pos"])
-            rect = pygame.Rect(entity.x,entity.y,entity.x_taille,entity.y_taille)
-            img = pygame.draw.rect(self.window,(255,255,255),rect)
+            if entity is not None:
+                #img = pygame.image.load(f"assets/characters/{entity["id"]}")
+                #img = pygame.transform.scale(img,entity["taille"])
+                #self.window.blit(img,entity["pos"])
+                rect = pygame.Rect(entity.x,entity.y,entity.x_taille,entity.y_taille)
+                img = pygame.draw.rect(self.window,(255,255,255),rect)
             
     def draw_decor(self,decor):
         '''

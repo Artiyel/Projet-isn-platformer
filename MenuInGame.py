@@ -10,6 +10,8 @@ class MenuInGame(Fenetre):
             background : image de fond
             window : instance de pygame.display'''
         super().__init__(background, window)
+        
+        self.etat = "stand by"
         self.parent_fenetre_jeu = parent_fenetre_jeu
         self.parent_entities = parent_entities
         self.parent_decor = parent_decor
@@ -38,7 +40,6 @@ class MenuInGame(Fenetre):
     def run(self):
         pygame.display.set_caption('Le jeu')
         self.running = True
-        self.etat = "stand by"
         clock = pygame.time.Clock()
 
         while self.running:

@@ -9,13 +9,14 @@ import Decor as d
 
 class Game :
 
-    def __init__(self, window, taille_carte=(3000, 20000)):
+    def __init__(self, mode, window, taille_carte=(3000, 20000)):
         '''
         Classe principale du jeu, elle initialise les entités et les contrôleurs.
         Entrée :
             window : instance de pygame.display
         '''
         self.dict_entites = dict()
+        self.mode = mode
 
         #personnage
         self.player = e.Player()
@@ -23,10 +24,14 @@ class Game :
         self.player.y = taille_carte[1]
         self.dict_entites["player"] = self.player
 
-        self.fantome = e.Fantome()
-        self.fantome.x = taille_carte[0]-100
-        self.fantome.y = taille_carte[1]
-        self.dict_entites["entites"] = [self.fantome]
+        #fantome
+        if mode == "fantome":
+            self.fantome = e.Fantome()
+            self.fantome.x = taille_carte[0]-100
+            self.fantome.y = taille_carte[1]
+            self.dict_entites["entites"] = [self.fantome]
+        else:
+            self.dict_entites["entites"] = []
 
         #decor
         self.decor = d.Decor(taille_carte[0],taille_carte[1])

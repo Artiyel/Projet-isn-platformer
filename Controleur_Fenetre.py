@@ -17,7 +17,12 @@ class ControlleurFenetre:
         self.decor = dict_entites["decor"]
         self.entities = dict_entites["entites"]
         self.player = dict_entites["player"]
-        self.fantome = self.entities[0]
+        if self.entities:
+            # Assure que fantome est défini même si entities est vide
+            self.fantome = self.entities[0] 
+        else:
+            self.fantome = None  # Assure que fantome est défini même si entities est vide
+
         self.depl_rel = [0,0]
         self.dir = [0,0]
         fond = background
@@ -87,6 +92,8 @@ class ControlleurFenetre:
         self.fenetre.draw(decor = self.decor.plateformes)
         pygame.mixer_music.load("assets/music/Celeste_In_The_Mirror.mp3")
         etat_saut, etat_right, etat_left = False, False, False
+        etat_right_f = False
+        etat_left_f = False
         running = True
         arrivee = False
         chute = False
@@ -115,66 +122,66 @@ class ControlleurFenetre:
             print('event off')
 
             ###déplacement du fantome
+            if self.fantome:
+                #on initialise les mouvements à réaliser
+                etat_saut_f, etat_right_f, etat_left_f = False, False, False
 
-            #on initialise les mouvements à réaliser
-            etat_saut_f, etat_right_f, etat_left_f = False, False, False
+                print(self.chemin)
 
-            print(self.chemin)
+                #on obtient la position du personnage dans la matrice
+                pos_perso = self.controleur.graphe.conversion_reel_to_matrice([self.player.x-self.depl_rel[0],self.player.y-self.depl_rel[1]])
 
-            #on obtient la position du personnage dans la matrice
-            pos_perso = self.controleur.graphe.conversion_reel_to_matrice([self.player.x-self.depl_rel[0],self.player.y-self.depl_rel[1]])
+                #on se place sur la plateforme en dessous (le personnage etant en dehors de la plateforme, sa position n'est pas dans le graphe)
+                pos_perso[1]+=1
 
-            #on se place sur la plateforme en dessous (le personnage etant en dehors de la plateforme, sa position n'est pas dans le graphe)
-            pos_perso[1]+=1
+                #de meme pour le fantome
+                print(self.fantome.x)
+                pos_fantome = self.controleur.graphe.conversion_reel_to_matrice([self.fantome.x-self.depl_rel[0],self.fantome.y-self.depl_rel[1]])
+                pos_fantome[1]+=1
+                        
+                #si le fantome n'est pas sur un chemin
+                if parcours_chemin == False:
 
-            #de meme pour le fantome
-            print(self.fantome.x)
-            pos_fantome = self.controleur.graphe.conversion_reel_to_matrice([self.fantome.x-self.depl_rel[0],self.fantome.y-self.depl_rel[1]])
-            pos_fantome[1]+=1
-                       
-            #si le fantome n'est pas sur un chemin
-            if parcours_chemin == False:
+                    #on regarde si la position est dans le graphe
+                    if str(pos_perso) in self.controleur.graphe.graphe.keys():
 
-                #on regarde si la position est dans le graphe
-                if str(pos_perso) in self.controleur.graphe.graphe.keys():
+                        #dans ce cas, on crée le chemin
+                        self.chemin = self.controleur.graphe.chemin_le_plus_court(pos_fantome,pos_perso)
 
-                    #dans ce cas, on crée le chemin
-                    self.chemin = self.controleur.graphe.chemin_le_plus_court(pos_fantome,pos_perso)
+                    #mesure de sécurité
+                    if self.chemin != None:
+                        parcours_chemin = True
 
-                #mesure de sécurité
-                if self.chemin != None:
-                    parcours_chemin = True
+                #si le fantome a un chemin a suivre
+                elif  self.chemin != None and self.chemin != []:
 
-            #si le fantome a un chemin a suivre
-            elif  self.chemin != None and self.chemin != []:
+                    #on place l'objectif à la prochaine étape du chemin (on corrige la position car on la décale avec la fenetre)
+                    obj_rel = [int(x) for x in self.chemin[0].strip("[]").split(",")]
+                    objectif = self.controleur.graphe.conversion_matrice_to_reel(obj_rel)
+                    objectif[0]-=self.depl_rel[0]
+                    objectif[1]-=self.depl_rel[1]
 
-                #on place l'objectif à la prochaine étape du chemin (on corrige la position car on la décale avec la fenetre)
-                obj_rel = [int(x) for x in self.chemin[0].strip("[]").split(",")]
-                objectif = self.controleur.graphe.conversion_matrice_to_reel(obj_rel)
-                objectif[0]-=self.depl_rel[0]
-                objectif[1]-=self.depl_rel[1]
+                    #on regarde les actions nécessaires
+                    if pos_fantome[0] - obj_rel[0] > 0:
+                        etat_left_f = True
+                    
+                    if obj_rel[0] - pos_fantome[0] > 0:
+                        etat_right_f = True
 
-                #on regarde les actions nécessaires
-                if pos_fantome[0] - obj_rel[0] > 0:
-                    etat_left_f = True
+                    if  pos_fantome[1] - obj_rel[1] > 0:
+                        etat_saut_f = True
+
+                    #si on a atteint l'objectif, on passe au suivant en supprimant celui que l'on viens d'atteindre
+                    print(pos_fantome)
+                    if (abs(pos_fantome[0] - obj_rel[0]) == 0 and abs(obj_rel[1] - pos_fantome[1]) < 50):
+                        self.chemin.pop(0)
+                        print("etape")
                 
-                if obj_rel[0] - pos_fantome[0] > 0:
-                    etat_right_f = True
-
-                if  pos_fantome[1] - obj_rel[1] > 0:
-                    etat_saut_f = True
-
-                #si on a atteint l'objectif, on passe au suivant en supprimant celui que l'on viens d'atteindre
-                print(pos_fantome)
-                if (abs(pos_fantome[0] - obj_rel[0]) == 0 and abs(obj_rel[1] - pos_fantome[1]) < 50):
-                    self.chemin.pop(0)
-                    print("etape")
-            
-            #si on a atteint le personnage, on clear le chemin
-            if  (pos_fantome[0] - pos_perso[0] == 0 and pos_perso[1] - pos_fantome[1] == 0) or self.chemin == []:
-                    self.chemin = None
-                    parcours_chemin = False
-                    print("arrivé")
+                #si on a atteint le personnage, on clear le chemin
+                if  (pos_fantome[0] - pos_perso[0] == 0 and pos_perso[1] - pos_fantome[1] == 0) or self.chemin == []:
+                        self.chemin = None
+                        parcours_chemin = False
+                        print("arrivé")
 
             self.move_all()  # Déplace tout si besoin (scrolling)
 
@@ -210,11 +217,15 @@ class ControlleurFenetre:
 
             # On passe events à souhait_action_joueur
             etat_saut, etat_right, etat_left = self.controleur.souhait_action_joueur(etat_saut, etat_right, etat_left, events)
-            etat_right_f, etat_left_f = self.controleur.souhait_action_fantome(etat_right_f,etat_left_f)
+            if self.fantome:
+                # On passe events à souhait_action_fantome
+                etat_right_f, etat_left_f = self.controleur.souhait_action_fantome(etat_right_f,etat_left_f)
  
             self.controleur.calcul_mvt(etat_saut, etat_right, etat_left,self.player)
-            self.controleur.calcul_mvt(etat_saut_f, etat_right_f, etat_left_f,self.fantome)
-            print(etat_saut_f, etat_right_f, etat_left_f)
+            if self.fantome:
+                # On calcule le mouvement du fantôme
+                self.controleur.calcul_mvt(etat_saut_f, etat_right_f, etat_left_f,self.fantome)
+                print(etat_saut_f, etat_right_f, etat_left_f)
             #important de mettre du délai. Là on a 60fps.
             clock.tick(60)  # 60 FPS, fluide
 

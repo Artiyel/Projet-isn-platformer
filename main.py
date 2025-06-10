@@ -6,7 +6,7 @@ import ctypes
 
 from Entity import Player, Fantome
 from Decor import Decor
-from Game import Game
+import Game
 from copy import deepcopy
 from Button import Button
 from MenuPrincipal import MenuPrincipal
@@ -44,9 +44,6 @@ fenetre_menu = MenuPrincipal(background=fond_menu, window=window)
 fenetre_menu.draw()
 pygame.display.flip()
 
-### CREATION DU JEU ###
-game = Game("classique", taille_carte)
-game.initialize_controlers(window)
 fenetre_menu.run()
 
 while True:
@@ -56,13 +53,21 @@ while True:
         break
 
     if fenetre_menu.etat == 'jeu':
+        if fenetre_menu.mode == 'classique':
+            print('mode classique')
+            game = Game.Game("classique", window, taille_carte)
+        elif fenetre_menu.mode == 'fantome':
+            print('mode fantome')
+            game = Game.Game("fantome", window, taille_carte)
+        game.initialize_controlers(window)
         game.controleurfenetre.run()
-        print('run')
+
+        # Après la partie, on regarde ce que l'utilisateur veut faire
         if game.controleurfenetre.menu.etat == "retour menu":
             print('retour au menu')
             fenetre_menu.run()
-            game = Game(window, taille_carte)
-            game.initialize_controlers(window)
+            # Recrée le jeu avec le bon mode si besoin
+            # (ce sera fait au prochain tour de boucle)
         elif game.controleurfenetre.menu.etat == 'quit':
             print('quitter le jeu')
             pygame.quit()
