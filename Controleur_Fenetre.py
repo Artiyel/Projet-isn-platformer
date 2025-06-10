@@ -89,6 +89,7 @@ class ControlleurFenetre:
         # self.fenetre.run()
         self.fenetre.draw(decor = self.decor.plateformes)
         pygame.mixer_music.load("assets/music/Celeste_In_The_Mirror.mp3")
+        pygame.mixer_music.play(-1)
         etat_saut, etat_right, etat_left = False, False, False
         etat_right_f = False
         etat_left_f = False
@@ -125,8 +126,6 @@ class ControlleurFenetre:
             if self.fantome:
                 #on initialise les mouvements à réaliser
                 etat_saut_f, etat_right_f, etat_left_f = False, False, False
-
-                print(self.chemin)
 
                 #on obtient la position du personnage dans la matrice
                 pos_perso = self.controleur.graphe.conversion_reel_to_matrice([self.player.x-self.depl_rel[0],self.player.y-self.depl_rel[1]])
@@ -210,11 +209,6 @@ class ControlleurFenetre:
                     pygame.quit()
                     exit()
 
-            if not pygame.mixer_music.get_busy():
-                # Si la musique n'est pas en cours de lecture, on la lance
-                pygame.mixer_music.play()
-            pygame.mixer_music.set_volume(1)
-
             # On passe events à souhait_action_joueur
             etat_saut, etat_right, etat_left = self.controleur.souhait_action_joueur(
                 etat_saut, etat_right, etat_left, events
@@ -237,7 +231,7 @@ class ControlleurFenetre:
             
             #NE PAS OUBLIER LE DISPLAY.FLIP() SINON CA VA FAIRE TOUT NOIR
             pygame.display.flip()
-
+        pygame.mixer_music.stop()
         if arrivee:
             print("Le joueur a gagné")
         if chute:

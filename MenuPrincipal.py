@@ -43,6 +43,8 @@ class MenuPrincipal(Fenetre):
         clock = pygame.time.Clock()
         self.draw()
         self.running = True
+        pygame.mixer_music.load("assets/music/NieR_WotW.mp3")
+        pygame.mixer_music.play(-1)
         while self.running:
             # on regarde si le joueur a cliqué sur un bouton
             for event in pygame.event.get():
@@ -92,3 +94,5 @@ class MenuPrincipal(Fenetre):
             self.draw()
             pygame.display.flip()
             clock.tick(60)  # 60 FPS
+
+        pygame.mixer_music.stop()
