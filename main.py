@@ -37,7 +37,7 @@ pygame.display.flip()
 #ça c'est le main
 
 ### PARAMETRES DU JEU ###
-taille_carte = (3000,3000)
+taille_carte = (3000,20000)
 ### CREATION DES ENTITES ###
 dict_entites = dict()
 
@@ -49,7 +49,7 @@ player.y = taille_carte[1]
 dict_entites["player"] = player
 
 fantome = Fantome()
-fantome.x = 200
+fantome.x = taille_carte[0]-100
 fantome.y = taille_carte[1]
 dict_entites["entites"] = [fantome]
 
