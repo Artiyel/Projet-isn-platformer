@@ -9,14 +9,14 @@ pygame.init()
 
 class ControleurJeu:
 
-    def __init__(self, decor, perso, entites, jeu):
+    def __init__(self, dict_entites, jeu):
         self.jeu = jeu
-        self.decor = decor.plateformes
-        self.perso = perso
+        self.decor = dict_entites["decor"]
+        self.perso = dict_entites["player"]
         # Prend le premier fantome de la liste s'il existe, sinon None
-        self.fantome = entites[0] if entites else None
-        self.matrice = decor.quadrillage()
-        self.taille_case = decor.taille_quadrillage
+        self.fantome = dict_entites["entites"][0]
+        self.matrice = self.decor.quadrillage()
+        self.taille_case = self.decor.taille_quadrillage
         self.graphe = Graphe(self)
 
 
@@ -73,7 +73,7 @@ class ControleurJeu:
         """
         contact = False
         meilleur_y = None
-        for element in self.decor:  # On parcourt les plateformes du décor
+        for element in self.decor.plateformes:  # On parcourt les plateformes du décor
             x_min, y_min, x_max, y_max = element.get_min_max()
             # Test de contact vertical et horizontal
             if (perso.y >= (y_min - perso.y_taille)
@@ -104,7 +104,7 @@ class ControleurJeu:
         Renvoie un Booléen correspondant.
         """
         res = False
-        for element in self.decor:
+        for element in self.decor.plateformes:
             x_min, y_min, x_max, y_max = element.get_min_max()
             if self.perso.y < y_max and perso.y + perso.y_taille > y_min and perso.x < x_max and perso.x + perso.x_taille > x_min:
                 res = True
@@ -119,7 +119,7 @@ class ControleurJeu:
         Renvoie un Booléen correspondant.
         """
         res = False
-        for element in self.decor :
+        for element in self.decor.plateformes:
             x_min, y_min, x_max, y_max = element.get_min_max()
             if perso.y < y_max and perso.y + perso.y_taille > y_min and (perso.x + perso.x_taille) > x_min and perso.x <= x_max:
                 res = True

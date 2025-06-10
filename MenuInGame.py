@@ -3,13 +3,16 @@ import pygame
 from Button import Button
 
 class MenuInGame(Fenetre):
-    def __init__(self, background, window):
+    def __init__(self, background, window, parent_fenetre_jeu, parent_entities, parent_decor):
         '''classe des menus
         entrée :
             boutons : liste d'instances de Button
             background : image de fond
             window : instance de pygame.display'''
         super().__init__(background, window)
+        self.parent_fenetre_jeu = parent_fenetre_jeu
+        self.parent_entities = parent_entities
+        self.parent_decor = parent_decor
         self.button_resume = Button(self.window.get_width() // 2, self.window.get_height() // 2 - 50, 200, 50,"Resume",  (255, 255, 255), (0, 0, 0))
         self.button_quit_game = Button( self.window.get_width() // 2, self.window.get_height() // 2 + 50, 200, 50, "Quit",(255, 255, 255), (0, 0, 0))
         self.button_return_menu = Button(self.window.get_width() // 2, self.window.get_height() // 2 + 150, 200, 50, "Return to Menu", (255, 255, 255), (0, 0, 0))
@@ -17,9 +20,15 @@ class MenuInGame(Fenetre):
         
 
     def draw(self):
-        super().draw()
-        
-    
+        # Affiche le fond capturé (le screenshot du jeu)
+        self.window.blit(self.background, (0, 0))
+        # Overlay transparent
+        overlay = pygame.Surface(self.window.get_size(), pygame.SRCALPHA)
+        overlay.fill((0, 0, 0, 120))  # 120 = transparence
+        self.window.blit(overlay, (0, 0))
+        # Dessine les boutons par-dessus
+        self.draw_buttons()
+
     def draw_buttons(self):
         self.button_resume.draw(self.window)
         self.button_quit_game.draw(self.window)
@@ -27,20 +36,19 @@ class MenuInGame(Fenetre):
         self.button_croix.draw(self.window)
     
     def run(self):
-        self.window.blit(self.background, (0, 0))
         pygame.display.set_caption('Le jeu')
-
-        self.draw()
-        self.draw_buttons()
-        pygame.display.flip()
         self.running = True
         self.etat = "stand by"
+        clock = pygame.time.Clock()
 
         while self.running:
-            pygame.time.delay(5)  # Pour la fluidité, tu peux remplacer par un clock.tick(60) si tu veux
-            events = pygame.event.get()
 
-            for event in events:
+            self.draw()  # dessine le fond et les boutons
+
+            pygame.display.flip()
+            clock.tick(60)
+
+            for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
                     self.etat = "quit"

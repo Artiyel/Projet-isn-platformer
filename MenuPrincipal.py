@@ -39,17 +39,17 @@ class MenuPrincipal(Fenetre):
             bouton.draw(self.window)
     
     def run(self):
-        self.draw()  # on dessine la fenêtre
+        clock = pygame.time.Clock()
+        self.draw()
         self.running = True
         while self.running:
-            pygame.time.delay(5)
-            pygame.display.flip()
-            #on regarde si le joueur exécute des actions
+            # on regarde si le joueur a cliqué sur un bouton
             for event in pygame.event.get():
                 #on arrête le jeu si on quitte par la croix par défaut (ou le bouton rouge pour les mac)
                 if event.type == pygame.QUIT:
-                    self.etat == "quit"
                     self.running = False
+                    self.etat = "quit"
+                                    
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     print("1")
                     for button in self.buttons:
@@ -61,8 +61,8 @@ class MenuPrincipal(Fenetre):
                                 self.etat = "jeu"
                                 #self.jeu.controleurfenetre.run()  # lance la fenêtre de jeu
                             elif button.text == "Quit":
+                                self.etat = "quit"
                                 self.running = False
-                                pygame.quit()
                                 print("Quitter le jeu")
                             elif button.text == "Histoire":
                                 self.etat = "lore"
@@ -82,3 +82,6 @@ class MenuPrincipal(Fenetre):
                             elif button.text == "Mode Fantôme":
                                 self.etat = "fantome"
                                 print("Mode Fantôme activé")
+            self.draw()
+            pygame.display.flip()
+            clock.tick(60)  # 60 FPS

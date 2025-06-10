@@ -10,19 +10,24 @@ class ControlleurFenetre:
     """
     Classe qui gère la fenêtre de jeu.
     """
-    def __init__(self, decor, entities, player,jeu, window ,background = pygame.image.load("assets/fond_1.png")):
+    def __init__(self, dict_entites,jeu, window ,background = pygame.image.load("assets/fond_1.png")):
         self.jeu = jeu
         self.fenetre = FenetreJeu(background, window)
         self.controleur = jeu.controleurjeu
-        self.decor = decor
-        self.entities = entities
-        self.player = player
+        self.decor = dict_entites["decor"]
+        self.entities = dict_entites["entites"]
+        self.player = dict_entites["player"]
         self.fantome = self.entities[0]
         self.depl_rel = [0,0]
         self.dir = [0,0]
         fond = background
-        self.menu = MenuInGame(fond, window)
-        
+        self.menu = MenuInGame(
+            fond, window,
+            parent_fenetre_jeu=self.fenetre,
+            parent_entities=self.entities,
+            parent_decor=self.decor.plateformes
+        )
+    
 
     def should_move(self):
         """
@@ -87,6 +92,7 @@ class ControlleurFenetre:
         chute = False
         parcours_chemin = False
         self.chemin = []
+        clock = pygame.time.Clock()
         while running and (not arrivee) and (not chute):
             events = pygame.event.get()  #on récupère les événements
             for event in events:
@@ -98,6 +104,9 @@ class ControlleurFenetre:
 
                 if event.type == pygame.KEYDOWN and (event.key == pygame.K_ESCAPE or event.key == pygame.K_RETURN): 
                     print('test')
+                    background_pause = pygame.Surface(self.fenetre.window.get_size())
+                    background_pause.blit(self.fenetre.window, (0, 0))
+                    self.menu.background = background_pause  # On remplace le fond du menu pause par la capture
                     self.menu.run() #pour lancer un autre menu (qui propose de retourner au menu principal ou continuer le jeu)
                     if self.menu.etat == "retour menu":
                         running = False
@@ -180,7 +189,19 @@ class ControlleurFenetre:
             if self.player.y > self.decor.plateformes[0].y_pos + 500:
                 self.fenetre.textbox("assets/text/Stubborn3ss.txt")
                 chute = True
-                self.fenetre.textbox("assets/text/Stubborn3ss.txt")
+                # Lance le menu in-game après le texte
+                self.menu.etat = "stand by"  # Réinitialise l'état du menu
+                self.menu.running = True
+                self.menu.run()
+                # Après le menu, tu peux agir selon l'état choisi par l'utilisateur
+                if self.menu.etat == "retour menu":
+                    running = False
+                    self.fenetre.running = False
+                elif self.menu.etat == "quit":
+                    running = False
+                    self.fenetre.running = False
+                    pygame.quit()
+                    exit()
 
             if not pygame.mixer_music.get_busy():
                 # Si la musique n'est pas en cours de lecture, on la lance
@@ -194,8 +215,8 @@ class ControlleurFenetre:
             self.controleur.calcul_mvt(etat_saut, etat_right, etat_left,self.player)
             self.controleur.calcul_mvt(etat_saut_f, etat_right_f, etat_left_f,self.fantome)
             print(etat_saut_f, etat_right_f, etat_left_f)
-            #important de mettre du délai. Là on a une image tout les 20ms, donc 50fps.
-            pygame.time.delay(20)
+            #important de mettre du délai. Là on a 60fps.
+            clock.tick(60)  # 60 FPS, fluide
 
             #On utilise cette méthode pour afficher la fenêtre dans la boucle (interdiction d'utiliser .run() ici)
             self.fenetre.draw(decor=self.decor.plateformes, entities=[self.player, self.fantome])

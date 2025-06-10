@@ -38,30 +38,6 @@ pygame.display.flip()
 
 ### PARAMETRES DU JEU ###
 taille_carte = (3000,20000)
-### CREATION DES ENTITES ###
-dict_entites = dict()
-
-
-#personnage
-player = Player()
-player.x = 100
-player.y = taille_carte[1]
-dict_entites["player"] = player
-
-fantome = Fantome()
-fantome.x = taille_carte[0]-100
-fantome.y = taille_carte[1]
-dict_entites["entites"] = [fantome]
-
-#decor
-decor = Decor(taille_carte[0],taille_carte[1])
-decor.creer_decor_hasard()
-dict_entites["decor"] = decor
-#dict_entites["decor"] = []
-#for element in decor.plateformes:
-#    dict_entites["decor"].append(element)
-#print(dict_entites)
-
 
 fond_menu = pygame.image.load("assets/fond_menu_1.png")
 fenetre_menu = MenuPrincipal(background=fond_menu, window=window)
@@ -69,10 +45,15 @@ fenetre_menu.draw()
 pygame.display.flip()
 
 ### CREATION DU JEU ###
-game = Game(dict_entites, window)
+game = Game(window, taille_carte)
 fenetre_menu.run()
 
 while True:
+    if fenetre_menu.etat == 'quit':
+        print('quitter le jeu')
+        pygame.quit()
+        break
+
     if fenetre_menu.etat == 'jeu':
         game.controleurfenetre.run()
         print('run')
