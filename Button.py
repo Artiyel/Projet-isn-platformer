@@ -51,13 +51,19 @@ class Button():
         sortie : reponse : Booléen
                     renvoie True si le curseur est sur le bouton, False sinon
         '''
-        reponse = False
-        if (
-            self.x - self.width < pygame.mouse.get_pos()[0]
-            and self.x + self.width > pygame.mouse.get_pos()[0]
-            and self.y - self.height < pygame.mouse.get_pos()[1]
-            and self.y + self.height > pygame.mouse.get_pos()[1]
-            ):
-            reponse = True
-            pygame.mixer.Channel(1).play(self.sound)
-        return reponse
+        return (
+            self.x - self.width < pos[0]
+            and self.x + self.width > pos[0]
+            and self.y - self.height < pos[1]
+            and self.y + self.height > pos[1]
+        )
+
+    def on_click(self, event):
+        '''
+        Joue le son et retourne True si le bouton a été cliqué avec la souris.
+        '''
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if self.is_hit(event.pos):
+                self.sound.play()
+                return True
+        return False

@@ -55,22 +55,19 @@ class MenuInGame(Fenetre):
                     self.etat = "quit"
                     pygame.quit()  
 
-                elif (self.button_resume.is_hit(pygame.mouse.get_pos()) or self.button_croix.is_hit(pygame.mouse.get_pos())):
-                    if event.type == pygame.MOUSEBUTTONDOWN:
-                        self.running = False
-                        self.etat = "resume"
+                elif self.button_resume.on_click(event) or self.button_croix.on_click(event):
+                    self.running = False
+                    self.etat = "resume"
 
-                elif self.button_quit_game.is_hit(pygame.mouse.get_pos()):
-                    if event.type == pygame.MOUSEBUTTONDOWN:
-                        self.running = False
-                        self.etat = "quit"
-                        pygame.quit() 
-
-                elif self.button_return_menu.is_hit(pygame.mouse.get_pos()):
-                    if event.type == pygame.MOUSEBUTTONDOWN:
-                        self.running = False
-                        self.etat = "retour menu"
-                        print("Retour au menu principal demandé")
+                elif self.button_quit_game.on_click(event):
+                    self.running = False
+                    self.etat = "quit"
+                    pygame.quit()  
+                    
+                elif self.button_return_menu.on_click(event):
+                    self.running = False
+                    self.etat = "retour menu"
+                    print("Retour au menu principal demandé")
 
 
             # Redessine les boutons à chaque frame pour l'effet hover éventuel

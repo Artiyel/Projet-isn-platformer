@@ -46,51 +46,42 @@ class MenuPrincipal(Fenetre):
         pygame.mixer_music.load("assets/music/NieR_WotW.mp3")
         pygame.mixer_music.play(-1)
         while self.running:
-            # on regarde si le joueur a cliqué sur un bouton
             for event in pygame.event.get():
-                #on arrête le jeu si on quitte par la croix par défaut (ou le bouton rouge pour les mac)
                 if event.type == pygame.QUIT:
                     self.running = False
                     self.etat = "quit"
-                                    
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    print("1")
-                    for button in self.buttons:
-                        print("2")
-                        if button.is_hit(pygame.mouse.get_pos()):
-                            if button.text == "Start Game":
-                                self.etat = "jeu"
-                                self.mode = "classique"
-                                self.running = False    #quitte la fenêtre du menu
-                                print("3")
-                                self.etat = "jeu"
-                            elif button.text == "Mode Fantôme":
-                                self.etat = "jeu"
-                                self.mode = "fantome"
-                                self.running = False
-                                print("Mode Fantôme activé")
-                            elif button.text == "Quit":
-                                self.etat = "quit"
-                                self.running = False
-                                print("Quitter le jeu")
-                            elif button.text == "Histoire":
-                                self.etat = "lore"
-                                print("Histoire du jeu")
-                                self.running = False
-                                # Crée une nouvelle fenêtre pour le lore
-                                fond_lore = pygame.image.load("assets//pics/fond_menu_1.png")
-                                print("Fond lore chargé :", fond_lore.get_size())
-                                fenetre_lore = MenuPrincipal(background=fond_lore, window=self.window)
-                                fenetre_lore.draw()  # Affiche la fenêtre avec le fond
-                                pygame.display.flip()
-                                pygame.time.wait(2000)
-                                # fenetre_lore = FenetreMenu()  # ou Fenetre(background=...) si tu veux un fond différent
-                                fenetre_lore.textbox("assets/text/lore.txt")  # Affiche le texte dans la nouvelle fenêtre
-                                self.running = True
-                                self.run()
-                            elif button.text == "Mode Fantôme":
-                                self.etat = "fantome"
-                                print("Mode Fantôme activé")
+
+                for button in self.buttons:
+                    if button.on_click(event):
+                        if button.text == "Start Game":
+                            self.etat = "jeu"
+                            self.mode = "classique"
+                            self.running = False
+                            print("Mode Classique activé")
+                        elif button.text == "Mode Fantôme":
+                            self.etat = "jeu"
+                            self.mode = "fantome"
+                            self.running = False
+                            print("Mode Fantôme activé")
+                        elif button.text == "Quit":
+                            self.etat = "quit"
+                            self.running = False
+                            print("Quitter le jeu")
+                        elif button.text == "Histoire":
+                            self.etat = "lore"
+                            print("Histoire du jeu")
+                            self.running = False
+                            # Crée une nouvelle fenêtre pour le lore
+                            fond_lore = pygame.image.load("assets//pics/fond_menu_1.png")
+                            print("Fond lore chargé :", fond_lore.get_size())
+                            fenetre_lore = MenuPrincipal(background=fond_lore, window=self.window)
+                            fenetre_lore.draw()
+                            pygame.display.flip()
+                            pygame.time.wait(2000)
+                            fenetre_lore.textbox("assets/text/lore.txt")
+                            self.running = True
+                            self.run()
+
             self.draw()
             pygame.display.flip()
             clock.tick(60)  # 60 FPS
