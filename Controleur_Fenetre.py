@@ -110,16 +110,14 @@ class ControlleurFenetre:
                     pygame.quit()
                     return  # Quitte la boucle et la fonction
 
-                if event.type == pygame.KEYDOWN and (event.key == pygame.K_ESCAPE or event.key == pygame.K_RETURN): 
-                    print('test')
+                if event.type == pygame.KEYDOWN and (event.key == pygame.K_ESCAPE or event.key == pygame.K_RETURN):
                     background_pause = pygame.Surface(self.fenetre.window.get_size())
                     background_pause.blit(self.fenetre.window, (0, 0))
                     self.menu.background = background_pause  # On remplace le fond du menu pause par la capture
                     self.menu.run() #pour lancer un autre menu (qui propose de retourner au menu principal ou continuer le jeu)
                     if self.menu.etat == "retour menu":
                         running = False
-                        self.fenetre.running = False 
-                        print('ouaippppp')
+                        self.fenetre.running = False
             #print('event off')
 
             ###déplacement du fantome

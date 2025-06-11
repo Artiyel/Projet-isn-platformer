@@ -26,7 +26,8 @@ if os.name == 'nt':
     screensize = user32.GetSystemMetrics(0), int(user32.GetSystemMetrics(1)*0.93)
 else:
     screensize = (1500,800)
-    
+
+# On définits les assets importés
 window = pygame.display.set_mode(screensize)
 fond_menu = pygame.image.load("assets/pics/fond_menu_1.png")
 fond_menu = pygame.transform.scale(fond_menu, screensize)
@@ -34,7 +35,6 @@ window.blit(fond_menu, (0, 0))
 pygame.display.flip()
 
 
-#ça c'est le main
 
 ### PARAMETRES DU JEU ###
 taille_carte = (3000,20000)
@@ -44,6 +44,7 @@ fenetre_menu = MenuPrincipal(background=fond_menu, window=window)
 fenetre_menu.draw()
 pygame.display.flip()
 
+#Programme de lancement
 fenetre_menu.run()
 
 while True:
