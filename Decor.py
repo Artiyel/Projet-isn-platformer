@@ -4,7 +4,10 @@ from Plateformes import Plateforme
 
 
 class Decor:
-
+    '''
+    Classe qui gère le décor du jeu, c'est-à-dire les plateformes et les objets.
+    Elle permet de créer un décor aléatoire et de le représenter sous forme de matrice quadrillée.
+    '''
     def __init__(self, taille_carte_x, taille_carte_y, taille_quadrillage = 50):
         self.plateformes = []
         self.objets = []
@@ -15,6 +18,7 @@ class Decor:
 
 
     def __str__(self):
+        '''Méthode permettant de représenter le décor sous forme de chaîne de caractères (débug)'''
         for element in self.plateformes:
             element.__str__()
 

@@ -3,8 +3,12 @@ import pygame
 pygame.mixer.init()
 
 class Button():
+    '''
+    Classe représentant un bouton dans le jeu, permettant de dessiner un bouton avec du texte, de gérer les clics et de jouer un son.
+    '''
     def __init__(self, x, y, width,height, text='',text_color=(255,255,255),bg_color=(50,50,50), textsize = 30, font_name = "assets/fonts/AncientModernTales-a7Po.ttf", sound = 'assets/sound/click_effect.mp3'):
         '''
+        constructeur de la classe
         Entrée : paramêtres du bouton
         Sortie : None
         '''
@@ -22,6 +26,7 @@ class Button():
 
     def draw(self,win):
         '''
+        méthode permettant de dessiner le bouton sur la fenêtre
         entrée : 
                 self
                 win : fenêtre sur laquelle on affiche le bouton
@@ -47,6 +52,7 @@ class Button():
 
     def is_hit(self, pos):
         '''
+        Méthode permettant de vérifier si le curseur de la souris est sur le bouton.
         entrée : self
         sortie : reponse : Booléen
                     renvoie True si le curseur est sur le bouton, False sinon
@@ -60,7 +66,12 @@ class Button():
 
     def on_click(self, event):
         '''
+        Méthode permettant de gérer le clic sur le bouton.
         Joue le son et retourne True si le bouton a été cliqué avec la souris.
+        entrée : 
+            event : événement pygame
+        sortie : Booléen
+                    retourne True si le bouton a été cliqué, False sinon
         '''
         if event.type == pygame.MOUSEBUTTONDOWN:
             if self.is_hit(event.pos):

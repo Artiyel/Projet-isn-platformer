@@ -19,7 +19,7 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 os.chdir(script_dir)
 
 
-
+# gestion de la taille de l'écran en fonction de l'OS (Windows ou Linux)
 if os.name == 'nt':
     print("ouf!")
     user32 = ctypes.windll.user32
@@ -47,6 +47,7 @@ pygame.display.flip()
 #Programme de lancement
 fenetre_menu.run()
 
+### gestion des différents états du jeu ###
 while True:
     if fenetre_menu.etat == 'quit':
         print('quitter le jeu')

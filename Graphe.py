@@ -82,7 +82,9 @@ class Graphe :
                     self.graphe[case1][case2] = self.distance(pos1,pos2)
     
     def trouver_chemin(self, pos1):
-        #init
+        '''Méthode permettant de trouver le chemin le plus court depuis une position donnée.
+           utilise l'algorithme de recherche de chemin Dijkstra pour trouver le chemin le plus court dans un graphe pondéré.'''
+        #initialisation
         dist = {sommet : float("inf") for sommet in self.graphe}
         dist[f"{pos1}"] = 0
 
@@ -91,7 +93,7 @@ class Graphe :
 
         visites = set()
 
-        while attente:
+        while attente:  # Tant qu'il y a des sommets à explorer
             dist_act, sommet_act = heapq.heappop(attente)
             if sommet_act in visites:
                 continue
@@ -111,6 +113,7 @@ class Graphe :
         return dist,pred
         
     def chemin_le_plus_court(self, origin, arivee):
+        '''Méthode permettant de trouver le chemin le plus court entre deux positions dans le graphe.'''
         if str(origin) in self.graphe.keys():
             _,pred = self.trouver_chemin(origin)
 

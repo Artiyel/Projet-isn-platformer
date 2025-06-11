@@ -32,41 +32,41 @@ class MenuInGame(Fenetre):
         self.draw_buttons()
 
     def draw_buttons(self):
+        '''Méthode pour dessiner les boutons sur la fenêtre'''
         self.button_resume.draw(self.window)
         self.button_quit_game.draw(self.window)
         self.button_return_menu.draw(self.window)
         self.button_croix.draw(self.window)
     
     def run(self):
-        pygame.display.set_caption('Le jeu')
+        '''Méthode principale qui gère la boucle du menu en jeu.'''
         self.running = True
         clock = pygame.time.Clock()
 
         while self.running:
 
             self.draw()  # dessine le fond et les boutons
-
-            pygame.display.flip()
+            pygame.display.flip()   # met à jour l'affichage
             clock.tick(60)
 
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
+            for event in pygame.event.get():    # gestion des événements
+                if event.type == pygame.QUIT:   # Si l'utilisateur ferme la fenêtre
                     self.running = False
                     self.etat = "quit"
                     pygame.quit()
                     return  
 
-                elif self.button_resume.on_click(event) or self.button_croix.on_click(event):
+                elif self.button_resume.on_click(event) or self.button_croix.on_click(event):   # Si l'utilisateur clique sur "Resume" ou "X"
                     self.running = False
                     self.etat = "resume"
 
-                elif self.button_quit_game.on_click(event):
+                elif self.button_quit_game.on_click(event): # Si l'utilisateur clique sur "Quit"
                     self.running = False
                     self.etat = "quit"
                     pygame.quit()  
                     return
 
-                elif self.button_return_menu.on_click(event):
+                elif self.button_return_menu.on_click(event): # Si l'utilisateur clique sur "Return to Menu"
                     self.running = False
                     self.etat = "retour menu"
                     print("Retour au menu principal demandé")

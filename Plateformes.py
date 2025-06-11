@@ -10,5 +10,7 @@ class Plateforme(ElementDecor):
         self.arrivee = False
 
     def __str__(self):
+        '''Représentation en chaîne de caractères de l'objet Plateforme, pour débug principalement
+        '''
         print(f"L'objet est une plateforme \n")
         super().__str__()

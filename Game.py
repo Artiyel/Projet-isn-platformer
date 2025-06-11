@@ -8,13 +8,14 @@ import Entity as e
 import Decor as d
 
 class Game :
-
+    '''
+    Classe principale du jeu, elle initialise les entités et les contrôleurs.
+    Entrée :
+        window : instance de pygame.display
+    '''
     def __init__(self, mode, window, taille_carte=(3000, 20000)):
-        '''
-        Classe principale du jeu, elle initialise les entités et les contrôleurs.
-        Entrée :
-            window : instance de pygame.display
-        '''
+        '''constructeur de la classe'''   
+             
         self.dict_entites = dict()
         self.mode = mode
 

@@ -34,7 +34,7 @@ class ControlleurFenetre:
 
     def should_move(self):
         """
-        gestion des déplacements de l'écran
+        gestion des déplacements de l'écran en fonction de la position du joueur
         :return: si on est offlimit -> True si l'écran doit bouger, False sinon
         """
         #on cherche dans quelle direction il faudrait déplacer l'écran
@@ -86,31 +86,35 @@ class ControlleurFenetre:
         """
         Lance la boucle principale de la fenêtre.
         """
-        # self.fenetre.run()
         self.fenetre.draw(decor = self.decor.plateformes)
         pygame.mixer_music.load("assets/music/Celeste_In_The_Mirror.mp3")
         pygame.mixer_music.play(-1)
+        # Initialisation des états de déplacement pour le joueur
         etat_saut, etat_right, etat_left = False, False, False
         etat_right_f = False
         etat_left_f = False
+        # Initialisation des états de jeu
         running = True
         arrivee = False
         perdu = False
+        # Initialisation des variables pour le fantôme
         parcours_chemin = False
         self.chemin = []
         count = 0
         clock = pygame.time.Clock()
 
+        # Boucle principale du jeu
         while running and (not arrivee) and (not perdu):
             events = pygame.event.get()  #on récupère les événements
             for event in events:
-                if event.type == pygame.QUIT:
+                if event.type == pygame.QUIT:       # Si l'utilisateur ferme la fenêtre
                     running = False
                     self.fenetre.running = False  # Pour arrêter aussi la fenêtre si besoin
                     pygame.quit()
                     return  # Quitte la boucle et la fonction
 
                 if event.type == pygame.KEYDOWN and (event.key == pygame.K_ESCAPE or event.key == pygame.K_RETURN):
+                    # Si l'utilisateur appuie sur Echap ou Entrée, on met le jeu en pause
                     background_pause = pygame.Surface(self.fenetre.window.get_size())
                     background_pause.blit(self.fenetre.window, (0, 0))
                     self.menu.background = background_pause  # On remplace le fond du menu pause par la capture
@@ -118,7 +122,6 @@ class ControlleurFenetre:
                     if self.menu.etat == "retour menu":
                         running = False
                         self.fenetre.running = False
-            #print('event off')
 
             ###déplacement du fantome
             if self.fantome:
@@ -265,9 +268,12 @@ class ControlleurFenetre:
             self.fenetre.draw(decor=self.decor.plateformes, entities=[self.player, self.fantome])
             #Et voilà le job du controlleur. On récupère toutes les actions...
             
-            #NE PAS OUBLIER LE DISPLAY.FLIP() SINON CA VA FAIRE TOUT NOIR
             pygame.display.flip()
+
+        # Arrête la musique avant de quitter
         pygame.mixer_music.stop()
+
+        # prints pour débug
         if arrivee:
             print("Le joueur a gagné")
         if perdu:

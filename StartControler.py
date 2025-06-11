@@ -4,7 +4,6 @@ from MenuPrincipal import MenuPrincipal
 from Elements_Decor import ElementDecor
 
 
-
 pygame.init() #startcontroler démarre le jeu donc on initie pygame
 
 class StartControler :

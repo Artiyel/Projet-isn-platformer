@@ -6,6 +6,9 @@ import heapq
 pygame.init()
 
 class Entity:
+    '''Classe de base pour les entités du jeu, représentant un objet avec une position,
+      une taille, une masse et des attributs de mouvement.
+    '''
     def __init__(self):
         self.x = 0  # position horizontale de l'entité
         self.y = 0  # position verticale de l'entité
@@ -60,12 +63,14 @@ class Entity:
         self.vel[1] -= 65
 
     def __str__(self):
+        """Représentation en chaîne de caractères de l'entité, pour débug principalement"""
         return (
             f"Entity(x={self.x}, y={self.y}, taille=({self.x_taille},{self.y_taille}), "
             f"vie={self.vie}, vitesse=({self.vel[0]},{self.vel[1]}))"
         )
 
 class Player(Entity):
+    '''Classe représentant un joueur dans le jeu, héritant de la classe Entity.'''
     def __init__(self):
         super().__init__()
 
@@ -73,6 +78,7 @@ class Player(Entity):
         return f"Player({super().__str__()})"
 
 class Ennemy(Entity):
+    '''Classe représentant un ennemi dans le jeu, héritant de la classe Entity.'''
     def __init__(self):
         super().__init__()
 
@@ -81,6 +87,8 @@ class Ennemy(Entity):
 
 
 class Fantome(Player):
+    '''Classe représentant un fantôme dans le jeu, héritant de la classe Player.
+    '''
     def __init__(self):
         super().__init__()
         self.vitesse = 100

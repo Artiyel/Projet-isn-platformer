@@ -179,6 +179,9 @@ class ControleurJeu:
         return False
     
     def __str__(self):
+        ''' Retourne une chaîne de caractères contenant les informations sur l'état du jeu.
+            (surtout utile pour le débogage)
+        '''
         info = "=== ControleurJeu ===\n"
         info += f"Décor : {self.decor}\n"
         info += f"Joueur : x={self.perso.x}, y={self.perso.y}\n"
@@ -192,8 +195,3 @@ class ControleurJeu:
         else:
             info += "Fantome : Aucun\n"
         return info
-    
-        
-
-if __name__ == "main":
-    print('bah rien ducoup')

@@ -5,8 +5,11 @@ pygame.init()
 
 
 class Fenetre:
-    ''''''
+    '''
+    Classe Fenetre qui gère l'affichage de la fenêtre du jeu.
+    '''
     def __init__(self, background, window):
+
         self.background = pygame.transform.scale(background, window.get_size())
         self.window = window
         #le décor 
@@ -43,6 +46,7 @@ class Fenetre:
 
     def draw(self):
         '''
+        Méthode permettant de dessiner la fenêtre.
         entrée : self
         sortie : None
         
@@ -52,14 +56,22 @@ class Fenetre:
 
 
     def textbox(self,text):
-        ''''''
+        '''
+        Méthode permettant d'afficher un texte progressivement dans une zone de texte, à la manière d'une boite de dialogue
+        entrée : 
+            text : le texte à afficher
+        '''
+        # On initialise les sons
         vol_red = 0.3
         pygame.mixer_music.set_volume(vol_red)
+
         running = True
+
         with open(text, 'r', encoding='utf-8') as f:
             for line in f:
                 text_up = ""
                 for char in line:
+
                     # Gestion des événements
                     for event in pygame.event.get():
                         if event.type == pygame.QUIT:
@@ -68,18 +80,22 @@ class Fenetre:
                             running = False
                     if not running:
                         return  # On quitte proprement la fonction
+                    
                     if char != "$":
                         text_up += char
                         self.click.play()
                     if char == " ":
                         self.click_alt.play()
+
                     # Affichage avec retour à la ligne automatique
                     if text_up.strip() != "":
-                        self.draw()  # Affiche le fond (image)
+                        self.draw()  # Affiche le fond
+
                         # Crée une surface semi-transparente pour la bande noire
                         rect_surface = pygame.Surface((self.screensize[0], self.screensize[1]//3), pygame.SRCALPHA)
                         rect_surface.fill((0, 0, 0, 180))  # 180 = transparence (0 transparent, 255 opaque)
                         self.window.blit(rect_surface, (0, int(self.screensize[1]*2/3)))
+
                         # Affichage du texte
                         lines = self.wrap_text(text_up, self.font, int(self.screensize[0]) - 40)
                         y = self.screensize[1]*2/3+50
@@ -88,11 +104,16 @@ class Fenetre:
                             self.window.blit(textbox, (10, y))
                             y += self.font.get_height() + 5
                         pygame.display.flip()
+                    # On attend un court instant pour simuler l'effet de frappe
                     pygame.time.delay(5)
+
                 if not running:
                     return
+                # On attend un court instant avant de fermer la fenêtre
                 pygame.time.delay(500)
         self.window.blit(self.background, (0,0))
+        
+        # On affiche la fenêtre
         while vol_red < 1 and running:
             vol_red += 0.1
             pygame.mixer_music.set_volume(vol_red)
@@ -107,9 +128,9 @@ class Fenetre:
             waiting = True
             while waiting:
                 for event in pygame.event.get():
-                    if event.type == pygame.QUIT:
+                    if event.type == pygame.QUIT:   # Si l'utilisateur ferme la fenêtre
                         waiting = False
-                    if event.type == pygame.KEYDOWN and (event.key == pygame.K_ESCAPE or event.key == pygame.K_RETURN):
+                    if event.type == pygame.KEYDOWN and (event.key == pygame.K_ESCAPE or event.key == pygame.K_RETURN):    # Si l'utilisateur appuie sur Échap ou Entrée
                         waiting = False
 
     
