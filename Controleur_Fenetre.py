@@ -189,6 +189,7 @@ class ControlleurFenetre:
                 (self.player.y + self.player.y_taille <= Plateforme_fin.y_pos + Plateforme_fin.y_taille) and
                 (self.player.y + self.player.y_taille >= Plateforme_fin.y_pos - 5)
             ):
+                self.fenetre.textbox("assets/text/1t.txt")
                 arrivee = True
                 # Lance le menu in-game après le texte
                 self.menu.etat = "stand by"  # Réinitialise l'état du menu
