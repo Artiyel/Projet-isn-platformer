@@ -66,8 +66,7 @@ while True:
         if game.controleurfenetre.menu.etat == "retour menu":
             print('retour au menu')
             fenetre_menu.run()
-            # Recrée le jeu avec le bon mode si besoin
-            # (ce sera fait au prochain tour de boucle)
+            
         elif game.controleurfenetre.menu.etat == 'quit':
             print('quitter le jeu')
             pygame.quit()

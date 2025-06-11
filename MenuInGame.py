@@ -53,7 +53,8 @@ class MenuInGame(Fenetre):
                 if event.type == pygame.QUIT:
                     self.running = False
                     self.etat = "quit"
-                    pygame.quit()  
+                    pygame.quit()
+                    return  
 
                 elif self.button_resume.on_click(event) or self.button_croix.on_click(event):
                     self.running = False
@@ -63,7 +64,8 @@ class MenuInGame(Fenetre):
                     self.running = False
                     self.etat = "quit"
                     pygame.quit()  
-                    
+                    return
+
                 elif self.button_return_menu.on_click(event):
                     self.running = False
                     self.etat = "retour menu"

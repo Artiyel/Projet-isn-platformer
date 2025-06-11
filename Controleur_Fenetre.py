@@ -108,7 +108,7 @@ class ControlleurFenetre:
                     running = False
                     self.fenetre.running = False  # Pour arrêter aussi la fenêtre si besoin
                     pygame.quit()
-                    exit()
+                    return  # Quitte la boucle et la fonction
 
                 if event.type == pygame.KEYDOWN and (event.key == pygame.K_ESCAPE or event.key == pygame.K_RETURN): 
                     print('test')
@@ -203,7 +203,7 @@ class ControlleurFenetre:
                     running = False
                     self.fenetre.running = False
                     pygame.quit()
-                    exit()
+                    return # Quitte la boucle et la fonction
 
             # On vérifie la condition de fin de partie "Le joueur est tombé de la carte"
             if self.player.y > self.decor.plateformes[0].y_pos + 500:
@@ -221,7 +221,7 @@ class ControlleurFenetre:
                     running = False
                     self.fenetre.running = False
                     pygame.quit()
-                    exit()
+                    return  # Quitte la boucle et la fonction
 
             # On passe events à souhait_action_joueur
             etat_saut, etat_right, etat_left = self.controleur.souhait_action_joueur(
