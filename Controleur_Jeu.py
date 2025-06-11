@@ -177,73 +177,7 @@ class ControleurJeu:
                 y + entite.y_taille > oy and y < oy + oh):
                 return True
         return False
-    """
-    def calcul_action_fantome(self, fantome, player_x, player_y, obstacles):
-
-        Calcule la prochaine action à effectuer pour le fantôme pour suivre le joueur en évitant les obstacles.
-        algorithme Dijstra pour trouver le chemin le plus court vers le joueur.
-        :param fantome: l'entité fantôme
-        :param player_x: la position x du joueur
-        :param player_y: la position y du joueur
-        :param obstacles: liste des obstacles sous forme de dictionnaires avec les clés "x", "y", "w", "h"
-        :return: None, met à jour l'attribut next_action du fantôme
-
-        actions = ["droite", "gauche", "saut"]
-        heap = []
-        visited = set()
-        heapq.heappush(heap, (0, fantome.x, fantome.y, fantome.vel[1], []))
-
-        while heap:
-            cost, x, y, vel_y, chemin = heapq.heappop(heap)
-            if abs(x - player_x) < 5 and abs(y - player_y) < 5:
-                fantome.next_action = chemin[0] if chemin else None
-                return
-
-            state = (round(x, 1), round(y, 1), round(vel_y, 1))
-            if state in visited:
-                continue
-            visited.add(state)
-
-            for action in actions:
-                nx, ny, nvel_y = x, y, vel_y
-                if action == "droite":
-                    nx += fantome.vitesse * 0.1
-                elif action == "gauche":
-                    nx -= fantome.vitesse * 0.1
-                elif action == "saut":
-                    nvel_y = -200
-
-                nvel_y += 9.81 * fantome.masse * 0.1
-                ny += nvel_y * 0.1
-
-                if ny < 0:
-                    ny = 0
-                    nvel_y = 0
-
-                if self.detecte_collision(fantome, nx, ny, obstacles):
-                    continue
-
-                heapq.heappush(heap, (cost + 1, nx, ny, nvel_y, chemin + [action]))
-
-        fantome.next_action = None
-
-    def appliquer_action_fantome(self, fantome, delta_time):
-
-        Applique l'action calculée au fantôme.
-
-        if fantome.next_action == "droite":
-            fantome.x += fantome.vitesse * delta_time
-            fantome.direction = np.array([1, 0])
-        elif fantome.next_action == "gauche":
-            fantome.x -= fantome.vitesse * delta_time
-            fantome.direction = np.array([-1, 0])
-        elif fantome.next_action == "saut":
-            fantome.vel[1] = -200
-            fantome.direction = np.array([0, -1])
-        # Gravité
-        fantome.vel[1] += 9.81 * fantome.masse * delta_time
-        fantome.y += fantome.vel[1] * delta_time"""
-
+    
     def __str__(self):
         info = "=== ControleurJeu ===\n"
         info += f"Décor : {self.decor}\n"
