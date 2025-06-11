@@ -2,7 +2,7 @@ Il n'y a pas de lumière.
 Je .$$$$.$$$$.
 Je ne vois rien.
 Le bout du tunnel est si sombre...
-Mais ce qu'il y a derrière moi l'est autant.
+Mais ce qu'il y a derrière moi l'est tout autant.
 Non.
 Ce qui rampe derrière moi est bien plus sinistre.
 Cette créature sans forme ni nom
@@ -24,7 +24,7 @@ Alors je cours
 Cours loin de tout
 Tout ce que j'aime
 Que je hais
-Jusqu'à ce que un jour...
+Jusqu'à ce qu'un jour...
 Peut-être...
 J'apperçoive enfin la lumière.
 (touche échap pour revenir au menu)
