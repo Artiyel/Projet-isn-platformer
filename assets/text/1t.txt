@@ -14,3 +14,4 @@ Pauvre enfant, qu'as tu fait pour mériter ainsi le courroux des dieux ?
 Ne t'inquiètes pas, tout ira mieux.
 Nous ne sommes pas au paradis mais j'espère que tu trouvera un peu de chaleur sur ta route.
 Et de la tendresse.
+(touche échap pour revenir au menu)
