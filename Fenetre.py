@@ -49,7 +49,7 @@ class Fenetre:
         permet de créer l'affichage de la fenêtre
         '''
         self.window.blit(self.background,(0,0))
-        #Faut mettre des trucs communs à tout les types de fenêtres
+
 
     def textbox(self,text):
         ''''''

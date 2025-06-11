@@ -79,20 +79,6 @@ class Ennemy(Entity):
     def __str__(self):
         return f"Ennemy({super().__str__()})"
 
-# class Projectile(Entity):
-#     def __init__(self):
-#         super().__init__()
-#         self.vitesse = 100  # vitesse du projectile
-#         self.direction = np.array([1, 0])  # direction du projectile (vecteur unitaire)
-#         self.x_taille = 5
-#         self.y_taille = 5
-
-#     def deplacer(self, delta_time):
-#         """
-#         Déplace le projectile dans la direction spécifiée par l'attribut direction.
-#         """
-#         self.x += self.direction[0] * self.vitesse * delta_time
-#         self.y += self.direction[1] * self.vitesse * delta_time
 
 class Fantome(Player):
     def __init__(self):

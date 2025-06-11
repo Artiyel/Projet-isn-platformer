@@ -11,11 +11,12 @@ class Decor:
         self.taille_carte_x = taille_carte_x
         self.taille_carte_y = taille_carte_y
         self.taille_quadrillage = taille_quadrillage
-        self.arrivee = False
+        self.arrivee = False #Attribut pour repérer la plateforme d'arrivée
 
 
     def __str__(self):
-        print("à coder")
+        for element in self.plateformes:
+            element.__str__()
 
 
     def ajouter_plateforme(self,plateforme):
@@ -46,7 +47,6 @@ class Decor:
             placement_x = randint(intervalle[0], intervalle[1])
             brique = Plateforme(x_pos= placement_x * case, y_pos= hauteur, x_taille= 4*case, y_taille = case)
             self.ajouter_plateforme(brique)
-            print(f"plateforme placée en {placement_x}, {hauteur}")
 
 
 

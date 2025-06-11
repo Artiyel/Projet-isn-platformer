@@ -18,13 +18,13 @@ class Game :
         self.dict_entites = dict()
         self.mode = mode
 
-        #personnage
+        #On initialise le personnage
         self.player = e.Player()
         self.player.x = 100
         self.player.y = taille_carte[1]
         self.dict_entites["player"] = self.player
 
-        #fantome
+        # On initialise le fantome
         if mode == "fantome":
             self.fantome = e.Fantome()
             self.fantome.x = taille_carte[0]-100
@@ -33,7 +33,7 @@ class Game :
         else:
             self.dict_entites["entites"] = []
 
-        #decor
+        #On créé le decor
         self.decor = d.Decor(taille_carte[0],taille_carte[1])
         self.decor.creer_decor_hasard()
         self.dict_entites["decor"] = self.decor
