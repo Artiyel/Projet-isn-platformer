@@ -29,6 +29,7 @@ else:
 
 # On définits les assets importés
 window = pygame.display.set_mode(screensize)
+pygame.display.set_caption("ICI")
 fond_menu = pygame.image.load("assets/pics/fond_menu_1.png")
 fond_menu = pygame.transform.scale(fond_menu, screensize)
 window.blit(fond_menu, (0, 0))
