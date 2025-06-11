@@ -85,9 +85,9 @@ class MenuPrincipal(Fenetre):
                                 pygame.display.flip()
                                 pygame.time.wait(2000)
                                 # fenetre_lore = FenetreMenu()  # ou Fenetre(background=...) si tu veux un fond différent
-                                fenetre_lore.textbox("lore.txt")  # Affiche le texte dans la nouvelle fenêtre
-                                self.fenetre.running = True
-                                self.start()
+                                fenetre_lore.textbox("assets/text/lore.txt")  # Affiche le texte dans la nouvelle fenêtre
+                                self.running = True
+                                self.run()
                             elif button.text == "Mode Fantôme":
                                 self.etat = "fantome"
                                 print("Mode Fantôme activé")
