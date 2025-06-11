@@ -95,13 +95,13 @@ class ControlleurFenetre:
         etat_left_f = False
         running = True
         arrivee = False
-        chute = False
+        perdu = False
         parcours_chemin = False
         self.chemin = []
         count = 0
         clock = pygame.time.Clock()
 
-        while running and (not arrivee) and (not chute):
+        while running and (not arrivee) and (not perdu):
             events = pygame.event.get()  #on récupère les événements
             for event in events:
                 if event.type == pygame.QUIT:
@@ -206,7 +206,7 @@ class ControlleurFenetre:
             # On vérifie la condition de fin de partie "Le joueur est tombé de la carte"
             if self.player.y > self.decor.plateformes[0].y_pos + 500:
                 self.fenetre.textbox("assets/text/Stubborn3ss.txt")
-                chute = True
+                perdu = True
                 # Lance le menu in-game après le texte
                 self.menu.etat = "stand by"  # Réinitialise l'état du menu
                 self.menu.running = True
@@ -220,6 +220,30 @@ class ControlleurFenetre:
                     self.fenetre.running = False
                     pygame.quit()
                     return  # Quitte la boucle et la fonction
+
+            # On vérifie la condition de fin de partie "Le joueur est rattrapé par le fantôme"
+            if self.fantome != None: #On vérifie qu'on est en mode fantôme
+                if (
+                    (self.player.x <= self.fantome.x) and
+                    (self.player.x + self.player.x_taille >= self.fantome.x + self.fantome.x_taille) and
+                    (self.player.y <= self.fantome.y) and
+                    (self.player.y + self.player.y_taille >= self.fantome.y + self.fantome.y_taille)
+                ):
+                    self.fenetre.textbox("assets/text/Stubborn3ss.txt")
+                    perdu = True
+                    # Lance le menu in-game après le texte
+                    self.menu.etat = "stand by"  # Réinitialise l'état du menu
+                    self.menu.running = True
+                    self.menu.run()
+                    # Après le menu, tu peux agir selon l'état choisi par l'utilisateur
+                    if self.menu.etat == "return to menu":
+                        running = False
+                        self.fenetre.running = False
+                    elif self.menu.etat == "quit":
+                        running = False
+                        self.fenetre.running = False
+                        pygame.quit()
+                        return  # Quitte la boucle et la fonction
 
             # On passe events à souhait_action_joueur
             etat_saut, etat_right, etat_left = self.controleur.souhait_action_joueur(
@@ -246,5 +270,5 @@ class ControlleurFenetre:
         pygame.mixer_music.stop()
         if arrivee:
             print("Le joueur a gagné")
-        if chute:
-            print("Le joueur est tombé de la carte")
+        if perdu:
+            print("Le joueur a perdu")
