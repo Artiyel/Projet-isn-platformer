@@ -101,13 +101,3 @@ class Decor:
                 k += 1
 
         return mat
-
-
-# Code pour tester et visualiser l'apprence de la matrice de carte quadrillée
-"""
-decor = Decor(taille_carte_x=2500, taille_carte_y=4000)
-decor.creer_decor_hasard()
-mat = decor.quadrillage()
-for element in mat:
-    print(element)
-"""
